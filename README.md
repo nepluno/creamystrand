@@ -111,38 +111,21 @@ Please contact the author (fyun@acm.org) for questions and bug report, or consul
 
 BibTex Citation
 ----------------------
-@article{fei2019mmc,
-
- author = {Fei, Yun (Raymond) and Batty, Christopher and Grinspun, Eitan and Zheng, Changxi},
-
- title = {A Multi-scale Model for Coupling Strands with Shear-Dependent Liquid},
-
- journal = {ACM Trans. Graph.},
-
- issue_date = {November 2019},
-
- volume = {38},
-
- number = {6},
-
- month = nov,
-
- year = {2019},
-
- pages = {1:1--1:20},
-
- articleno = {1},
-
- numpages = {20},
-
- url = {http://doi.acm.org/10.1145/},
-
- doi = {10.1145/3355089.3356532},
-
- acmid = {3356532},
-
- publisher = {ACM},
-
- address = {New York, NY, USA}
- 
+@article{fei2019mmc,  
+ author = {Fei, Yun (Raymond) and Batty, Christopher and Grinspun, Eitan and Zheng, Changxi},  
+ title = {A Multi-scale Model for Coupling Strands with Shear-Dependent Liquid},  
+ journal = {ACM Trans. Graph.},  
+ issue_date = {November 2019},  
+ volume = {38},  
+ number = {6},  
+ month = nov,  
+ year = {2019},  
+ pages = {1:1--1:20},  
+ articleno = {1},  
+ numpages = {20},  
+ url = {http://doi.acm.org/10.1145/},  
+ doi = {10.1145/3355089.3356532},  
+ acmid = {3356532},  
+ publisher = {ACM},  
+ address = {New York, NY, USA}  
 }
