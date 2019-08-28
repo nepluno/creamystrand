@@ -22,6 +22,7 @@ CreamyStrand depends on following libraries (some of them have been included in 
 - tclap* (http://tclap.sourceforge.net)
 - libIGL* (https://github.com/libigl/libigl)
 - ANN* (https://www.cs.umd.edu/~mount/ANN/)
+- So-Bogus* (http://gdaviet.fr/code/bogus/)
 - Intel MKL (https://software.intel.com/en-us/parallel-studio-xe/choose-download)
 - GLUT (https://www.opengl.org/resources/libraries/glut/)
 - Boost 1.58+ (https://www.boost.org/)
@@ -56,7 +57,7 @@ Run the Demo
 --------------------
 To run the demo of CreamyStrand, you may simply use the command line argument *-f [scene_file]* to specify the scene to be loaded. For example, you may type
 
-./libWetCloth -f assets/unit_tests/drag/default_strand_cream.xml
+./StrandSimulatorApp -f assets/unit_tests/drag/default_strand_cream.xml
 
 to run the simulation of shaving cream poured onto seven pinned strands. 
 
@@ -111,20 +112,37 @@ Please contact the author (fyun@acm.org) for questions and bug report, or consul
 BibTex Citation
 ----------------------
 @article{fei2019mmc,
+
  author = {Fei, Yun (Raymond) and Batty, Christopher and Grinspun, Eitan and Zheng, Changxi},
+
  title = {A Multi-scale Model for Coupling Strands with Shear-Dependent Liquid},
+
  journal = {ACM Trans. Graph.},
+
  issue_date = {November 2019},
+
  volume = {38},
+
  number = {6},
+
  month = nov,
+
  year = {2019},
+
  pages = {1:1--1:20},
+
  articleno = {1},
+
  numpages = {20},
+
  url = {http://doi.acm.org/10.1145/},
+
  doi = {10.1145/3355089.3356532},
+
  acmid = {3356532},
+
  publisher = {ACM},
+
  address = {New York, NY, USA}
+ 
 }
