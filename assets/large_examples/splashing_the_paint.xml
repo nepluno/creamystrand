@@ -1,0 +1,104 @@
+<scene>
+  <description text="A rapidly rotating paint brush splashes oil paint everywhere."/>
+
+  <duration time="8.0"/>
+  <integrator type="linearized-implicit-euler" dt="0.001" criterion="1e-9" maxiters="1000"/>
+  <collision type="continuous-time"/>
+
+  <simplegravity fx="0.0" fy="-981.0"/>
+
+  <bucketinfo size="2.0" numcells="4"/>
+
+  <liquidinfo>
+    <surfTensionCoeff value="20.6"/>
+    <affineStretchDamping value="0.0"/>
+    <affineRotateDamping value="0.0"/>
+    <velocityDamping value="0.00"/>
+    <liquidBulkModulus value="2e10"/>
+    <liquidDensity value=".95"/>
+    <implicitElasticity value="1"/>
+    <liquidBoundaryFriction value="1.0"/>
+    <shearPcgCriterion value="1e-6"/>
+    <liquidShearModulus value="4010.0"/>
+    <flowBehaviorIndex value="0.3162"/>
+    <flowConsistencyIndex value="173.56"/>
+    <plasticYieldStress value="9.6"/>
+    <particleCellMultiplier value="0.25"/>
+    <numComponents value="5"/>
+    <geometricDragInsulation value="0.0"/>
+  </liquidinfo>
+
+  <StrandParameters>
+    <radius value="0.0125" />
+    <youngsModulus value="2.98e10"/>
+    <poissonRatio value="0.39" />
+    <collisionMultiplier value="1.0"/>
+    <attachMultiplier value="1.0" />
+    <density value="1.3" /> 
+    <viscosity value="5.96e8" />
+    <baseRotation value="0.0"/>
+    <accumulateWithViscous value="1"/>
+    <accumulateViscousOnlyForBendingModes value="0"/>
+    <frictionAngle value="40.0"/>
+    <stretchMultiplier value="0.001"/>
+  </StrandParameters>
+
+  <CollisionParameters>
+    <constantCollisionRadius value="1"/>
+    <externalCollisionsRadius value="0.0001"/>
+    <selfCollisionsRadius value="0.013"/>
+    <impulseMaxNorm value="0"/>
+    <maxNumCollisionsPerEdge value="6"/>
+  </CollisionParameters>
+
+  <SimulationParameters>
+    <airDrag value="0.0005"/> 
+    <gaussSeidelIterations value="75"/>
+    <gaussSeidelTolerance value="1e-04"/> 
+    <maxNewtonIterations value="1000"/>
+    <hairMeshFrictionCoefficient value="0.0"/>
+    <numberOfThreads value="24"/>
+    <percentCTRodRodCollisionsAccept value="100"/>
+    <pruneExternalCollisions value="1"/>
+    <pruneSelfCollisions value="1"/>
+    <rodSubSteps value="1"/>
+    <simulationManagerLimitedMemory value="0"/>
+    <skipFlowFrictions value="1"/>
+    <skipRodMeshCollisions value="0"/>
+    <skipRodRodCollisions value="0"/>
+    <statGathering value="0"/>
+    <stochasticPruningFraction value="0.8"/>
+    <hairHairFrictionCoefficient value="0.13"/>
+    <substeps value="1"/>
+    <useApproxRodElasticFriction value="1"/>
+    <useCTRodRodCollisions value="0"/>
+    <useImpulseMethod value="0"/>
+    <useLengthProjection value="0"/>
+    <useNonlinearContacts value="1"/>
+    <useSoftAttachConstraints value="0"/>
+    <usePreFilterGeometry value="0"/>
+  </SimulationParameters>
+
+
+  <distancefield usage="source" type="box" cx="0" cy="-21.75" cz="15.36" rx="0.0" ry="1.0" rz="0.0" radius="0.001" ex="9.0" ey="4.25" ez="3.84" rw="0.0" corner="0.001" group="1" colorIndex="0"/>
+
+  <distancefield usage="source" type="box" cx="0" cy="-21.75" cz="7.68" rx="0.0" ry="1.0" rz="0.0" radius="0.001" ex="9.0" ey="4.25" ez="3.84" rw="0.0" corner="0.001" group="2" colorIndex="1"/>
+
+  <distancefield usage="source" type="box" cx="0" cy="-21.75" cz="0.0" rx="0.0" ry="1.0" rz="0.0" radius="0.001" ex="9.0" ey="4.25" ez="3.84" rw="0.0" corner="0.001" group="3" colorIndex="2"/>
+
+  <distancefield usage="source" type="box" cx="0" cy="-21.75" cz="-7.68" rx="0.0" ry="1.0" rz="0.0" radius="0.001" ex="9.0" ey="4.25" ez="3.84" rw="0.0" corner="0.001" group="4" colorIndex="3"/>
+
+  <distancefield usage="source" type="box" cx="0" cy="-21.75" cz="-15.36" rx="0.0" ry="1.0" rz="0.0" radius="0.001" ex="9.0" ey="4.25" ez="3.84" rw="0.0" corner="0.001" group="5" colorIndex="4"/>
+
+  <hairobj filename="assets/brush_hair.obj" params="0" group="0" x="0.0" y="0.0" z="0.0">
+    <fixed start="0" end="0" value="3"/>
+    <fixed start="1" end="1" value="1"/>
+  </hairobj>
+
+  <script type="rotate" x="-1" y="0" z="0" w="21.9911485751" start="0.0" end="3.0" group="0"/>
+
+  <distancefield usage="solid" type="file" cx="0.0" cy="0.0" cz="0.0" rx="0.0" ry="1.0" rz="0.0" rw="0.0" group="6" filename="assets/brush_base.obj" cached="1"/>
+  <distancefield usage="solid" type="file" cx="0.0" cy="0.0" cz="0.0" rx="0.0" ry="1.0" rz="0.0" rw="0.0" group="0" filename="assets/brush_handle.obj" cached="1"/>  
+  <distancefield usage="terminator" type="box" cx="0.0" cy="20.0" cz="-20.0" ex="100.0" ey="100.0" ez="100.0" group="7" radius="0.001" inverted="1"/>
+
+</scene>

@@ -1,0 +1,8 @@
+README
+
+ Created on: 11/07/2011
+     Author: Jean-Marie Aubry <jaubry@wetafx.co.nz>
+
+StrandSim is a streamlined version of BASim focused on making an efficient implementation of elastic rods, both for static and dynamic solving, with full collision detection.
+
+Largely based on work by miklos@cs.columbia.edu and smith@cs.columbia.edu

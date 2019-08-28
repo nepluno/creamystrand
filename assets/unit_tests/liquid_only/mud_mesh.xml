@@ -1,0 +1,51 @@
+<scene>
+  <description text="A moving vertex collides with a stationary one of the same size and mass. The first vertex should stop moving, and the second one should begin moving in the same direction and at the same speed as the first one did."/>
+
+  <duration time="2.0"/>
+  <integrator type="linearized-implicit-euler" dt="0.001" criterion="1e-9" maxiters="1000"/>
+  <collision type="continuous-time"/>
+
+  <simplegravity fx="0.0" fy="-981.0"/>
+
+  <bucketinfo size="2.0" numcells="4"/>
+
+  <liquidinfo>
+    <surfTensionCoeff value="72.0"/>
+    <affineDamping value="0.004"/>
+    <velocityDamping value="0.004"/>
+    <liquidBulkModulus value="2e10"/>
+    <liquidDensity value="1.22"/>
+    <implicitElasticity value="1"/>
+    <liquidBoundaryFriction value="0.99"/>
+    <shearPcgCriterion value="1e-6"/>
+    <liquidShearModulus value="10000"/>
+    <flowBehaviorIndex value="0.8175"/>
+    <flowConsistencyIndex value="1.259"/>
+    <plasticYieldStress value="30.6"/>
+    <particleCellMultiplier value="0.25"/>
+  </liquidinfo>
+
+  <StrandParameters>
+    <radius value="0.005" />
+    <youngsModulus value="2.5e10"/>
+    <poissonRatio value="0.3" />
+    <collisionMultiplier value="1.0"/>
+    <attachMultiplier value="1.0" />
+    <density value="1.32" /> 
+    <viscosity value="1e8" />
+    <baseRotation value="0.0"/>
+    <accumulateWithViscous value="1"/>
+    <accumulateViscousOnlyForBendingModes value="0"/>
+    <frictionAngle value="40.0"/>
+  </StrandParameters>
+
+  <distancefield usage="source" type="cylinder" cx="0.0" cy="0.0" cz="0.0" rx="0.0" ry="1.0" rz="0.0" radius="0.5" halflength="0.125" rw="0.0" corner="0.025" group="0">
+    <emit start="0.0" end="1.0" evx="0." evy="-80." evz="0."/>
+  </distancefield>
+
+  <distancefield usage="solid" type="file" cx="0.0" cy="-10.0" cz="0.0" rx="0.0" ry="1.0" rz="0.0" rw="0.0" group="1" sampled="0" scale="5.0" dx="0.25" filename="assets/spot_triangulated.obj"/>   
+
+ <script type="rotate" x="0.0" y="0.0" z="1.0" w="-3.14159265359" start="0.0" end="0.25" group="1"/>  
+
+  <distancefield usage="solid" type="cylinder" cx="0.0" cy="-21.0" cz="0.0" rx="0.0" ry="1.0" rz="0.0" rw="0.0" radius="20.0" corner="0.125" halflength="0.875" group="2" sampled="0"/>   
+</scene>

@@ -1,0 +1,92 @@
+<scene>
+  <description text="A moving vertex collides with a stationary one of the same size and mass. The first vertex should stop moving, and the second one should begin moving in the same direction and at the same speed as the first one did."/>
+
+  <duration time="2.0"/>
+  <integrator type="linearized-implicit-euler" dt="0.001" criterion="1e-14" maxiters="1000"/>
+  <collision type="continuous-time"/>
+
+  <simplegravity fx="0.0" fy="-981.0"/>
+
+  <bucketinfo size="2.0" numcells="4"/>
+
+  <liquidinfo>
+    <surfTensionCoeff value="72.0"/>
+    <affineDamping value="0.00"/>
+    <velocityDamping value="0.00"/>
+    <liquidBulkModulus value="2e10"/>
+    <liquidShearModulus value="0.0"/>
+    <liquidDensity value="1.0"/>
+    <implicitElasticity value="1"/>
+    <liquidBoundaryFriction value="0.99"/>
+    <shearPcgCriterion value="1e-6"/>
+    <particleCellMultiplier value="0.25"/>
+    <flowBehaviorIndex value="1.0"/>
+    <flowConsistencyIndex value="8.9e-3"/>
+    <plasticYieldStress value="0.0"/>
+    <restContactAngle value="40.0"/>
+  </liquidinfo>
+
+  <StrandParameters>
+    <radius value="0.005"/>
+    <youngsModulus value="3.727e10"/>
+    <poissonRatio value="0.37" />
+    <collisionMultiplier value="1.0"/>
+    <attachMultiplier value="1.0" />
+    <density value="1.32" /> 
+    <viscosity value="3.727e8" />
+    <baseRotation value="0.0"/>
+    <accumulateWithViscous value="1"/>
+    <accumulateViscousOnlyForBendingModes value="0"/>
+    <stretchMultiplier value="0.01"/>
+    <frictionAngle value="40.0"/>
+  </StrandParameters>
+
+    <particle group="0" x="0 0 0" v="0.0 0.0 0.0"      h="0.0"  fixed="3"/>
+    <particle group="0" x="0 -0.114630000000000 0" v="0.0 0.0 0.0"  h="0.0"  fixed="1"/>
+    <particle group="0" x="0 -0.229270000000001 0" v="0.0 0.0 0.0"  h="0.0"  />
+    <particle group="0" x="0 -0.343900000000001 0" v="0.0 0.0 0.0"   h="0.07" />
+    <particle group="0" x="0 -0.458540000000000 0" v="0.0 0.0 0.0"  h="0.14" />
+    <particle group="0" x="0 -0.573170000000000 0" v="0.0 0.0 0.0"  h="0.14" />
+    <particle group="0" x="0 -0.687800000000000 0" v="0.0 0.0 0.0"   h="0.14" />
+    <particle group="0" x="0 -0.802440000000000 0" v="0.0 0.0 0.0"  h="0.14" />
+    <particle group="0" x="0 -0.917070000000000 0" v="0.0 0.0 0.0"  h="0.14" />
+    <particle group="0" x="0 -1.03171000000000 0" v="0.0 0.0 0.0"  h="0.14" />
+    <particle group="0" x="0 -1.14634000000000 0" v="0.0 0.0 0.0"  h="0.07" />
+    <particle group="0" x="0 -1.26098000000000 0" v="0.0 0.0 0.0"  h="0.0" />
+    <particle group="0" x="0 -1.37561000000000 0" v="0.0 0.0 0.0"  h="0.0" />
+    <particle group="0" x="0 -1.49024000000000 0" v="0.0 0.0 0.0"  h="0.0" />
+    <particle group="0" x="0 -1.60488000000000 0" v="0.0 0.0 0.0"  h="0.0" />
+    <particle group="0" x="0 -1.71951000000000 0" v="0.0 0.0 0.0"  h="0.0" />
+    <particle group="0" x="0 -1.83415000000000 0" v="0.0 0.0 0.0"  h="0.0" />
+    <particle group="0" x="0 -1.94878000000000 0" v="0.0 0.0 0.0"  h="0.0" />
+    <particle group="0" x="0 -2.06341000000000 0" v="0.0 0.0 0.0"  h="0.0" />
+    <particle group="0" x="0 -2.17805000000000 0" v="0.0 0.0 0.0"  h="0.0" />
+    <particle group="0" x="0 -2.29268000000000 0" v="0.0 0.0 0.0"  h="0.0" />
+    <particle group="0" x="0 -2.40732000000000 0" v="0.0 0.0 0.0"  h="0.0" />
+    <particle group="0" x="0 -2.52195000000000 0" v="0.0 0.0 0.0"  h="0.0" />
+    <particle group="0" x="0 -2.63659000000000 0" v="0.0 0.0 0.0"  h="0.0" />
+    <particle group="0" x="0 -2.75122000000000 0" v="0.0 0.0 0.0"  h="0.0" />
+    <particle group="0" x="0 -2.86585000000000 0" v="0.0 0.0 0.0"  h="0.0" />
+    <particle group="0" x="0 -2.98049000000000 0" v="0.0 0.0 0.0"  h="0.0" />
+    <particle group="0" x="0 -3.09512000000000 0" v="0.0 0.0 0.0"  h="0.0" />
+    <particle group="0" x="0 -3.20976000000000 0" v="0.0 0.0 0.0"  h="0.0" />
+    <particle group="0" x="0 -3.32439000000000 0" v="0.0 0.0 0.0"  h="0.0" />
+    <particle group="0" x="0 -3.43902000000000 0" v="0.0 0.0 0.0"  h="0.0" />
+    <particle group="0" x="0 -3.55366000000000 0" v="0.0 0.0 0.0"  h="0.0" />
+    <particle group="0" x="0 -3.66829000000000 0" v="0.0 0.0 0.0"  h="0.0" />
+    <particle group="0" x="0 -3.78292700000000 0" v="0.0 0.0 0.0" h="0.0" />
+    <particle group="0" x="0 -3.89756100000000 0" v="0.0 0.0 0.0" h="0.0" />
+    <particle group="0" x="0 -4.01219500000000 0" v="0.0 0.0 0.0" h="0.0" />
+    <particle group="0" x="0 -4.12682900000000 0" v="0.0 0.0 0.0" h="0.0" />
+    <particle group="0" x="0 -4.24146300000000 0" v="0.0 0.0 0.0" h="0.0" />
+    <particle group="0" x="0 -4.35609800000000 0" v="0.0 0.0 0.0" h="0.0" />
+    <particle group="0" x="0 -4.47073200000000 0" v="0.0 0.0 0.0" h="0.0" />
+    <particle group="0" x="0 -4.58536600000000 0" v="0.0 0.0 0.0" h="0.0" />
+    <particle group="0" x="0 -4.70000000000000 0" v="0.0 0.0 0.0"      h="0.0"/>
+
+  <hair params="0" start="0" count="42"/>
+  <script type="rotate" x="0" y="0" z="1.0" w="87.9645943005" start="0.0" end="2.0" group="0"/>
+
+    <distancefield usage="terminator" type="box" cx="0.0" cy="0.0" cz="-0.0" ex="5.0" ey="5.0" ez="5.0" group="1" radius="0.001" inverted="1"/>
+
+</scene>

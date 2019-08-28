@@ -1,0 +1,97 @@
+<scene>
+  <description text="A moving vertex collides with a stationary one of the same size and mass. The first vertex should stop moving, and the second one should begin moving in the same direction and at the same speed as the first one did."/>
+
+  <duration time="4.0"/>
+  <integrator type="linearized-implicit-euler" dt="0.0002" criterion="1e-9" maxiters="1000"/>
+  <collision type="continuous-time"/>
+
+  <simplegravity fx="0.0" fy="-981.0"/>
+
+  <bucketinfo size="8.0" numcells="4"/>
+
+  <liquidinfo>
+    <surfTensionCoeff value="72.0"/>
+    <affineStretchDamping value="0.004"/>
+    <affineRotateDamping value="0.004"/>
+    <liquidBulkModulus value="2e10"/>
+    <liquidDensity value="1.0"/>
+    <implicitElasticity value="1"/>
+    <liquidBoundaryFriction value="0.99"/>
+    <shearPcgCriterion value="1e-6"/>
+    <liquidShearModulus value="0.0"/>
+    <flowBehaviorIndex value="1.0"/>
+    <flowConsistencyIndex value="8.9e-3"/>
+    <plasticYieldStress value="0.0"/>
+    <plasticWeakenStrain value="10.0"/>
+  </liquidinfo>
+
+  <StrandParameters>
+    <radius value="0.005"/>
+    <youngsModulus value="1e10"/>
+    <poissonRatio value="0.36" />
+    <collisionMultiplier value="1.0"/>
+    <attachMultiplier value="1.0" />
+    <density value="1.32" /> 
+    <viscosity value="1e8" />
+    <baseRotation value="0.0"/>
+    <accumulateWithViscous value="1"/>
+    <accumulateViscousOnlyForBendingModes value="0"/>
+    <frictionAngle value="40.0"/>
+    <stretchMultiplier value="1e-2"/>
+    <minBendingAngle value="45.0"/>
+  </StrandParameters>
+
+  <CollisionParameters>
+    <constantCollisionRadius value="1"/>
+    <externalCollisionsRadius value="0.0055"/>
+    <selfCollisionsRadius value="0.0055"/>
+    <impulseMaxNorm value="0"/>
+    <maxNumCollisionsPerEdge value="6"/>
+  </CollisionParameters>
+
+  <SimulationParameters>
+    <airDrag value="0.0005"/> 
+    <gaussSeidelIterations value="75"/>
+    <gaussSeidelTolerance value="1e-04"/> 
+    <maxNewtonIterations value="40"/>
+    <hairMeshFrictionCoefficient value="0.0"/>
+    <numberOfThreads value="24"/>
+    <percentCTRodRodCollisionsAccept value="100"/>
+    <pruneExternalCollisions value="1"/>
+    <pruneSelfCollisions value="1"/>
+    <rodSubSteps value="1"/>
+    <simulationManagerLimitedMemory value="0"/>
+    <skipFlowFrictions value="1"/>
+    <skipRodMeshCollisions value="0"/>
+    <skipRodRodCollisions value="0"/>
+    <statGathering value="0"/>
+    <stochasticPruningFraction value="0.8"/>
+    <hairHairFrictionCoefficient value="0.16"/>
+    <substeps value="1"/>
+    <useApproxRodElasticFriction value="1"/>
+    <useCTRodRodCollisions value="0"/>
+    <useImpulseMethod value="0"/>
+    <useLengthProjection value="0"/>
+    <useNonlinearContacts value="0"/>
+    <useSoftAttachConstraints value="0"/>
+    <usePreFilterGeometry value="0"/>
+    <solveLiquids value="1"/>
+  </SimulationParameters>
+
+  <hairobj filename="assets/hairbundle.obj" params="0" group="0" x="0.0" y="0.0" z="0.0" rx="0.0" ry="1.0" rz="0.0" rw="0.0">
+    <fixed start="0" end="0" value="3"/>
+    <fixed start="1" end="1" value="1"/>
+    <fixed start="39" end="39" value="3"/>
+    <fixed start="40" end="40" value="1"/>
+    <flow start="2" end="38" value="0.007"/>
+  </hairobj>
+
+  <hairobj filename="assets/hairbundle.obj" params="0" group="1" x="0.0" y="3.0" z="3.0" rx="0.0" ry="1.0" rz="0.0" rw="1.5707963268">
+    <fixed start="0" end="0" value="3"/>
+    <fixed start="1" end="1" value="1"/>
+    <flow start="2" end="38" value="0.007"/>
+  </hairobj>
+
+  <distancefield usage="terminator" type="box" cx="0.0" cy="2.5" cz="0.0" rx="0.0" ry="1.0" rz="0.0" rw="0.0" ex="20.0" ey="20.0" ez="20.0" radius="0.0" group="2" inverted="1">
+  </distancefield>
+</scene>  

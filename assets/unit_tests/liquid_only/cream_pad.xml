@@ -1,0 +1,46 @@
+<scene>
+  <description text="A moving vertex collides with a stationary one of the same size and mass. The first vertex should stop moving, and the second one should begin moving in the same direction and at the same speed as the first one did."/>
+
+  <duration time="4.0"/>
+  <integrator type="linearized-implicit-euler" dt="0.001" criterion="1e-9" maxiters="1000" cfl="1"/>
+  <collision type="continuous-time"/>
+
+  <simplegravity fx="0.0" fy="-981.0"/>
+
+  <bucketinfo size="2" numcells="4"/>
+
+  <liquidinfo>
+    <surfTensionCoeff value="20.6"/>
+    <affineStretchDamping value="0.0"/>
+    <affineRotateDamping value="0.0"/>
+    <velocityDamping value="0.00"/>
+    <liquidBulkModulus value="1.09e6"/>
+    <liquidDensity value="0.2"/>
+    <liquidBoundaryFriction value="1.0"/>
+    <shearPcgCriterion value="1e-6"/>
+    <particleCellMultiplier value="0.25"/>
+    <implicitElasticity value="0"/>
+    <liquidShearDamping value="0.005"/>
+  </liquidinfo>
+
+  <StrandParameters>
+    <radius value="0.0037"/>
+    <youngsModulus value="1.047e10"/>
+    <poissonRatio value="0.37" />
+    <collisionMultiplier value="1.0"/>
+    <attachMultiplier value="1.0" />
+    <density value="1.32" /> 
+    <viscosity value="1e8" />
+    <baseRotation value="0.0"/>
+    <accumulateWithViscous value="1"/>
+    <accumulateViscousOnlyForBendingModes value="0"/>
+    <frictionAngle value="40.0"/>
+  </StrandParameters>
+
+  <distancefield usage="source" type="box" cx="0.0" cy="16.0" cz="0.0" rx="0.0" ry="1.0" rz="0.0" ex="15.0" ey="0.125" ez="15.0" rw="0.0" radius="0.025" group="0">
+    <emit start="0.0" end="0.0" evx="0." evy="-80." evz="0."/>
+  </distancefield>
+
+  <distancefield usage="solid" type="cylinder" cx="0.0" cy="-25.0" cz="0.0" rx="0.0" ry="1.0" rz="0.0" rw="0.0" radius="40.0" corner="0.125" halflength="5" group="4" sampled="0"/>   
+
+</scene>

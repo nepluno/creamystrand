@@ -1,0 +1,111 @@
+<scene>
+  <description text="Oyster sauce is poured onto a plate of soba noodles, while a fork is used to stir and pull the noodles."/>
+
+  <duration time="6.0"/>
+  <integrator type="linearized-implicit-euler" dt="0.0004" criterion="1e-9" maxiters="1000"/>
+  <collision type="continuous-time"/>
+
+  <simplegravity fx="0.0" fy="-981.0"/>
+
+  <bucketinfo size="1.5" numcells="4"/>
+
+  <liquidinfo>
+    <surfTensionCoeff value="20.6"/>
+    <affineStretchDamping value="0.00"/>
+    <affineRotateDamping value="0.00"/>
+    <liquidBulkModulus value="2e10"/>
+    <liquidDensity value="1.22"/>
+    <implicitElasticity value="1"/>
+    <shearPcgCriterion value="1e-6"/>
+    <liquidBoundaryFriction value="0.05"/>
+    <liquidShearModulus value="4000.0"/>
+    <flowBehaviorIndex value="0.62"/>
+    <flowConsistencyIndex value="16.1"/>
+    <plasticYieldStress value="26.5"/>
+    <particleCellMultiplier value="0.25"/>
+    <numComponents value="1"/>
+    <signedDistanceMultiplier value="1"/>
+    <geometricDragInsulation value="0.25"/>
+  </liquidinfo>
+
+  <StrandParameters>
+    <radius value="0.056" />
+    <youngsModulus value="1e6"/>
+    <poissonRatio value="0.39" />
+    <collisionMultiplier value="1.0"/>
+    <attachMultiplier value="1.0" />
+    <density value="1.0" /> 
+    <viscosity value="4e5" />
+    <baseRotation value="0.0"/>
+    <accumulateWithViscous value="1"/>
+    <accumulateViscousOnlyForBendingModes value="0"/>
+    <frictionAngle value="40.0"/>
+    <stretchMultiplier value="1.0"/>
+  </StrandParameters>
+
+  <CollisionParameters>
+    <constantCollisionRadius value="1"/>
+    <externalCollisionsRadius value="0.056"/>
+    <selfCollisionsRadius value="0.056"/>
+    <impulseMaxNorm value="0"/>
+    <maxNumCollisionsPerEdge value="6"/>
+  </CollisionParameters>
+
+  <SimulationParameters>
+    <airDrag value="0.0003"/> 
+    <gaussSeidelIterations value="75"/>
+    <gaussSeidelTolerance value="1e-04"/> 
+    <maxNewtonIterations value="1000"/>
+    <hairMeshFrictionCoefficient value="1.0"/>
+    <numberOfThreads value="24"/>
+    <percentCTRodRodCollisionsAccept value="100"/>
+    <pruneExternalCollisions value="1"/>
+    <pruneSelfCollisions value="1"/>
+    <rodSubSteps value="4"/>
+    <simulationManagerLimitedMemory value="0"/>
+    <skipFlowFrictions value="1"/>
+    <skipRodMeshCollisions value="0"/>
+    <skipRodRodCollisions value="0"/>
+    <statGathering value="0"/>
+    <stochasticPruningFraction value="0.8"/>
+    <hairHairFrictionCoefficient value="0.1"/>
+    <substeps value="1"/>
+    <useApproxRodElasticFriction value="1"/>
+    <useCTRodRodCollisions value="0"/>
+    <useImpulseMethod value="0"/>
+    <useLengthProjection value="0"/>
+    <useNonlinearContacts value="0"/>
+    <useSoftAttachConstraints value="0"/>
+    <usePreFilterGeometry value="0"/>
+  </SimulationParameters>
+
+  <hairobj filename="assets/pasta_1k.obj" params="0" group="0" x="0.0" y="0.0" z="0.0">
+  </hairobj>
+
+  <pose path="assets/pasta_init3.ply" cy="0.0">
+  </pose>
+
+  <distancefield usage="solid" type="file" cx="0.0" cy="0.0" cz="0.0" rx="0.0" ry="1.0" rz="0.0" rw="0.0" group="1" filename="assets/bowl.obj" cached="1" dx="0.1875"/>
+
+  <script type="translate" x="0.0" y="-15.0" z="0.0" w="0.0" start="0.0" end="0.25" group="2"/>  
+  <script type="swirl" x="0" y="1" z="0" w="12.5663706144" start="0.5" end="3.5" group="2" ox="0.0" oy="0.0" oz="0.0"/>
+  <script type="translate" x="0.0" y="15.0" z="0.0" w="0.0" start="4.0" end="5.5" group="2"/> 
+
+  <distancefield usage="solid" type="file" cx="-7.5" cy="15.0" cz="0.0" rx="0.0" ry="1.0" rz="0.0" rw="0.0" group="2" filename="assets/fork.obj" cached="1" dx="0.05"/>
+
+  <distancefield usage="source" type="cylinder" cx="-5" cy="14.0" cz="-7.5" rx="0.0" ry="1.0" rz="0.0" radius="0.5" halflength="0.495" rw="0.0" corner="0.005" group="3">
+    <emit start="0.0" end="2.1" evx="0." evy="-80." evz="0."/>
+  </distancefield>
+
+  <script type="translate" x="10.0" y="0.0" z="0.0" w="0.0" start="0.0" end="0.3" group="3"/>
+  <script type="translate" x="-10.0" y="0.0" z="5.0" w="0.0" start="0.3" end="0.6" group="3"/>
+  <script type="translate" x="10.0" y="0.0" z="0.0" w="0.0" start="0.6" end="0.9" group="3"/>
+  <script type="translate" x="-10.0" y="0.0" z="5.0" w="0.0" start="0.9" end="1.2" group="3"/>
+  <script type="translate" x="10.0" y="0.0" z="0.0" w="0.0" start="1.2" end="1.5" group="3"/>
+  <script type="translate" x="-10.0" y="0.0" z="5.0" w="0.0" start="1.5" end="1.8" group="3"/>
+  <script type="translate" x="10.0" y="0.0" z="0.0" w="0.0" start="1.8" end="2.1" group="3"/>
+
+  <distancefield usage="solid" type="box" cx="0.0" cy="-3.45" cz="0.0" rx="0.0" ry="1.0" rz="0.0" rw="0.0" ex="50.0" ey="2.5" ez="50.0" radius="0.005" group="4"/>
+
+  <distancefield usage="terminator" type="box" cx="0.0" cy="10" cz="0.0" rx="0.0" ry="1.0" rz="0.0" rw="0.0" ex="50.0" ey="50.0" ez="50.0" radius="0.0" group="5" inverted="1"/>
+</scene>

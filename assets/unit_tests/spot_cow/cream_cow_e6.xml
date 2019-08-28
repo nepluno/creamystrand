@@ -1,0 +1,43 @@
+<scene>
+  <description text="A moving vertex collides with a stationary one of the same size and mass. The first vertex should stop moving, and the second one should begin moving in the same direction and at the same speed as the first one did."/>
+
+  <duration time="1.0"/>
+  <integrator type="linearized-implicit-euler" dt="0.001" criterion="1e-9" maxiters="1000"/>
+  <collision type="continuous-time"/>
+
+  <simplegravity fx="0.0" fy="-981.0"/>
+
+  <bucketinfo size="2.0" numcells="4"/>
+
+  <liquidinfo>
+    <surfTensionCoeff value="20.6"/>
+    <affineDamping value="0.00"/>
+    <velocityDamping value="0.00"/>
+    <liquidBulkModulus value="2.5e6"/>
+    <liquidDensity value="0.2"/>
+    <implicitElasticity value="1"/>
+    <liquidBoundaryFriction value="0.75"/>
+    <shearPcgCriterion value="1e-6"/>
+    <signedDistanceMultiplier value="1"/>
+    <particleCellMultiplier value="0.25"/>
+    <!-- <numComponents value="5"/> -->
+  </liquidinfo>
+
+  <StrandParameters>
+    <radius value="0.005" />
+    <youngsModulus value="2.5e10"/>
+    <poissonRatio value="0.3" />
+    <collisionMultiplier value="1.0"/>
+    <attachMultiplier value="1.0" />
+    <density value="1.32" /> 
+    <viscosity value="1e8" />
+    <baseRotation value="0.0"/>
+    <accumulateWithViscous value="1"/>
+    <accumulateViscousOnlyForBendingModes value="0"/>
+    <frictionAngle value="40.0"/>
+  </StrandParameters>
+
+  <distancefield usage="source" type="file" cx="0.0" cy="0.0" cz="0.0" rx="0.0" ry="1.0" rz="0.0" rw="0.0" group="0" filename="assets/spot_triangulated_large.obj" dx="0.5" cached="1" scale="1.0"/>
+
+  <distancefield usage="solid" type="cylinder" cx="0.0" cy="-21.0" cz="0.0" rx="0.0" ry="1.0" rz="0.0" rw="0.0" radius="20.0" corner="0.125" halflength="0.875" group="1" sampled="0"/> 	
+</scene>

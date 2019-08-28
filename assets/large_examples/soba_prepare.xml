@@ -1,0 +1,88 @@
+<scene>
+  <description text="Drop the pasta to prepare a starting point for the later simulation."/>
+
+  <duration time="8.0"/>
+  <integrator type="linearized-implicit-euler" dt="0.001" criterion="1e-9" maxiters="1000"/>
+  <collision type="continuous-time"/>
+
+  <simplegravity fx="0.0" fy="-981.0"/>
+
+  <bucketinfo size="2.0" numcells="4"/>
+
+  <liquidinfo>
+    <surfTensionCoeff value="20.6"/>
+    <affineStretchDamping value="0.0"/>
+    <affineRotateDamping value="0.0"/>
+    <velocityDamping value="0.00"/>
+    <liquidBulkModulus value="2e10"/>
+    <liquidDensity value=".95"/>
+    <implicitElasticity value="1"/>
+    <liquidBoundaryFriction value="1.0"/>
+    <shearPcgCriterion value="1e-6"/>
+    <liquidShearModulus value="4010.0"/>
+    <flowBehaviorIndex value="0.3162"/>
+    <flowConsistencyIndex value="173.56"/>
+    <plasticYieldStress value="9.6"/>
+    <numComponents value="5"/>
+  </liquidinfo>
+
+  <StrandParameters>
+    <radius value="0.056" />
+    <youngsModulus value="1e6"/>
+    <poissonRatio value="0.39" />
+    <collisionMultiplier value="1.0"/>
+    <attachMultiplier value="1.0" />
+    <density value="1.0" /> 
+    <viscosity value="1e5" />
+    <baseRotation value="0.0"/>
+    <accumulateWithViscous value="1"/>
+    <accumulateViscousOnlyForBendingModes value="0"/>
+    <frictionAngle value="40.0"/>
+    <stretchMultiplier value="1.0"/>
+  </StrandParameters>
+
+  <CollisionParameters>
+    <constantCollisionRadius value="1"/>
+    <externalCollisionsRadius value="0.056"/>
+    <selfCollisionsRadius value="0.056"/>
+    <impulseMaxNorm value="0"/>
+    <maxNumCollisionsPerEdge value="6"/>
+  </CollisionParameters>
+
+  <SimulationParameters>
+    <airDrag value="0.0003"/> 
+    <gaussSeidelIterations value="75"/>
+    <gaussSeidelTolerance value="1e-04"/> 
+    <maxNewtonIterations value="1000"/>
+    <hairMeshFrictionCoefficient value="0.0"/>
+    <numberOfThreads value="24"/>
+    <percentCTRodRodCollisionsAccept value="100"/>
+    <pruneExternalCollisions value="1"/>
+    <pruneSelfCollisions value="1"/>
+    <rodSubSteps value="4"/>
+    <simulationManagerLimitedMemory value="0"/>
+    <skipFlowFrictions value="1"/>
+    <skipRodMeshCollisions value="0"/>
+    <skipRodRodCollisions value="0"/>
+    <statGathering value="0"/>
+    <stochasticPruningFraction value="0.8"/>
+    <hairHairFrictionCoefficient value="0.1"/>
+    <substeps value="1"/>
+    <useApproxRodElasticFriction value="1"/>
+    <useCTRodRodCollisions value="0"/>
+    <useImpulseMethod value="0"/>
+    <useLengthProjection value="0"/>
+    <useNonlinearContacts value="0"/>
+    <useSoftAttachConstraints value="0"/>
+    <usePreFilterGeometry value="0"/>
+    <solveLiquids value="0"/>
+  </SimulationParameters>
+
+  <hairobj filename="assets/pasta_1k.obj" params="0" group="0" x="0.0" y="0.0" z="0.0">
+  </hairobj>
+
+  <pose path="assets/pasta_init2.ply" cy="0.5">
+  </pose>
+
+  <distancefield usage="solid" type="file" cx="0.0" cy="0.0" cz="0.0" rx="0.0" ry="1.0" rz="0.0" rw="0.0" group="1" filename="assets/bowl.obj" cached="1" dx="0.25"/>
+</scene>

@@ -1,0 +1,53 @@
+<scene>
+  <description text="A moving vertex collides with a stationary one of the same size and mass. The first vertex should stop moving, and the second one should begin moving in the same direction and at the same speed as the first one did."/>
+
+  <duration time="8.0"/>
+  <integrator type="linearized-implicit-euler" dt="0.001" criterion="1e-9" maxiters="1000"/>
+  <collision type="continuous-time"/>
+
+  <simplegravity fx="0.0" fy="-981.0"/>
+
+  <bucketinfo size="2.0" numcells="4"/>
+
+  <liquidinfo>
+    <surfTensionCoeff value="20.6"/>
+    <affineStretchDamping value="0.0"/>
+    <affineRotateDamping value="0.0"/>
+    <velocityDamping value="0.00"/>
+    <liquidBulkModulus value="2e5"/>
+    <liquidDensity value="1.207"/>
+    <implicitElasticity value="1"/>
+    <liquidBoundaryFriction value="1.0"/>
+    <shearPcgCriterion value="1e-6"/>
+    <liquidShearModulus value="10000.0"/>
+    <flowBehaviorIndex value="0.29"/>
+    <flowConsistencyIndex value="447.2"/>
+    <plasticYieldStress value="75.4"/>
+    <plasticWeakenStrain value="10.0"/>
+    <plasticRelaxCoeff value="0.3"/>
+    <particleCellMultiplier value="0.25"/>
+    <numComponents value="1"/>
+  </liquidinfo>
+
+  <StrandParameters>
+    <radius value="0.0125" />
+    <youngsModulus value="2.98e10"/>
+    <poissonRatio value="0.39" />
+    <collisionMultiplier value="1.0"/>
+    <attachMultiplier value="1.0" />
+    <density value="1.3" /> 
+    <viscosity value="2.98e8" />
+    <baseRotation value="0.0"/>
+    <accumulateWithViscous value="1"/>
+    <accumulateViscousOnlyForBendingModes value="0"/>
+    <frictionAngle value="40.0"/>
+    <stretchMultiplier value="0.005"/>
+  </StrandParameters>
+
+  <distancefield usage="source" type="box" cx="0" cy="0.0" cz="0.0" rx="0.0" ry="1.0" rz="0.0" ex=".5" ey="1.0" ez=".5" rw="0.0" radius="0.025" group="0" colorIndex="0">
+    <emit start="0.0" end="0.5" evx="0." evy="-80." evz="0."/>
+  </distancefield>
+
+  <distancefield usage="solid" type="sphere" cx="0.0" cy="0.0" cz="0.0" rx="0.0" ry="1.0" rz="0.0" rw="0.0" radius="10.0" group="2" sampled="0" inverted="1"/>   
+
+</scene>

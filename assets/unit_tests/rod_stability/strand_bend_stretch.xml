@@ -1,0 +1,173 @@
+<scene>
+  <description text="A moving vertex collides with a stationary one of the same size and mass. The first vertex should stop moving, and the second one should begin moving in the same direction and at the same speed as the first one did."/>
+
+  <duration time="4.0"/>
+  <integrator type="linearized-implicit-euler" dt="0.001" criterion="1e-9" maxiters="1000"/>
+  <collision type="continuous-time"/>
+
+  <simplegravity fx="0.0" fy="-981.0"/>
+
+  <bucketinfo size="2.0" numcells="4"/>
+
+  <liquidinfo>
+    <viscosity value="8.9e-3"/>
+    <surfTensionCoeff value="20.6"/>
+    <affineStretchDamping value="0.1"/>
+    <affineRotateDamping value="0.1"/>
+    <velocityDamping value="0.004"/>
+    <liquidBulkModulus value="2e10"/>
+    <liquidDensity value="1.22"/>
+    <implicitElasticity value="1"/>
+    <liquidBoundaryFriction value="0.99"/>
+    <shearPcgCriterion value="1e-6"/>
+    <liquidShearModulus value="10000"/>
+    <flowBehaviorIndex value="0.8175"/>
+    <flowConsistencyIndex value="1.259"/>
+    <plasticYieldStress value="30.6"/>
+    <plasticWeakenStrain value="10.0"/>
+    <particleCellMultiplier value="0.25"/>
+  </liquidinfo>
+
+  <StrandParameters>
+    <radius value="0.005"/>
+    <youngsModulus value="3.727e10"/>
+    <poissonRatio value="0.37" />
+    <collisionMultiplier value="1.0"/>
+    <attachMultiplier value="1.0" />
+    <density value="1.32" /> 
+    <viscosity value="3.727e8" />
+    <baseRotation value="0.0"/>
+    <accumulateWithViscous value="1"/>
+    <accumulateViscousOnlyForBendingModes value="0"/>
+    <frictionAngle value="40.0"/>
+    <stretchMultiplier value="1e-2"/>
+  </StrandParameters>
+
+  <CollisionParameters>
+    <constantCollisionRadius value="1"/>
+    <externalCollisionsRadius value="0.0055"/>
+    <selfCollisionsRadius value="0.0055"/>
+    <impulseMaxNorm value="0"/>
+    <maxNumCollisionsPerEdge value="6"/>
+  </CollisionParameters>
+
+  <SimulationParameters>
+    <airDrag value="0.0003"/> 
+    <gaussSeidelIterations value="75"/>
+    <gaussSeidelTolerance value="1e-04"/> 
+    <maxNewtonIterations value="1000"/>
+    <hairMeshFrictionCoefficient value="0.0"/>
+    <numberOfThreads value="24"/>
+    <percentCTRodRodCollisionsAccept value="100"/>
+    <pruneExternalCollisions value="1"/>
+    <pruneSelfCollisions value="1"/>
+    <rodSubSteps value="1"/>
+    <simulationManagerLimitedMemory value="0"/>
+    <skipFlowFrictions value="1"/>
+    <skipRodMeshCollisions value="0"/>
+    <skipRodRodCollisions value="0"/>
+    <statGathering value="0"/>
+    <stochasticPruningFraction value="0.8"/>
+    <hairHairFrictionCoefficient value="0.16"/>
+    <substeps value="1"/>
+    <useApproxRodElasticFriction value="1"/>
+    <useCTRodRodCollisions value="0"/>
+    <useImpulseMethod value="0"/>
+    <useLengthProjection value="0"/>
+    <useNonlinearContacts value="0"/>
+    <useSoftAttachConstraints value="0"/>
+    <usePreFilterGeometry value="0"/>
+    <solveLiquids value="1"/>
+  </SimulationParameters>
+
+  <particle x="-19.5000000000000 0.0 0.0" v="0.0 0.0 0.0" fixed="3" group="0"/>
+  <particle h="0.05" x="-19 0.0 0.0" v="0.0 0.0 0.0" fixed="1" group="0"/>
+  <particle h="0.05" x="-18.5000000000000 0.0 0.0" v="0.0 0.0 0.0" fixed="0"/>
+  <particle h="0.05" x="-18 0.0 0.0" v="0.0 0.0 0.0" fixed="0"/>
+  <particle h="0.05" x="-17.5000000000000 0.0 0.0" v="0.0 0.0 0.0" fixed="0"/>
+  <particle h="0.05" x="-17 0.0 0.0" v="0.0 0.0 0.0" fixed="0"/>
+  <particle h="0.05" x="-16.5000000000000 0.0 0.0" v="0.0 0.0 0.0" fixed="0"/>
+  <particle h="0.05" x="-16 0.0 0.0" v="0.0 0.0 0.0" fixed="0"/>
+  <particle h="0.05" x="-15.5000000000000 0.0 0.0" v="0.0 0.0 0.0" fixed="0"/>
+  <particle h="0.05" x="-15 0.0 0.0" v="0.0 0.0 0.0" fixed="0"/>
+  <particle h="0.05" x="-14.5000000000000 0.0 0.0" v="0.0 0.0 0.0" fixed="0"/>
+  <particle h="0.05" x="-14 0.0 0.0" v="0.0 0.0 0.0" fixed="0"/>
+  <particle h="0.05" x="-13.5000000000000 0.0 0.0" v="0.0 0.0 0.0" fixed="0"/>
+  <particle h="0.05" x="-13 0.0 0.0" v="0.0 0.0 0.0" fixed="0"/>
+  <particle h="0.05" x="-12.5000000000000 0.0 0.0" v="0.0 0.0 0.0" fixed="0"/>
+  <particle h="0.05" x="-12 0.0 0.0" v="0.0 0.0 0.0" fixed="0"/>
+  <particle h="0.05" x="-11.5000000000000 0.0 0.0" v="0.0 0.0 0.0" fixed="0"/>
+  <particle h="0.05" x="-11 0.0 0.0" v="0.0 0.0 0.0" fixed="0"/>
+  <particle h="0.05" x="-10.5000000000000 0.0 0.0" v="0.0 0.0 0.0" fixed="0"/>
+  <particle h="0.05" x="-10 0.0 0.0" v="0.0 0.0 0.0" fixed="0"/>
+  <particle h="0.05" x="-9.50000000000000 0.0 0.0" v="0.0 0.0 0.0" fixed="0"/>
+  <particle h="0.05" x="-9 0.0 0.0" v="0.0 0.0 0.0" fixed="0"/>
+  <particle h="0.05" x="-8.50000000000000 0.0 0.0" v="0.0 0.0 0.0" fixed="0"/>
+  <particle h="0.05" x="-8 0.0 0.0" v="0.0 0.0 0.0" fixed="0"/>
+  <particle h="0.05" x="-7.50000000000000 0.0 0.0" v="0.0 0.0 0.0" fixed="0"/>
+  <particle h="0.05" x="-7 0.0 0.0" v="0.0 0.0 0.0" fixed="0"/>
+  <particle h="0.05" x="-6.50000000000000 0.0 0.0" v="0.0 0.0 0.0" fixed="0"/>
+  <particle h="0.05" x="-6 0.0 0.0" v="0.0 0.0 0.0" fixed="0"/>
+  <particle h="0.05" x="-5.50000000000000 0.0 0.0" v="0.0 0.0 0.0" fixed="0"/>
+  <particle h="0.05" x="-5 0.0 0.0" v="0.0 0.0 0.0" fixed="0"/>
+  <particle h="0.05" x="-4.50000000000000 0.0 0.0" v="0.0 0.0 0.0" fixed="0"/>
+  <particle h="0.05" x="-4 0.0 0.0" v="0.0 0.0 0.0" fixed="0"/>
+  <particle h="0.05" x="-3.50000000000000 0.0 0.0" v="0.0 0.0 0.0" fixed="0"/>
+  <particle h="0.05" x="-3 0.0 0.0" v="0.0 0.0 0.0" fixed="0"/>
+  <particle h="0.05" x="-2.50000000000000 0.0 0.0" v="0.0 0.0 0.0" fixed="0"/>
+  <particle h="0.05" x="-2 0.0 0.0" v="0.0 0.0 0.0" fixed="0"/>
+  <particle h="0.05" x="-1.50000000000000 0.0 0.0" v="0.0 0.0 0.0" fixed="0"/>
+  <particle h="0.05" x="-1 0.0 0.0" v="0.0 0.0 0.0" fixed="0"/>
+  <particle h="0.05" x="-0.500000000000000 0.0 0.0" fixed="0" v="0.0 0.0 0.0"/>
+  <particle h="0.05" x="0 0.0 0.0" v="0.0 0.0 0.0" fixed="1" group="2"/>
+  <particle h="0.05" x="0.500000000000000 0.0 0.0" v="0.0 0.0 0.0" fixed="0"/>
+  <particle h="0.05" x="1 0.0 0.0" v="0.0 0.0 0.0" fixed="0"/>
+  <particle h="0.05" x="1.50000000000000 0.0 0.0" v="0.0 0.0 0.0" fixed="0"/>
+  <particle h="0.05" x="2 0.0 0.0" v="0.0 0.0 0.0" fixed="0"/>
+  <particle h="0.05" x="2.50000000000000 0.0 0.0" v="0.0 0.0 0.0" fixed="0"/>
+  <particle h="0.05" x="3 0.0 0.0" v="0.0 0.0 0.0" fixed="0"/>
+  <particle h="0.05" x="3.50000000000000 0.0 0.0" v="0.0 0.0 0.0" fixed="0"/>
+  <particle h="0.05" x="4 0.0 0.0" v="0.0 0.0 0.0" fixed="0"/>
+  <particle h="0.05" x="4.50000000000000 0.0 0.0" v="0.0 0.0 0.0" fixed="0"/>
+  <particle h="0.05" x="5 0.0 0.0" v="0.0 0.0 0.0" fixed="0"/>
+  <particle h="0.05" x="5.50000000000000 0.0 0.0" v="0.0 0.0 0.0" fixed="0"/>
+  <particle h="0.05" x="6 0.0 0.0" v="0.0 0.0 0.0" fixed="0"/>
+  <particle h="0.05" x="6.50000000000000 0.0 0.0" v="0.0 0.0 0.0" fixed="0"/>
+  <particle h="0.05" x="7 0.0 0.0" v="0.0 0.0 0.0" fixed="0"/>
+  <particle h="0.05" x="7.50000000000000 0.0 0.0" v="0.0 0.0 0.0" fixed="0"/>
+  <particle h="0.05" x="8 0.0 0.0" v="0.0 0.0 0.0" fixed="0"/>
+  <particle h="0.05" x="8.50000000000000 0.0 0.0" v="0.0 0.0 0.0" fixed="0"/>
+  <particle h="0.05" x="9 0.0 0.0" v="0.0 0.0 0.0" fixed="0"/>
+  <particle h="0.05" x="9.50000000000000 0.0 0.0" v="0.0 0.0 0.0" fixed="0"/>
+  <particle h="0.05" x="10 0.0 0.0" v="0.0 0.0 0.0" fixed="0"/>
+  <particle h="0.05" x="10.5000000000000 0.0 0.0" v="0.0 0.0 0.0" fixed="0"/>
+  <particle h="0.05" x="11 0.0 0.0" v="0.0 0.0 0.0" fixed="0"/>
+  <particle h="0.05" x="11.5000000000000 0.0 0.0" v="0.0 0.0 0.0" fixed="0"/>
+  <particle h="0.05" x="12 0.0 0.0" v="0.0 0.0 0.0" fixed="0"/>
+  <particle h="0.05" x="12.5000000000000 0.0 0.0" v="0.0 0.0 0.0" fixed="0"/>
+  <particle h="0.05" x="13 0.0 0.0" v="0.0 0.0 0.0" fixed="0"/>
+  <particle h="0.05" x="13.5000000000000 0.0 0.0" v="0.0 0.0 0.0" fixed="0"/>
+  <particle h="0.05" x="14 0.0 0.0" v="0.0 0.0 0.0" fixed="0"/>
+  <particle h="0.05" x="14.5000000000000 0.0 0.0" v="0.0 0.0 0.0" fixed="0"/>
+  <particle h="0.05" x="15 0.0 0.0" v="0.0 0.0 0.0" fixed="0"/>
+  <particle h="0.05" x="15.5000000000000 0.0 0.0" v="0.0 0.0 0.0" fixed="0"/>
+  <particle h="0.05" x="16 0.0 0.0" v="0.0 0.0 0.0" fixed="0"/>
+  <particle h="0.05" x="16.5000000000000 0.0 0.0" v="0.0 0.0 0.0" fixed="0"/>
+  <particle h="0.05" x="17 0.0 0.0" v="0.0 0.0 0.0" fixed="0"/>
+  <particle h="0.05" x="17.5000000000000 0.0 0.0" v="0.0 0.0 0.0" fixed="0"/>
+  <particle h="0.05" x="18 0.0 0.0" v="0.0 0.0 0.0" fixed="0"/>
+  <particle h="0.05" x="18.5000000000000 0.0 0.0" v="0.0 0.0 0.0" fixed="0"/>
+  <particle h="0.05" x="19 0.0 0.0" v="0.0 0.0 0.0" fixed="3" group="1"/>
+  <particle x="19.5000000000000 0.0 0.0" v="0.0 0.0 0.0" fixed="1" group="1"/>
+
+  <hair params="0" start="0" count="79"/>
+ 
+  <script type="translate" x="0.0" y="0.0" z="-0.01" w="0.0" start="0.0" end="0.05" group="0"/>  
+  <script type="translate" x="0.0" y="0.0" z="0.01" w="0.0" start="0.0" end="0.05" group="1"/>    
+
+  <script type="rotate" x="0.0" y="0.0" z="1.0" w="-1.5707963268" ox="0.0" oy="0.0" oz="0.0" start="0.05" end="0.3" group="0"/>  
+  <script type="rotate" x="0.0" y="0.0" z="1.0" w="1.5707963268" ox="0.0" oy="0.0" oz="0.0" start="0.05" end="0.3" group="1"/>    
+
+  <script type="translate" x="0.0" y="-20.0" z="0.0" w="0.0" start="0.4" end="0.6" group="2"/> 
+  <script type="switch" group="2" start=".75" end="1.0" mask="1"/>   
+</scene>

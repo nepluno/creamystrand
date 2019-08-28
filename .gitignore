@@ -1,0 +1,25 @@
+# Files/directories for git to ignore and not track.
+# I think I got all the random stuff we should ignore but feel free to add more.
+# -Alasdair
+*~
+build*/
+CMakeFiles/
+CMakeCache.txt
+iters_over_time.*
+.DS_Store
+figaro.config
+figaro.creator
+figaro.creator.user
+figaro.files
+figaro.includes
+*.o
+*.cache
+*simulation_capture*/*
+fluid*.obj
+fluid*.ply
+rods*.obj
+rods*.ply
+mesh*.obj
+mesh*.ply
+config_file
+

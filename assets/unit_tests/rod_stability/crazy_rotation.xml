@@ -1,0 +1,136 @@
+<scene>
+  <description text="A moving vertex collides with a stationary one of the same size and mass. The first vertex should stop moving, and the second one should begin moving in the same direction and at the same speed as the first one did."/>
+
+  <duration time="4.0"/>
+  <integrator type="linearized-implicit-euler" dt="0.001" criterion="1e-9" maxiters="1000"/>
+  <collision type="continuous-time"/>
+
+  <simplegravity fx="0.0" fy="-981.0"/>
+
+  <bucketinfo size="8.0" numcells="4"/>
+
+  <liquidinfo>
+    <viscosity value="8.9e-3"/>
+    <surfTensionCoeff value="20.6"/>
+    <affineStretchDamping value="0.004"/>
+    <affineRotateDamping value="0.004"/>
+    <liquidBulkModulus value="2e10"/>
+    <liquidDensity value="1.22"/>
+    <implicitElasticity value="1"/>
+    <liquidBoundaryFriction value="0.99"/>
+    <shearPcgCriterion value="1e-6"/>
+    <liquidShearModulus value="400.0"/>
+    <flowBehaviorIndex value="0.8175"/>
+    <flowConsistencyIndex value="1.259"/>
+    <plasticYieldStress value="30.6"/>
+    <plasticWeakenStrain value="10.0"/>
+  </liquidinfo>
+
+  <StrandParameters>
+    <radius value="0.005"/>
+    <youngsModulus value="3.727e10"/>
+    <poissonRatio value="0.37" />
+    <collisionMultiplier value="1.0"/>
+    <attachMultiplier value="1.0" />
+    <density value="1.32" /> 
+    <viscosity value="3.727e8" />
+    <baseRotation value="0.0"/>
+    <accumulateWithViscous value="1"/>
+    <accumulateViscousOnlyForBendingModes value="0"/>
+    <frictionAngle value="40.0"/>
+    <stretchMultiplier value="1e-4"/>
+  </StrandParameters>
+
+  <CollisionParameters>
+    <constantCollisionRadius value="1"/>
+    <externalCollisionsRadius value="0.0055"/>
+    <selfCollisionsRadius value="0.0055"/>
+    <impulseMaxNorm value="0"/>
+    <maxNumCollisionsPerEdge value="6"/>
+  </CollisionParameters>
+
+  <SimulationParameters>
+    <airDrag value="0.0003"/> 
+    <gaussSeidelIterations value="75"/>
+    <gaussSeidelTolerance value="1e-04"/> 
+    <maxNewtonIterations value="1000"/>
+    <hairMeshFrictionCoefficient value="0.0"/>
+    <numberOfThreads value="24"/>
+    <percentCTRodRodCollisionsAccept value="100"/>
+    <pruneExternalCollisions value="1"/>
+    <pruneSelfCollisions value="1"/>
+    <rodSubSteps value="1"/>
+    <simulationManagerLimitedMemory value="0"/>
+    <skipFlowFrictions value="1"/>
+    <skipRodMeshCollisions value="0"/>
+    <skipRodRodCollisions value="1"/>
+    <statGathering value="0"/>
+    <stochasticPruningFraction value="0.8"/>
+    <hairHairFrictionCoefficient value="0.16"/>
+    <substeps value="1"/>
+    <useApproxRodElasticFriction value="1"/>
+    <useCTRodRodCollisions value="0"/>
+    <useImpulseMethod value="0"/>
+    <useLengthProjection value="1"/>
+    <useNonlinearContacts value="0"/>
+    <useSoftAttachConstraints value="0"/>
+    <usePreFilterGeometry value="0"/>
+    <solveLiquids value="0"/>
+  </SimulationParameters>
+
+
+
+  <particle x="4.5504 -3 2.50876" v="0.0 0.0 0.0" fixed="1"/>
+  <particle x="5.1283 -3.381 2.82738" v="0.0 0.0 0.0" fixed="1"/>
+  <particle x="5.93235 -3.716 3.34901" v="0.0 0.0 0.0" />
+  <particle x="6.25643 -4.22956 3.67389" v="0.0 0.0 0.0" />
+  <particle x="6.76567 -4.69028 3.72611" v="0.0 0.0 0.0" />
+  <particle x="7.41821 -4.86199 3.86401" v="0.0 0.0 0.0" />
+  <particle x="7.93306 -4.99083 4.30293" v="0.0 0.0 0.0" />
+  <particle x="8.259 -5.3945 4.75584" v="0.0 0.0 0.0" />
+  <particle x="8.6601 -5.93203 4.91236" v="0.0 0.0 0.0" />
+  <particle x="9.27498 -6.23905 4.95676" v="0.0 0.0 0.0" />
+  <particle x="9.88549 -6.33589 5.26043" v="0.0 0.0 0.0" />
+  <particle x="10.2808 -6.59365 5.76206" v="0.0 0.0 0.0" />
+  <particle x="10.6092 -7.11488 6.06997" v="0.0 0.0 0.0" />
+  <particle x="11.1306 -7.5624 6.11577" v="0.0 0.0 0.0" />
+  <particle x="11.7829 -7.72207 6.26852" v="0.0 0.0 0.0" />
+  <particle x="12.2854 -7.86012 6.71878" v="0.0 0.0 0.0" />
+  <particle x="12.6076 -8.27889 7.16059" v="0.0 0.0 0.0" />
+  <particle x="13.0197 -8.8122 7.3021" v="0.0 0.0 0.0" />
+  <particle x="13.6421 -9.10272 7.35263" v="0.0 0.0 0.0" />
+  <particle x="14.244 -9.19832 7.67334" v="0.0 0.0 0.0" />
+  <particle x="14.629 -9.47217 8.17448" v="0.0 0.0 0.0" />
+  <particle x="14.9625 -9.99995 8.46518" v="0.0 0.0 0.0" />
+  <particle x="15.496 -10.4336 8.50578" v="0.0 0.0 0.0" />
+  <particle x="16.1472 -10.5821 8.674" v="0.0 0.0 0.0" />
+  <particle x="16.6372 -10.7303 9.1346" v="0.0 0.0 0.0" />
+  <particle x="16.9564 -11.1636 9.56436" v="0.0 0.0 0.0" />
+  <particle x="17.38 -11.6916 9.69154" v="0.0 0.0 0.0" />
+  <particle x="18.0091 -11.9658 9.74938" v="0.0 0.0 0.0" />
+  <particle x="18.6018 -12.0613 10.0868" v="0.0 0.0 0.0" />
+  <particle x="18.977 -12.3515 10.5862" v="0.0 0.0 0.0" />
+  <particle x="19.3165 -12.8847 10.8596" v="0.0 0.0 0.0" />
+  <particle x="19.8618 -13.3038 10.8962" v="0.0 0.0 0.0" />
+  <particle x="20.5109 -13.4421 11.0804" v="0.0 0.0 0.0" />
+  <particle x="20.9885 -13.6015 11.5503" v="0.0 0.0 0.0" />
+  <particle x="21.3056 -14.0487 11.9671" v="0.0 0.0 0.0" />
+  <particle x="21.741 -14.5701 12.0808" v="0.0 0.0 0.0" />
+  <particle x="22.3761 -14.8282 12.147" v="0.0 0.0 0.0" />
+  <particle x="22.959 -14.925 12.5009" v="0.0 0.0 0.0" />
+  <particle x="23.3249 -15.2317 12.9972" v="0.0 0.0 0.0" />
+  <particle x="23.6712 -15.7691 13.2532" v="0.0 0.0 0.0" />
+  <particle x="24.2279 -16.1731 13.2871" v="0.0 0.0 0.0" />
+ 
+
+  <hair params="0" start="0" count="41"/>
+
+ <script type="translate" x="0" y="-8.0" z="0" w="0.0" start="0.0" end="0.3" group="0"/>
+ <script type="translate" x="0" y="16.0" z="0" w="0.0" start="0.3" end="0.55" group="0"/>
+ <script type="rotate" x="0" y="0" z="1" w="6.28" start="0.4" end="0.55" group="0"/>
+ <script type="translate" x="0" y="8.0" z="0" w="0.0" start="2.0" end="2.4" group="0"/>
+ 
+  <distancefield usage="solid" type="sphere" cx="0.0" cy="0.0" cz="0.0" rx="0.0" ry="1.0" rz="0.0" rw="0.0" radius="6.0" group="0" sampled="0"/>   
+  <distancefield usage="solid" type="sphere" cx="0.0" cy="0.0" cz="0.0" rx="0.0" ry="1.0" rz="0.0" rw="0.0" radius="40.0" group="1" sampled="0" inverted="1"/>   
+
+</scene>  
