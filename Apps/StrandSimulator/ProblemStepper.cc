@@ -385,6 +385,7 @@ void ProblemStepper::dumpRods(DumpData* data, std::string outputdirectory, int c
     data->rod_flow_height.reserve(num_verts);
     data->rod_groups.reserve(num_verts);
     data->rod_colors.reserve(num_verts);
+	data->rod_start_vert_indices.reserve(m_rodDatum.size());
     
     int rod_num = 0;
     for(auto rd_itr = m_rodDatum.begin(); rd_itr != m_rodDatum.end(); ++rd_itr, ++rod_num)
@@ -392,6 +393,8 @@ void ProblemStepper::dumpRods(DumpData* data, std::string outputdirectory, int c
         const ElasticStrand& strand = (*rd_itr)->getStrand();
         // ignore bad strands
         if(strand.getNumVertices() < 2) continue;
+
+		data->rod_start_vert_indices.push_back((int)(data->rod_vertices.size()));
 
         Scalar h0 = strand.getCurrentFlowHeight(0);
         Scalar r0 = sqrt(strand.getRadiusA(0) * strand.getRadiusB(0));
@@ -590,7 +593,10 @@ void dump_data_subprog( DumpData* data )
         os_rod << "property float c" << j << std::endl;
     }
     
-    os_rod << "element face 0"<< std::endl << "property list int int vertex_indices" << std::endl << "end_header " << std::endl;
+	const int num_rods = (int) data->rod_start_vert_indices.size();
+
+	os_rod << "element face " << num_rods << std::endl;
+	os_rod << "property list int int vertex_indices" << std::endl << "end_header " << std::endl;
     
     for(int i = 0; i < num_verts; ++i) {
         os_rod << data->rod_vertices[i](0) << " " << data->rod_vertices[i](1) << " " << data->rod_vertices[i](2) << " " << data->rod_vertices[i](3) << " " << data->rod_indices[i] << " " << data->rod_radius[i](0) << " " << data->rod_radius[i](1) << " " << (data->rod_radius[i](0) + data->rod_flow_height[i]) << " " << (data->rod_radius[i](1) + data->rod_flow_height[i]) << " " << data->rod_groups[i] << " " << data->rod_actual[i] << " ";
@@ -606,6 +612,18 @@ void dump_data_subprog( DumpData* data )
         
         os_rod << std::endl;
     }
+
+	for (int i = 0; i < num_rods; ++i)
+	{
+		const int num_vert_in_rod = (i == num_rods - 1) ? ((int) data->rod_vertices.size() - data->rod_start_vert_indices[i]) : (data->rod_start_vert_indices[i + 1] - data->rod_start_vert_indices[i]);
+		os_rod << num_vert_in_rod << " ";
+
+		for (int j = 0; j < num_vert_in_rod; ++j) {
+			os_rod << (data->rod_start_vert_indices[i] + j) << " ";
+		}
+
+		os_rod << "0" << std::endl;
+	}
     
     os_rod.flush();
     os_rod.close();

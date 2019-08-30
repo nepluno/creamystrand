@@ -149,6 +149,8 @@ struct DumpData
     std::vector< Scalar > rod_groups;
     std::vector< int > rod_actual;
     std::vector< VecXx > rod_colors;
+
+	std::vector< int > rod_start_vert_indices;
     
     std::vector< std::vector< Vec3x > > mesh_vertices;
     std::vector< std::vector< Scalar > > mesh_flow_height;

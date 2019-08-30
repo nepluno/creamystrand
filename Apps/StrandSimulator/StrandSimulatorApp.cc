@@ -499,6 +499,11 @@ int main( int argc, char** argv )
             boost::filesystem::create_directory(g_outputdirectory);
             boost::filesystem::permissions(g_outputdirectory, boost::filesystem::add_perms | boost::filesystem::others_all | boost::filesystem::owner_all | boost::filesystem::group_all);
         }
+
+		const int file_width = 20;
+
+		g_ps->dumpData(g_outputdirectory, g_current_frame, file_width);
+		++g_current_frame;
         
         g_ps->PrintAdditionalSettings(g_outputdirectory);
     }
