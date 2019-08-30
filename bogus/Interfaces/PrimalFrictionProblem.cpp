@@ -33,16 +33,57 @@ void PrimalFrictionProblem< Dimension >::computeMInv( )
 }
 
 template< unsigned Dimension >
-double PrimalFrictionProblem< Dimension >::solveWith( ProductGaussSeidelType &pgs, double * r, const bool staticProblem ) const
+void PrimalFrictionProblem< Dimension >::computeDiagMInv()
+{
+	// M^-1
+	DiagMInv.cloneStructure(DiagM);
+#ifndef BOGUS_DONT_PARALLELIZE
+#pragma omp parallel for
+#endif
+	for (std::ptrdiff_t i = 0; i < (std::ptrdiff_t) DiagM.nBlocks(); ++i)
+	{
+		DiagMInv.block(i) = DiagM.block(i).inverse();
+	}
+}
+
+template< unsigned Dimension >
+double PrimalFrictionProblem< Dimension >::solveWith(DiagProductGaussSeidelType& pgs, double* r, const bool staticProblem) const
 {
 	// b = E' w - H M^-1 f
-	const Eigen::VectorXd b = E.transpose() * w - H * ( MInv * ( f + H.transpose() * rc ) );
+	Eigen::VectorXd b;
+
+	b = E.transpose() * w - H * (DiagMInv * (f + H.transpose() * rc));
+
+	Eigen::VectorXd::MapType r_map(r, H.rows());
+
+	pgs.setMatrix(H);
+
+	pgs.setDiagonal(DiagMInv);
+
+	if (staticProblem) {
+		bogus::SOCLaw< Dimension, double, false > law(H.rowsOfBlocks(), mu.data());
+		return pgs.solve(law, b, r_map);
+	}
+	else {
+		bogus::SOCLaw< Dimension, double, true  > law(H.rowsOfBlocks(), mu.data());
+		return pgs.solve(law, b, r_map);
+	}
+}
+
+template< unsigned Dimension >
+double PrimalFrictionProblem< Dimension >::solveWith( ProductGaussSeidelType &pgs, double * r, const bool staticProblem) const
+{
+	// b = E' w - H M^-1 f
+	Eigen::VectorXd b;
+	
+	b = E.transpose() * w - H * (MInv * (f + H.transpose() * rc));
 
 	Eigen::VectorXd::MapType r_map( r, H.rows() ) ;
 
 	pgs.setMatrix( H ) ;
-	pgs.setDiagonal( MInv ) ;
 
+	pgs.setDiagonal(MInv);
+	
 	if( staticProblem ) {
 		bogus::SOCLaw< Dimension, double, false > law( H.rowsOfBlocks(), mu.data() ) ;
 		return pgs.solve( law, b, r_map ) ;

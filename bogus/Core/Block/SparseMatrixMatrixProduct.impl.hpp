@@ -378,8 +378,8 @@ struct BinaryTransposeOption< false, false, LhsTranspose, RhsTranspose >
 	        const LhsT &lhs, const RhsT &rhs, ResT &res,
 	        bool , bool )
 	{
-		res += TransposeIf< LhsTranspose >::get( lhs )
-		        * TransposeIf< RhsTranspose >::get( rhs )  ;
+		res = res + TransposeIf< LhsTranspose >::get( lhs )
+		        * TransposeIf< RhsTranspose >::get( rhs );
 	}
 
 
@@ -451,7 +451,7 @@ static void compute_blocks(
 			    b, bc->lhsIsAfterDiag, bc->rhsIsAfterDiag ) ;
 		}
 
-		if( scaling != 1 ) b *= scaling ;
+		if( scaling != 1 ) b = b * scaling ;
 	}
 
 }

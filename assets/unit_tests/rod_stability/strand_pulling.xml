@@ -29,17 +29,17 @@
 
   <StrandParameters>
     <radius value="0.005"/>
-    <youngsModulus value="3.727e10"/>
+    <youngsModulus value="3.727e7"/>
     <poissonRatio value="0.37" />
     <collisionMultiplier value="1.0"/>
     <attachMultiplier value="1.0" />
     <density value="1.32" /> 
-    <viscosity value="3.727e8" />
+    <viscosity value="3.727e5" />
     <baseRotation value="0.0"/>
     <accumulateWithViscous value="1"/>
     <accumulateViscousOnlyForBendingModes value="0"/>
     <frictionAngle value="40.0"/>
-    <stretchMultiplier value="1e-2"/>
+    <stretchMultiplier value="1.0"/>
   </StrandParameters>
 
   <CollisionParameters>
@@ -71,7 +71,7 @@
     <substeps value="1"/>
     <useApproxRodElasticFriction value="1"/>
     <useCTRodRodCollisions value="0"/>
-    <useImpulseMethod value="0"/>
+    <useImpulseMethod value="1"/>
     <useLengthProjection value="0"/>
     <useNonlinearContacts value="0"/>
     <useSoftAttachConstraints value="0"/>

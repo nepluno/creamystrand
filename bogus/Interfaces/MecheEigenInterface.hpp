@@ -101,8 +101,9 @@ namespace bogus
                          const int * const ObjA, //!< array of size \a n, the first object involved in the \a i-th contact (must be an internal object) (counted from 0)
                          const int * const ObjB, //!< array of size \a n, the second object involved in the \a i-th contact (-1 for an external object) (counted from 0)
                          const std::vector < strandsim::SparseRowMatx* > HA, //!< array of size \a n, containing pointers to a dense, colum-major matrix of size <c> d*ndof[ObjA[i]] </c> corresponding to the H-matrix of <c> ObjA[i] </c>
-                         const std::vector < strandsim::SparseRowMatx* > HB //!< array of size \a n, containing pointers to a dense, colum-major matrix of size <c> d*ndof[ObjA[i]] </c> corresponding to the H-matrix of <c> ObjB[i] </c> (\c NULL for an external object)
-        );
+                         const std::vector < strandsim::SparseRowMatx* > HB, //!< array of size \a n, containing pointers to a dense, colum-major matrix of size <c> d*ndof[ObjA[i]] </c> corresponding to the H-matrix of <c> ObjB[i] </c> (\c NULL for an external object)
+						 const bool diagonalProblem
+		);
         
         //! Solves the friction problem
         double solve(Eigen::VectorXd& r, //!< length \a nd : initialization for \a r (in world space coordinates) + used to return computed r
@@ -112,7 +113,8 @@ namespace bogus
                      bool staticProblem = false,       //!< If true, do not use DeSaxce change of variable, ie solve SOCQP -- useful for statics
                      bool herschelBulkleyProblem = false,
                      bool doFrictionShrinking = false,
-                     double problemRegularization = 0.
+                     double problemRegularization = 0.,
+					 bool diagonalProblem = false
         ) ;
         
         //! Solves the friction problem (\deprecated interface)
@@ -128,11 +130,12 @@ namespace bogus
                      double regularization = 0.,       //!< Coefficient to add to the diagonal of static problems / GS regularization coefficient for friction problems
                      bool useInfinityNorm = false,     //!< Whether to use the infinity norm to evaluate the residual of the friction problem,
                      bool useProjectedGradient = false,//!< 0 = GS, 1 = PG, 2 = ADMM, 3 = DualAMA.
-                     unsigned cadouxIters = 0          //!< If staticProblem is false and cadouxIters is greater than zero, use the Cadoux algorithm to solve the friction problem.
+                     unsigned cadouxIters = 0,          //!< If staticProblem is false and cadouxIters is greater than zero, use the Cadoux algorithm to solve the friction problem.
+					 bool diagonalProblem = false      //!< If mass matrix is perfectly diagonal
         );
         
         //! Computes the dual from the primal
-        void computeDual( double regularization ) ;
+        void computeDual( double regularization, bool diagonalProblem ) ;
         
         //! Cleams up the problem, then allocates a new PrimalFrictionProblem and make m_primal point to it
         void reset() ;
@@ -145,17 +148,6 @@ namespace bogus
         
         //! Signal< interationNumber, error, elapsedTime > that will be triggered every few iterations
         Signal< unsigned, double, double > &callback() { return m_callback ; }
-        
-        //! Dumps the current primal() to \p fileName
-        /*! \param r0 The initial guess that shouls be saved with the problem, or NULL */
-        bool dumpToFile( const char* fileName, const double *r0 = BOGUS_NULL_PTR(const double) ) const ;
-        //! Loads the primal from a previously saved problem file
-        /*! \param r0 Will be set to ploint to a newly allocated array containing the initial
-         guess, if such one was saved with the problem. Will have to be manually freed
-         by the caller using the delete[] operator.
-         \param old If true, use the old (<1.4) version of the serialization file
-         */
-        bool fromFile( const char* fileName, double* &r0, bool old = false ) ;
         
         // solvers Callback
         void ackCurrentResidual( unsigned GSIter, double err ) ;

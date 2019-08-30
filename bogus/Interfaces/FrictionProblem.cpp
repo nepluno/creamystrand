@@ -20,14 +20,25 @@ namespace bogus {
 // DualFrictionProblem
 
 template< unsigned Dimension >
-void DualFrictionProblem< Dimension >::computeFrom(const PrimalFrictionProblem<Dimension> &primal )
+void DualFrictionProblem< Dimension >::computeFrom(const PrimalFrictionProblem<Dimension> &primal, const bool diagonalProblem )
 {
 
-	//W
-	W = primal.H * ( primal.MInv * primal.H.transpose() ) ;
+	if (diagonalProblem) {
+		//W
+		PrimalFrictionProblem<Dimension>::HType SH = primal.H * primal.DiagMInv;
 
-	// M^-1 f, b
-	b = primal.E.transpose() * primal.w - primal.H * ( primal.MInv * primal.f ) - W * primal.rc;
+		W = primal.H * SH.transpose();
+
+		// M^-1 f, b
+		b = primal.E.transpose() * primal.w - primal.H * (primal.DiagMInv * primal.f) - W * primal.rc;
+	}
+	else {
+		//W
+		W = primal.H * (primal.MInv * primal.H.transpose());
+
+		// M^-1 f, b
+		b = primal.E.transpose() * primal.w - primal.H * (primal.MInv * primal.f) - W * primal.rc;
+	}
 
 	mu = primal.mu;
     

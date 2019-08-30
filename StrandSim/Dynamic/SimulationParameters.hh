@@ -12,6 +12,8 @@
 #include "../Utils/MsgInfo.hh"
 #include "../Core/Definitions.hh"
 
+#include "../../bogus/Interfaces/MecheEigenInterface.hpp"
+
 namespace strandsim
 {
 
@@ -68,6 +70,8 @@ struct SimulationParameters
     bool m_solveLiquids;
     
     unsigned m_subSteps;
+
+	bogus::MecheFrictionProblem::Algorithm m_bogusAlgorithm;
 };
 
 }

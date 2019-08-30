@@ -61,6 +61,12 @@ struct PrimalFrictionProblem
 	typedef SparseBlockMatrix< Eigen::MatrixXd > MType ;
 	//! M -- mass matrix
 	MType M ;
+
+	typedef Eigen::DiagonalMatrix<double, Eigen::Dynamic> DiagonalXd;
+	typedef SparseBlockMatrix< DiagonalXd > DiagMType;
+
+	DiagMType DiagM ;
+
 	//! E -- local rotation matrix ( contact basis coordinates to world coordinates )
 	bogus::SparseBlockMatrix< Eigen::Matrix< double, Dimension, Dimension > > E ;
 
@@ -92,16 +98,20 @@ struct PrimalFrictionProblem
 	typedef SparseBlockMatrix< LU< Eigen::MatrixBase< Eigen::MatrixXd > > > MInvType ;
 	MInvType MInv ;
 
+	typedef SparseBlockMatrix< DiagonalXd > DiagMInvType;
+	DiagMInvType DiagMInv;
+
 	//! Computes MInv from M. Required to build a DualFrictionProblem for the PrimalFrictionProblem,
 	//! or to use the ADMM and matrix-free Gauss-Seidel solvers.
 	void computeMInv () ;
 
-
+	void computeDiagMInv();
 	// Primal-dual solve functions
 
 	typedef ADMM   < HType >    ADMMType ;
 	typedef DualAMA< HType > DualAMAType ;
 	typedef ProductGaussSeidel< HType, MInvType, true > ProductGaussSeidelType ;
+	typedef ProductGaussSeidel< HType, DiagMInvType, true > DiagProductGaussSeidelType;
 
 	//! Matrix-free Gauss-Seidel solver
 	/*! \note Requires the computation of a factorization of M with computeMInv()
@@ -109,6 +119,8 @@ struct PrimalFrictionProblem
 	  \param staticProblem If true, solve this problem as a \b SOCQP instead of a Coulomb Friction problem
 	*/
 	double solveWith( ProductGaussSeidelType &pgs, double * r, const bool staticProblem = false ) const ;
+
+	double solveWith( DiagProductGaussSeidelType& pgs, double* r, const bool staticProblem = false) const;
 	//! ADMM (Alternating Direction Method of Multipliers) on the primal objective function.
 	/*!
 	  May only be used to solve SOCQP (static problems), not Coulomb friction problems
@@ -169,7 +181,7 @@ struct DualFrictionProblem
 
 	//! Computes this DualFrictionProblem from the given \p primal
 	/*! \warning Assumes MInv has been computed */
-	void computeFrom( const PrimalFrictionProblem< Dimension >& primal ) ;
+	void computeFrom( const PrimalFrictionProblem< Dimension >& primal, const bool diagonalProblem = false ) ;
 
 	//! Solves this problem
 	/*!

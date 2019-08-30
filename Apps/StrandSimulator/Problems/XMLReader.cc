@@ -1594,6 +1594,8 @@ void XMLReader::setSimulationParameters()
     m_simulation_params.m_hairHairFrictionCoefficient = 0.3;
     m_simulation_params.m_hairMeshFrictionCoefficient = 0.0;
     m_simulation_params.m_airDrag = 0.0003;
+
+	m_simulation_params.m_bogusAlgorithm = bogus::MecheFrictionProblem::ProjectedGradient;
     
     if(!m_scene_node)
         return;
@@ -1632,6 +1634,20 @@ void XMLReader::setSimulationParameters()
     loadParam(nd, "hairMeshFrictionCoefficient", m_simulation_params.m_hairMeshFrictionCoefficient);
     loadParam(nd, "airDrag", m_simulation_params.m_airDrag);
     loadParam(nd, "subSteps", m_simulation_params.m_subSteps);
+
+	rapidxml::xml_node<>* subnd;
+	if ((subnd = nd->first_node("bogusAlgorithm")))
+	{
+		std::string attribute(subnd->first_attribute("value")->value());
+		if (attribute == "projectedgradient") m_simulation_params.m_bogusAlgorithm = bogus::MecheFrictionProblem::ProjectedGradient;
+		else if (attribute == "matrixfreegaussseidel") m_simulation_params.m_bogusAlgorithm = bogus::MecheFrictionProblem::MatrixFreeGaussSeidel;
+		else if (attribute == "gaussseidel") m_simulation_params.m_bogusAlgorithm = bogus::MecheFrictionProblem::GaussSeidel;
+		else
+		{
+			std::cerr << outputmod::startred << "ERROR IN XMLSCENEPARSER:" << outputmod::endred << " Invalid simulation parameter 'bogusAlgorithm' specified. Exiting." << std::endl;
+			exit(1);
+		}
+	}
 }
 
 void XMLReader::setRodCollisionParameters( CollisionParameters& param, const ElasticStrandParameters& strand_param )
