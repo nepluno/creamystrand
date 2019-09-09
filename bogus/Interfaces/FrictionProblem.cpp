@@ -25,7 +25,7 @@ void DualFrictionProblem< Dimension >::computeFrom(const PrimalFrictionProblem<D
 
 	if (diagonalProblem) {
 		//W
-		PrimalFrictionProblem<Dimension>::HType SH = primal.H * primal.DiagMInv;
+		typename PrimalFrictionProblem<Dimension>::HType SH = primal.H * primal.DiagMInv;
 
 		W = primal.H * SH.transpose();
 

@@ -659,7 +659,7 @@ bool CTCD::vertexVertexCTCD(const Vector3d &q1start,
             return true;
         }
         checkInterval(t1, 1.0, op, 2, interval, false);
-        if(!interval.empty());
+        if(!interval.empty())
         {
             t = t1;
             return true;

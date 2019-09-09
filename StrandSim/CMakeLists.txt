@@ -23,8 +23,8 @@ endif( MKL_FOUND )
 include_directories( ${LAPACK_INCLUDE_DIR} )
 
 # Boost is required
-# We need 1.58+ for the sort library
-find_package( Boost 1.58.0 REQUIRED COMPONENTS serialization thread system filesystem )
+# We need 1.67+ for the block_indirect_sort function
+find_package( Boost 1.67.0 REQUIRED COMPONENTS serialization thread system filesystem )
 include_directories( ${Boost_INCLUDE_DIRS} )
 
 if (USE_XCODE_PATCH AND CMAKE_GENERATOR STREQUAL Xcode)
