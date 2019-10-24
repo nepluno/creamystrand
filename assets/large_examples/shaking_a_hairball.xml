@@ -43122,7 +43122,8 @@
  -->
 <!--   <distancefield usage="solid" type="cylinder" cx="-20.26" cy="-10.0" cz="0.0" rx="0.0" ry="1.0" rz="0.0" rw="0.0" radius="0.375" corner="0.125" halflength="10.25" group="2" sampled="0"/> 
   <distancefield usage="solid" type="cylinder" cx="20.26" cy="-10.0" cz="0.0" rx="0.0" ry="1.0" rz="0.0" rw="0.0" radius="0.375" corner="0.125" halflength="10.25" group="2" sampled="0"/>   --> 
-  <distancefield usage="solid" type="file" cx="0.0" cy="0.0" cz="0.0" rx="0.0" ry="1.0" rz="0.0" rw="0.0" group="0" sampled="0" scale="12.0" dx="1.0" filename="assets/test_sphere.obj" surfflow="1" flowheight="0.0"/>   
+<!--   <distancefield usage="solid" type="file" cx="0.0" cy="0.0" cz="0.0" rx="0.0" ry="1.0" rz="0.0" rw="0.0" group="0" sampled="0" scale="12.0" dx="1.0" filename="assets/test_sphere.obj" surfflow="1" flowheight="0.0"/>    -->
+  <distancefield usage="solid" type="sphere" cx="0.0" cy="0.0" cz="0.0" rx="0.0" ry="1.0" rz="0.0" rw="0.0" radius="6.0" group="0" sampled="0"/>   
   <distancefield usage="solid" type="cylinder" cx="0.0" cy="16.0" cz="0.0" rx="0.0" ry="1.0" rz="0.0" rw="0.0" radius="20.875" corner="0.125" halflength="25.0" group="1" sampled="0" inverted="1"/> 
 <!--   <distancefield usage="solid" type="sphere" cx="0.0" cy="0.0" cz="0.0" rx="0.0" ry="1.0" rz="0.0" rw="0.0" radius="40.0" group="1" sampled="0" inverted="1"/>   
   <distancefield usage="source" type="box" cx="0.0" cy="-25.84722" cz="0.0" rx="0.0" ry="1.0" rz="0.0" rw="0.0" ex="43" ey="17.23148" ez="37.0787"/> -->
