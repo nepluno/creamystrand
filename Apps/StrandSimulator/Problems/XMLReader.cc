@@ -1368,6 +1368,11 @@ void XMLReader::loadParticles(rapidxml::xml_node<>* node, int& maxgroup )
         if(szfn.empty()) continue;
         
         std::ifstream ifs(szfn);
+
+        if(ifs.fail()) {
+            std::cerr << outputmod::startred << "ERROR IN XMLSCENEPARSER:" << outputmod::endred << " Failed to read file: " << szfn << ". Exiting." << std::endl;
+            exit(1);                
+        }
         
         int base_idx = m_particles.size();
         int group = 0;
@@ -1696,7 +1701,11 @@ void XMLReader::loadCheckpoint( rapidxml::xml_node<>* node, int& current_frame, 
 			std::string file_path(nd->first_attribute("path")->value());
 			
 			ifstream ifs( file_path.c_str(), std::ios::binary );
-			
+
+            if(ifs.fail()) {
+                std::cerr << outputmod::startred << "ERROR IN XMLSCENEPARSER:" << outputmod::endred << " Failed to read file: " << file_path << ". Exiting." << std::endl;
+                exit(1);                
+            }			
 			// read general info
 			ifs.read((char*) &(data.m_time), sizeof(Scalar));
 			ifs.read((char*) &(data.current_frame), sizeof(int));
@@ -2065,6 +2074,11 @@ void XMLReader::loadHairPose( rapidxml::xml_node<>* node )
             std::string file_path(nd->first_attribute("path")->value());
             
             ifstream ifs( file_path.c_str() );
+
+            if(ifs.fail()) {
+                std::cerr << outputmod::startred << "ERROR IN XMLSCENEPARSER:" << outputmod::endred << " Failed to read file: " << file_path << ". Exiting." << std::endl;
+                exit(1);                
+            }
             
             string line;
             bool start_data = false;
@@ -2794,6 +2808,11 @@ void XMLReader::loadHairs( rapidxml::xml_node<>* node )
         
         std::string line;
         std::ifstream ifs(szfn);
+
+        if(ifs.fail()) {
+            std::cerr << outputmod::startred << "ERROR IN XMLSCENEPARSER:" << outputmod::endred << " Failed to read file: " << szfn << ". Exiting." << std::endl;
+            exit(1);                
+        }
         
         int linenumber = 0;
         
