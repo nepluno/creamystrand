@@ -63,6 +63,8 @@ to run the simulation of shaving cream poured onto seven pinned strands.
 
 All the parameters can be modified offline in the scene description XML files.
 
+*NOTE*: For running on Windows, please set the *Working Directory* to be the directory containing the assets folder. Some examples may read data from the files in this folder.
+
 USAGE:
 
    ./StrandSimulatorApp [-l <0-2>] [-d <integer>] [-c <integer>] [-o <integer>] -f <string> [--] [--version] [-h]
