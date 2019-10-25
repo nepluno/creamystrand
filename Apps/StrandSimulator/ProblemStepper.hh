@@ -10,6 +10,8 @@
 #ifdef WIN32
 #define NOMINMAX
 #include <Windows.h>
+#include <direct.h>
+#include <shlobj_core.h>
 #endif
 
 #include "../../StrandSim/Core/Definitions.hh"

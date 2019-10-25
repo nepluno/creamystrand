@@ -95,8 +95,8 @@ void output()
         int steps_per_frame = g_dumpcoord;
         const int step = floor( g_ps->getTime() / g_ps->getDt() + 0.5 );
 
-		const int last_frame_num = step / steps_per_frame;
-		std::cout << "step: " << step << " steps / frame: " << steps_per_frame << " last step: " << last_frame_num << std::endl;
+        const int last_frame_num = step / steps_per_frame;
+        std::cout << "step: " << step << " steps / frame: " << steps_per_frame << " last step: " << last_frame_num << std::endl;
         if( g_last_frame_num != last_frame_num )
         {
             g_last_frame_num = last_frame_num;
@@ -113,30 +113,30 @@ void output()
         }
         
     }
-	
-	if( g_dumpbinary )
-	{
-		int step_per_checkpoint = g_dumpbinary;
-		const int step = floor( g_ps->getTime() / g_ps->getDt() + 0.5 );
-		
-		const int last_checkpoint_num = step / step_per_checkpoint;
-		std::cout << "step: " << step << " steps / checkpoint: " << step_per_checkpoint << " last checkpoint: " << last_checkpoint_num << std::endl;
-		if( g_last_checkpoint_num != last_checkpoint_num )
-		{
-			g_last_checkpoint_num = last_checkpoint_num;
-			
-			if(!boost::filesystem::exists(g_outputdirectory)) {
-				boost::filesystem::create_directory(g_outputdirectory);
-				boost::filesystem::permissions(g_outputdirectory, boost::filesystem::add_perms | boost::filesystem::others_all | boost::filesystem::owner_all | boost::filesystem::group_all);
-			}
-			
-			const int file_width = 20;
+    
+    if( g_dumpbinary )
+    {
+        int step_per_checkpoint = g_dumpbinary;
+        const int step = floor( g_ps->getTime() / g_ps->getDt() + 0.5 );
+        
+        const int last_checkpoint_num = step / step_per_checkpoint;
+        std::cout << "step: " << step << " steps / checkpoint: " << step_per_checkpoint << " last checkpoint: " << last_checkpoint_num << std::endl;
+        if( g_last_checkpoint_num != last_checkpoint_num )
+        {
+            g_last_checkpoint_num = last_checkpoint_num;
+            
+            if(!boost::filesystem::exists(g_outputdirectory)) {
+                boost::filesystem::create_directory(g_outputdirectory);
+                boost::filesystem::permissions(g_outputdirectory, boost::filesystem::add_perms | boost::filesystem::others_all | boost::filesystem::owner_all | boost::filesystem::group_all);
+            }
+            
+            const int file_width = 20;
 
-			++g_current_checkpoint;
-			
-			g_ps->dumpBinaryCheckpoint( g_outputdirectory, g_current_frame, g_current_checkpoint, file_width );
-		}
-	}
+            ++g_current_checkpoint;
+            
+            g_ps->dumpBinaryCheckpoint( g_outputdirectory, g_current_frame, g_current_checkpoint, file_width );
+        }
+    }
 }
 
 void idle()
@@ -284,33 +284,33 @@ void menu( int id )
     {
         case 'q':
             g_paused = true;
-			g_exit = true;
-			std:exit(EXIT_SUCCESS);
+            g_exit = true;
+            std:exit(EXIT_SUCCESS);
             break;
             
         case ' ':
             g_paused = !g_paused;
             break;
-		case 'w':
-			break;
-		case 's':
+        case 'w':
+            break;
+        case 's':
             g_single_step = true;
             g_paused = !g_paused;
-			break;
-		case 'a':
-			break;
-		case 'd':
-			break;
+            break;
+        case 'a':
+            break;
+        case 'd':
+            break;
         case 'f':
-			if(g_paused) {
-				g_ps->step();
-				// if in render mode, update the display
-				if( g_render )
-				{
-					glutPostRedisplay();
-				}
-				output();
-			}
+            if(g_paused) {
+                g_ps->step();
+                // if in render mode, update the display
+                if( g_render )
+                {
+                    glutPostRedisplay();
+                }
+                output();
+            }
             break;
     }
 }
@@ -325,7 +325,7 @@ void keyboard( unsigned char key, int, int )
 void initializeOpenGL( int argc, char** argv )
 {
     glutInit( &argc, argv );
-	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH | GLUT_ALPHA);
+    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH | GLUT_ALPHA);
     glutInitWindowPosition(500, 500);
     glutInitWindowSize( g_window_width, g_window_height );
     glutCreateWindow(argv[0]);
@@ -377,8 +377,8 @@ int parseCommandLine( int argc, char** argv )
         TCLAP::ValueArg<std::string> file( "f", "file", "XML file for a problem", true, "", "string", cmd );
         
         TCLAP::ValueArg<int> output("o", "outputfile", "Between # steps several PLY files are written to save simulation state to", false, 0, "integer", cmd);
-		
-		TCLAP::ValueArg<int> checkpoint("c", "checkpoint", "Between # steps several binary files are written to cache simulation state to", false, 0, "integer", cmd);
+        
+        TCLAP::ValueArg<int> checkpoint("c", "checkpoint", "Between # steps several binary files are written to cache simulation state to", false, 0, "integer", cmd);
         
         TCLAP::ValueArg<int> display("d", "display", "Run the simulation with display enabled if 1, without if 0", false, 1, "integer", cmd);
         
@@ -390,39 +390,39 @@ int parseCommandLine( int argc, char** argv )
         
         g_render = display.getValue();
         g_dumpcoord = output.getValue();
-		g_dumpbinary = checkpoint.getValue();
-		
-		int idx = 0;
-		g_ps = problems[idx];
-		g_problem_idx = idx;
-		setOptions();
+        g_dumpbinary = checkpoint.getValue();
+        
+        int idx = 0;
+        g_ps = problems[idx];
+        g_problem_idx = idx;
+        setOptions();
 
-		if (file.isSet())
-		{
-			if (g_ps->LoadOptions(file.getValue()) == -1)
-			{
-				return -1;
-			}
-		}
-		else
-		{
-			std::cout << "No XML file specified. Please specify XML file with -f" << std::endl;
-			return -1;
-		}
+        if (file.isSet())
+        {
+            if (g_ps->LoadOptions(file.getValue()) == -1)
+            {
+                return -1;
+            }
+        }
+        else
+        {
+            std::cout << "No XML file specified. Please specify XML file with -f" << std::endl;
+            return -1;
+        }
 
-		if (statlog.isSet())
-		{
-			int statLogLevel = statlog.getValue();
-			g_ps->setStatLogging(statLogLevel);
-		}
-	}
-	catch (TCLAP::ArgException& e)
-	{
-		std::cerr << "ERROR: " << e.argId() << std::endl << "       " << e.error() << std::endl;
-	}
+        if (statlog.isSet())
+        {
+            int statLogLevel = statlog.getValue();
+            g_ps->setStatLogging(statLogLevel);
+        }
+    }
+    catch (TCLAP::ArgException& e)
+    {
+        std::cerr << "ERROR: " << e.argId() << std::endl << "       " << e.error() << std::endl;
+    }
 
 
-	return 0;
+    return 0;
 }
 
 void printCommandLineSplashScreen()
@@ -479,13 +479,13 @@ int main( int argc, char** argv )
     }
     
     g_ps->setup(g_current_frame, g_current_checkpoint);
-	
-	const int step = floor( g_ps->getTime() / g_ps->getDt() + 0.5 );
-	
-	int step_per_checkpoint = g_dumpbinary;
+    
+    const int step = floor( g_ps->getTime() / g_ps->getDt() + 0.5 );
+    
+    int step_per_checkpoint = g_dumpbinary;
     g_last_checkpoint_num = step / std::max(1, step_per_checkpoint);
-	
-	int steps_per_frame = g_dumpcoord;
+    
+    int steps_per_frame = g_dumpcoord;
     g_last_frame_num = step / std::max(1, steps_per_frame);
     
     g_outputdirectory = generateOutputDirName();
@@ -495,15 +495,37 @@ int main( int argc, char** argv )
     if( g_dumpcoord )
     {
         // dump copy of options used for the record
-        if(!boost::filesystem::exists(g_outputdirectory)) {
-            boost::filesystem::create_directory(g_outputdirectory);
-            boost::filesystem::permissions(g_outputdirectory, boost::filesystem::add_perms | boost::filesystem::others_all | boost::filesystem::owner_all | boost::filesystem::group_all);
+#ifdef WIN32
+        const std::string base_path(_getcwd(NULL, 0));
+        // Windows will eliminate "." at trailing of a folder name.
+        // Use SHCreateDirectoryEx allows to create this such folder.
+        const std::string g_outputdirectory_ = base_path + "\\" + g_outputdirectory;
+        int sh_err_code = SHCreateDirectoryEx(NULL, g_outputdirectory_.c_str(), NULL);
+        if (sh_err_code)
+        {
+            std::cout << "Create directory " << g_outputdirectory_ <<
+                " failed, results will not be dumped. Error code" << sh_err_code << std::endl;
         }
+#else
+        if (!boost::filesystem::exists(g_outputdirectory)) 
+        {
+            try
+            {
+                boost::filesystem::create_directory(g_outputdirectory);
+            }
+            catch (boost::filesystem::filesystem_error & e)
+            {
+                const boost::system::error_code errorCode = e.code();
+                std::cout << "boost::filesystem::create_directories failed with error code: " << errorCode.message();
+            }
+             boost::filesystem::permissions(g_outputdirectory, boost::filesystem::add_perms | boost::filesystem::others_all | boost::filesystem::owner_all | boost::filesystem::group_all);
+        }
+#endif // !WIN32
 
-		const int file_width = 20;
+        const int file_width = 20;
 
-		g_ps->dumpData(g_outputdirectory, g_current_frame, file_width);
-		++g_current_frame;
+        g_ps->dumpData(g_outputdirectory, g_current_frame, file_width);
+        ++g_current_frame;
         
         g_ps->PrintAdditionalSettings(g_outputdirectory);
     }
@@ -514,12 +536,12 @@ int main( int argc, char** argv )
     if(g_render)
     {
         initializeOpenGL( argc, argv );
-		std::thread(doSimulation).detach();
+        std::thread(doSimulation).detach();
         glutMainLoop();
     }
     else{
         g_paused = false;
-		for(;;) doSimulation();
+        for(;;) doSimulation();
     }
 
     return 0;
@@ -527,21 +549,21 @@ int main( int argc, char** argv )
 
 void doSimulation ()
 {
-	    // If the simulation isn't paused, take a timestep
-	while( !g_exit ) {
-		if( !g_paused )
-		{
-			if(!g_ps->step()) {
+        // If the simulation isn't paused, take a timestep
+    while( !g_exit ) {
+        if( !g_paused )
+        {
+            if(!g_ps->step()) {
                 g_paused = true;
             }
-			output();
+            output();
 
             if(g_single_step) {
                 g_paused = true;
                 g_single_step = false;
             }
         } else {
-			std::this_thread::sleep_for(std::chrono::milliseconds(1));
+            std::this_thread::sleep_for(std::chrono::milliseconds(1));
         }
-	}
+    }
 }
