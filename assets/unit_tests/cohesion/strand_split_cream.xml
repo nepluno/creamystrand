@@ -47,8 +47,8 @@
 
   <SimulationParameters>
     <airDrag value="0.0005"/> 
-    <gaussSeidelIterations value="75"/>
-    <gaussSeidelTolerance value="1e-04"/> 
+    <gaussSeidelIterations value="250"/>
+    <gaussSeidelTolerance value="1e-06"/> 
     <maxNewtonIterations value="40"/>
     <hairMeshFrictionCoefficient value="0.0"/>
     <numberOfThreads value="24"/>
