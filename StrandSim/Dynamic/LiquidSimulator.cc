@@ -4308,7 +4308,7 @@ namespace strandsim
 		if(!num_end_verts) return;
 		
 		Vec3x bbx_min = Vec3x::Constant( std::numeric_limits<Scalar>::max() );
-		Vec3x bbx_max = Vec3x::Constant( std::numeric_limits<Scalar>::min() );
+		Vec3x bbx_max = Vec3x::Constant( -std::numeric_limits<Scalar>::max() );
 		for(int i = 0; i < num_end_verts; ++i)
 		{
 			int strand_idx = i / 2;
