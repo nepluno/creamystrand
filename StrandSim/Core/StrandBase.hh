@@ -11,23 +11,18 @@
 
 #include "Definitions.hh"
 
-namespace strandsim
-{
+namespace strandsim {
 
-class StrandBaseParameters
-{
+class StrandBaseParameters {};
 
+class StrandBase {
+  typedef StrandBaseParameters ParametersType;
+
+ public:
+  StrandBase();
+  virtual ~StrandBase();
 };
 
-class StrandBase
-{
-    typedef StrandBaseParameters ParametersType;
-
-public:
-    StrandBase();
-    virtual ~StrandBase();
-};
-
-}
+}  // namespace strandsim
 
 #endif /* STRANDBASE_H_ */

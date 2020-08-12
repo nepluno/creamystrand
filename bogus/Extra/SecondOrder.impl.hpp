@@ -18,18 +18,17 @@
  * along with So-bogus.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-
 #ifndef BOGUS_SECOND_ORDER_IMPL_HPP
 #define BOGUS_SECOND_ORDER_IMPL_HPP
 
-#include "SecondOrder.hpp"
-#include "SOC/SOCLaw.impl.hpp"
 #include "SOC/HBLaw.impl.hpp"
+#include "SOC/SOCLaw.impl.hpp"
+#include "SecondOrder.hpp"
 #ifndef BOGUS_WITHOUT_EIGEN
 #include "../Core/Eigen/EigenLinearSolvers.hpp"
 #endif
-#include "SOC/LocalSOCSolver.impl.hpp"
-#include "SOC/LocalHBSolver.impl.hpp"
 #include "SOC/FischerBurmeister.impl.hpp"
+#include "SOC/LocalHBSolver.impl.hpp"
+#include "SOC/LocalSOCSolver.impl.hpp"
 
 #endif

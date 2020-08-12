@@ -8,18 +8,14 @@
 
 #include "StrandBase.hh"
 
-namespace strandsim
-{
+namespace strandsim {
 
-StrandBase::StrandBase()
-{
-    // TODO Auto-generated constructor stub
-
+StrandBase::StrandBase() {
+  // TODO Auto-generated constructor stub
 }
 
-StrandBase::~StrandBase()
-{
-    // TODO Auto-generated destructor stub
+StrandBase::~StrandBase() {
+  // TODO Auto-generated destructor stub
 }
 
-}
+}  // namespace strandsim

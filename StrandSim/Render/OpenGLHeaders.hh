@@ -14,13 +14,13 @@
 #endif
 
 #ifdef __APPLE__
-#  include <OpenGL/gl.h>
-#  include <OpenGL/glu.h>
-#  include <GLUT/glut.h>
+#include <GLUT/glut.h>
+#include <OpenGL/gl.h>
+#include <OpenGL/glu.h>
 #else
-#  include <GL/gl.h>
-#  include <GL/glu.h>
-#  include <GL/glut.h>
+#include <GL/gl.h>
+#include <GL/glu.h>
+#include <GL/glut.h>
 #endif
 
-#endif // OPENGLHEADERS_HH
+#endif  // OPENGLHEADERS_HH

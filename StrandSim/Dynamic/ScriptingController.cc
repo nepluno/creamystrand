@@ -10,38 +10,19 @@
 
 namespace strandsim {
 
-ScriptingController::ScriptingController( ) :
-        m_time( 0. ), m_dt( 1. )
-{
-}
+ScriptingController::ScriptingController() : m_time(0.), m_dt(1.) {}
 
-ScriptingController::ScriptingController( double time, double dt ) :
-        m_time( time ), m_dt( dt )
-{
-}
+ScriptingController::ScriptingController(double time, double dt)
+    : m_time(time), m_dt(dt) {}
 
-ScriptingController::~ScriptingController()
-{
-}
+ScriptingController::~ScriptingController() {}
 
-void ScriptingController::setTime( double time )
-{
-    m_time = time;
-}
+void ScriptingController::setTime(double time) { m_time = time; }
 
-void ScriptingController::setDt( double dt )
-{
-    m_dt = dt;
-}
+void ScriptingController::setDt(double dt) { m_dt = dt; }
 
-double ScriptingController::getTime() const
-{
-    return m_time;
-}
+double ScriptingController::getTime() const { return m_time; }
 
-double ScriptingController::getDt() const
-{
-    return m_dt;
-}
+double ScriptingController::getDt() const { return m_dt; }
 
-} // namespace strandsim
+}  // namespace strandsim

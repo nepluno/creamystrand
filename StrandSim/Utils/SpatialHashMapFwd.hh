@@ -9,12 +9,11 @@
 #ifndef SPATIALHASHMAPFWD_HH
 #define SPATIALHASHMAPFWD_HH
 
-namespace strandsim
-{
+namespace strandsim {
 
-template<typename DataT, typename IteratorT, bool GenFromAABB = false >
+template <typename DataT, typename IteratorT, bool GenFromAABB = false>
 class SpatialHashMap;
 
 }
 
-#endif // SPATIALHASHMAPFWD_HH
+#endif  // SPATIALHASHMAPFWD_HH

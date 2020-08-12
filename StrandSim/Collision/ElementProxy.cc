@@ -7,58 +7,51 @@
  */
 
 #include "ElementProxy.hh"
-#include "BVH.hh"
 
 #include "../Dynamic/MeshScriptingController.hh"
+#include "BVH.hh"
 
-namespace strandsim
-{
+namespace strandsim {
 
-std::ostream& operator<<( std::ostream& os, const ElementProxy& elem )
-{
-    elem.print( os );
+std::ostream& operator<<(std::ostream& os, const ElementProxy& elem) {
+  elem.print(os);
 
-    return os;
+  return os;
 }
 
-void EdgeProxy::print( std::ostream& os ) const
-{
-    os << "edge: " << &m_strand << ' ' << m_vertexIndex << ": "
-            << m_strand.getVertex( m_vertexIndex ).format( EIGEN_VECTOR_IO_FORMAT ) << " --- "
-            << m_strand.getVertex( m_vertexIndex + 1 ).format( EIGEN_VECTOR_IO_FORMAT );
+void EdgeProxy::print(std::ostream& os) const {
+  os << "edge: " << &m_strand << ' ' << m_vertexIndex << ": "
+     << m_strand.getVertex(m_vertexIndex).format(EIGEN_VECTOR_IO_FORMAT)
+     << " --- "
+     << m_strand.getVertex(m_vertexIndex + 1).format(EIGEN_VECTOR_IO_FORMAT);
 }
 
-void FaceProxy::print( std::ostream& os ) const
-{
-    auto mesh = getMesh();
+void FaceProxy::print(std::ostream& os) const {
+  auto mesh = getMesh();
 
-    os << "triangle: " << mesh << '\n';
+  os << "triangle: " << mesh << '\n';
 
-    os << "past position:\n";
-    os
-            << m_face.idx[0]
-            << ": "
-            << ( mesh->getVertex( m_face.idx[0] ) - mesh->getDisplacement( m_face.idx[0] ) ).format(
-                    EIGEN_VECTOR_IO_FORMAT ) << '\n';
-    os
-            << m_face.idx[1]
-            << ": "
-            << ( mesh->getVertex( m_face.idx[1] ) - mesh->getDisplacement( m_face.idx[1] ) ).format(
-                    EIGEN_VECTOR_IO_FORMAT ) << '\n';
-    os
-            << m_face.idx[2]
-            << ": "
-            << ( mesh->getVertex( m_face.idx[2] ) - mesh->getDisplacement( m_face.idx[2] ) ).format(
-                    EIGEN_VECTOR_IO_FORMAT ) << '\n';
+  os << "past position:\n";
+  os << m_face.idx[0] << ": "
+     << (mesh->getVertex(m_face.idx[0]) - mesh->getDisplacement(m_face.idx[0]))
+            .format(EIGEN_VECTOR_IO_FORMAT)
+     << '\n';
+  os << m_face.idx[1] << ": "
+     << (mesh->getVertex(m_face.idx[1]) - mesh->getDisplacement(m_face.idx[1]))
+            .format(EIGEN_VECTOR_IO_FORMAT)
+     << '\n';
+  os << m_face.idx[2] << ": "
+     << (mesh->getVertex(m_face.idx[2]) - mesh->getDisplacement(m_face.idx[2]))
+            .format(EIGEN_VECTOR_IO_FORMAT)
+     << '\n';
 
-    os << "current position:\n";
-    os << m_face.idx[0] << ": " << mesh->getVertex( m_face.idx[0] ).format( EIGEN_VECTOR_IO_FORMAT )
-            << '\n';
-    os << m_face.idx[1] << ": " << mesh->getVertex( m_face.idx[1] ).format( EIGEN_VECTOR_IO_FORMAT )
-            << '\n';
-    os << m_face.idx[2] << ": "
-            << mesh->getVertex( m_face.idx[2] ).format( EIGEN_VECTOR_IO_FORMAT );
+  os << "current position:\n";
+  os << m_face.idx[0] << ": "
+     << mesh->getVertex(m_face.idx[0]).format(EIGEN_VECTOR_IO_FORMAT) << '\n';
+  os << m_face.idx[1] << ": "
+     << mesh->getVertex(m_face.idx[1]).format(EIGEN_VECTOR_IO_FORMAT) << '\n';
+  os << m_face.idx[2] << ": "
+     << mesh->getVertex(m_face.idx[2]).format(EIGEN_VECTOR_IO_FORMAT);
 }
-
 
 } /* namespace strandsim */

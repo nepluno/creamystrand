@@ -18,7 +18,6 @@
  * along with So-bogus.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-
 #ifndef BOGUS_LOCAL_HB_SOLVER_HPP
 #define BOGUS_LOCAL_HB_SOLVER_HPP
 
@@ -26,26 +25,20 @@
 
 namespace bogus {
 
+template <DenseIndexType Dimension, typename Scalar,
+          local_soc_solver::Strategy Strat = local_soc_solver::Hybrid>
+struct LocalHBSolver {
+  typedef LocalProblemTraits<Dimension, Scalar> Traits;
+  typedef typename Traits::Vector Vector;
+  typedef typename Traits::Matrix Matrix;
 
-template< DenseIndexType Dimension, typename Scalar,
-		   local_soc_solver::Strategy Strat = local_soc_solver::Hybrid  >
-struct LocalHBSolver
-{
+  static Scalar solve(const typename Traits::Matrix &A,
+                      const typename Traits::Vector &b,
+                      typename Traits::Vector &x, const Scalar yield,
+                      const Scalar eta, const Scalar n, const Scalar tol,
+                      const Scalar scaling);
+};
 
-  typedef LocalProblemTraits< Dimension, Scalar > Traits ;
-  typedef typename Traits::Vector Vector ;
-  typedef typename Traits::Matrix Matrix ;
-
-  static Scalar solve(
-		  const typename Traits::Matrix &A,
-		  const typename Traits::Vector &b,
-		  typename Traits::Vector &x,
-		  const Scalar yield, const Scalar eta, const Scalar n, const Scalar tol,
-		  const Scalar scaling
-		  ) ;
-
-} ;
-
-}
+}  // namespace bogus
 
 #endif

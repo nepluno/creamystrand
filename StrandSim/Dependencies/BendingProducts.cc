@@ -7,25 +7,24 @@
  */
 
 #include "BendingProducts.hh"
+
 #include "../Core/ElasticStrandUtils.hh"
 
-namespace strandsim
-{
+namespace strandsim {
 
-void BendingProducts::compute()
-{
-    m_value.resize( m_size );
-    const Mat2x& bendingMatrix = m_bendingMatrixBase.get();
-    const GradKArrayType& gradKappas = m_gradKappas.get();
+void BendingProducts::compute() {
+  m_value.resize(m_size);
+  const Mat2x& bendingMatrix = m_bendingMatrixBase.get();
+  const GradKArrayType& gradKappas = m_gradKappas.get();
 
-    for ( IndexType vtx = m_firstValidIndex; vtx < size(); ++vtx )
-    {
-        symBProduct<11>( m_value[vtx], bendingMatrix, gradKappas[vtx].block<11, 2>(0, 0) );
-        symBProductAdd<11>( m_value[vtx], bendingMatrix, gradKappas[vtx].block<11, 2>(0, 2) );
-    }
+  for (IndexType vtx = m_firstValidIndex; vtx < size(); ++vtx) {
+    symBProduct<11>(m_value[vtx], bendingMatrix,
+                    gradKappas[vtx].block<11, 2>(0, 0));
+    symBProductAdd<11>(m_value[vtx], bendingMatrix,
+                       gradKappas[vtx].block<11, 2>(0, 2));
+  }
 
-    setDependentsDirty();
+  setDependentsDirty();
 }
 
-}
-
+}  // namespace strandsim

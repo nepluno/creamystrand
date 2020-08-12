@@ -9,17 +9,15 @@
 #ifndef LEVELSETFWD_HH_
 #define LEVELSETFWD_HH_
 
-namespace strandsim
-{
+namespace strandsim {
 
-template<int deg>
-class InterpolatedLevelSet ;
+template <int deg>
+class InterpolatedLevelSet;
 
 // Change interpolation degree here
 #define LEVELSET_INTERPOLATION_DEGREE 1
-typedef InterpolatedLevelSet< LEVELSET_INTERPOLATION_DEGREE > LevelSet ;
+typedef InterpolatedLevelSet<LEVELSET_INTERPOLATION_DEGREE> LevelSet;
 
-}
-
+}  // namespace strandsim
 
 #endif /* LEVELSETFWD_HH_ */

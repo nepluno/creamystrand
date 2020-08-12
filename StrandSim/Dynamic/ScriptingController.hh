@@ -13,28 +13,27 @@
 
 namespace strandsim {
 
-class ScriptingController
-{
-public:
-    ScriptingController();
-    ScriptingController( Scalar time, Scalar dt );
+class ScriptingController {
+ public:
+  ScriptingController();
+  ScriptingController(Scalar time, Scalar dt);
 
-    virtual ~ScriptingController();
+  virtual ~ScriptingController();
 
-    //! Steps forward the ScriptingController to the current value of m_time
-    virtual bool execute( ) = 0;
+  //! Steps forward the ScriptingController to the current value of m_time
+  virtual bool execute() = 0;
 
-    void setTime( Scalar time );
-    void setDt( Scalar dt );
+  void setTime(Scalar time);
+  void setDt(Scalar dt);
 
-    Scalar getTime() const;
-    Scalar getDt() const;
+  Scalar getTime() const;
+  Scalar getDt() const;
 
-protected:
-    Scalar m_time;
-    Scalar m_dt;
+ protected:
+  Scalar m_time;
+  Scalar m_dt;
 };
 
-} // namespace strandsim
+}  // namespace strandsim
 
-#endif // STRANDSIM_SCRIPTINGCONTROLLER_HH
+#endif  // STRANDSIM_SCRIPTINGCONTROLLER_HH

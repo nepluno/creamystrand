@@ -9,16 +9,15 @@
 #ifndef DEPENDENCYNODE_HH_
 #define DEPENDENCYNODE_HH_
 
-#include "../Core/Definitions.hh"
-#include "../Utils/TextLog.hh"
+#include <boost/noncopyable.hpp>
+#include <boost/serialization/split_member.hpp>
+#include <boost/serialization/vector.hpp>
 #include <list>
 
-#include <boost/serialization/vector.hpp>
-#include <boost/serialization/split_member.hpp>
-#include <boost/noncopyable.hpp>
+#include "../Core/Definitions.hh"
+#include "../Utils/TextLog.hh"
 
-namespace strandsim
-{
+namespace strandsim {
 
 //#define VERBOSE_DEPENDENCY_NODE
 
@@ -28,296 +27,245 @@ namespace strandsim
  * DependencyNodes are non-copyable by design, as the dependency relationship
  * is established in the constructor.
  */
-class DependencyBase: public boost::noncopyable
-{
-public:
-    DependencyBase() :
-            m_dirty( true )
-    {
-    }
+class DependencyBase : public boost::noncopyable {
+ public:
+  DependencyBase() : m_dirty(true) {}
 
-    virtual ~DependencyBase()
-    {
-    }
+  virtual ~DependencyBase() {}
 
-    bool isDirty() const
-    {
-        return m_dirty;
-    }
+  bool isDirty() const { return m_dirty; }
 
-    void setDirty()
-    {
-        if ( !m_dirty )
-        {
+  void setDirty() {
+    if (!m_dirty) {
 #ifdef VERBOSE_DEPENDENCY_NODE
-            std::cout << "Dirtying " << name() << ' ' << this << '\n';
+      std::cout << "Dirtying " << name() << ' ' << this << '\n';
 #endif
-            m_dirty = true;
-            // Unlike Maya, we also dirty transitively
-            setDependentsDirty();
-        }
-        // NB if this was dirty, we can assume that it's dependents were dirty also because this method
-        // and the constructor are the only places where m_dirty can be set to true; in both cases the
-        // dependents are also dirtied. So no need to call setDependentsDirty() if we are already dirty here.
+      m_dirty = true;
+      // Unlike Maya, we also dirty transitively
+      setDependentsDirty();
     }
+    // NB if this was dirty, we can assume that it's dependents were dirty also
+    // because this method and the constructor are the only places where m_dirty
+    // can be set to true; in both cases the dependents are also dirtied. So no
+    // need to call setDependentsDirty() if we are already dirty here.
+  }
 
-    void setDependentsDirty()
-    {
-        for ( auto dep = m_dependents.begin(); dep != m_dependents.end(); ++dep )
-        {
-            ( *dep )->setDirty();
-        }
+  void setDependentsDirty() {
+    for (auto dep = m_dependents.begin(); dep != m_dependents.end(); ++dep) {
+      (*dep)->setDirty();
     }
+  }
 
-    void setClean()
-    {
+  void setClean() {
 #ifdef VERBOSE_DEPENDENCY_NODE
-        std::cout << "Setting clean " << name() << ' ' << this << '\n';
+    std::cout << "Setting clean " << name() << ' ' << this << '\n';
 #endif
-        m_dirty = false;
-    }
+    m_dirty = false;
+  }
 
-    virtual const char* name() const = 0;
+  virtual const char* name() const = 0;
 
-    void addDependent( DependencyBase* dependent )
-    {
+  void addDependent(DependencyBase* dependent) {
 #ifdef VERBOSE_DEPENDENCY_NODE
-        std::cout << name() << ' ' << this << " adding " << dependent->name() << ' ' << dependent
-        << " as dependent" << '\n';
+    std::cout << name() << ' ' << this << " adding " << dependent->name() << ' '
+              << dependent << " as dependent" << '\n';
 #endif
-        m_dependents.push_back( dependent );
-    }
+    m_dependents.push_back(dependent);
+  }
 
-protected:
+ protected:
+  void setDirtyWithoutPropagating() { m_dirty = true; }
 
-    void setDirtyWithoutPropagating()
-    {
-        m_dirty = true;
-    }
+  virtual void compute() = 0;
+  std::list<DependencyBase*> m_dependents;
 
-    virtual void compute() = 0;
-    std::list<DependencyBase*> m_dependents;
-
-private:
-    bool m_dirty;
-
+ private:
+  bool m_dirty;
 };
 
 /**
- * @brief Template class to contain computable quantities and links to their dependencies.
+ * @brief Template class to contain computable quantities and links to their
+ * dependencies.
  *
- * To register dependencies, a class derived from DependencyNode<ValueT> must have those dependencies
- * as reference member variables (thus needing their initialization in the constructor). Each dependency
- * must also call addDependent(this) in the constructor.
+ * To register dependencies, a class derived from DependencyNode<ValueT> must
+ * have those dependencies as reference member variables (thus needing their
+ * initialization in the constructor). Each dependency must also call
+ * addDependent(this) in the constructor.
  */
-template<typename ValueT>
-class DependencyNode: public DependencyBase
-{
-public:
-    DependencyNode( const ValueT& value ) :
-            m_value( value )
-    {
-    }
+template <typename ValueT>
+class DependencyNode : public DependencyBase {
+ public:
+  DependencyNode(const ValueT& value) : m_value(value) {}
 
-    virtual ~DependencyNode()
-    {
-    }
+  virtual ~DependencyNode() {}
 
-    virtual const ValueT& get()
-    {
-        if ( isDirty() )
-        {
-            compute();
+  virtual const ValueT& get() {
+    if (isDirty()) {
+      compute();
 #ifdef VERBOSE_DEPENDENCY_NODE
-            std::cout << "Computed " << name() << ' ' << this << '\n';
+      std::cout << "Computed " << name() << ' ' << this << '\n';
 #endif
-            setClean();
-        }
-
-        return m_value;
+      setClean();
     }
 
-    virtual void set( const ValueT& value )
-    {
-        setDependentsDirty();
-        m_value = value;
-    }
+    return m_value;
+  }
 
-    /**
-     * @brief Erase m_value and free the memory
-     */
-    void free()
-    {
-        ValueT empty;
-        std::swap( empty, m_value );
-        // Do not propagate dirtiness, as the dependents are still valid
-        // ( Free as not been called to signal that some input changed, but just to save memory )
-        setDirtyWithoutPropagating();
-    }
+  virtual void set(const ValueT& value) {
+    setDependentsDirty();
+    m_value = value;
+  }
 
-    friend class boost::serialization::access;
-    template<class Archive>
-    void save( Archive & ar, const unsigned int version ) const
-    {
-        ar & m_value;
-    }
-    template<class Archive>
-    void load( Archive & ar, const unsigned int version )
-    {
-        ValueT value;
-        ar & value;
-        set( value );
-    }
-    BOOST_SERIALIZATION_SPLIT_MEMBER()
+  /**
+   * @brief Erase m_value and free the memory
+   */
+  void free() {
+    ValueT empty;
+    std::swap(empty, m_value);
+    // Do not propagate dirtiness, as the dependents are still valid
+    // ( Free as not been called to signal that some input changed, but just to
+    // save memory )
+    setDirtyWithoutPropagating();
+  }
 
-protected    :
-    ValueT m_value;
+  friend class boost::serialization::access;
+  template <class Archive>
+  void save(Archive& ar, const unsigned int version) const {
+    ar& m_value;
+  }
+  template <class Archive>
+  void load(Archive& ar, const unsigned int version) {
+    ValueT value;
+    ar& value;
+    set(value);
+  }
+  BOOST_SERIALIZATION_SPLIT_MEMBER()
+
+ protected:
+  ValueT m_value;
 };
 
 /**
  * @brief Specialized template for vector quantities
  */
-template<typename ElemValueT, typename AllocatorT>
-class DependencyNode<std::vector<ElemValueT, AllocatorT> > : public DependencyBase
-{
-public:
-    typedef std::vector<ElemValueT, AllocatorT> ValueT;
+template <typename ElemValueT, typename AllocatorT>
+class DependencyNode<std::vector<ElemValueT, AllocatorT> >
+    : public DependencyBase {
+ public:
+  typedef std::vector<ElemValueT, AllocatorT> ValueT;
 
-    DependencyNode( IndexType firstValidIndex, IndexType size ) :
-            m_firstValidIndex( firstValidIndex ), m_size( size )
-    {
-    }
+  DependencyNode(IndexType firstValidIndex, IndexType size)
+      : m_firstValidIndex(firstValidIndex), m_size(size) {}
 
-    virtual ~DependencyNode()
-    {
-    }
+  virtual ~DependencyNode() {}
 
-    const ValueT& get()
-    {
-        if ( isDirty() || m_value.size() != m_size )
-        {
-            compute();
+  const ValueT& get() {
+    if (isDirty() || m_value.size() != m_size) {
+      compute();
 #ifdef VERBOSE_DEPENDENCY_NODE
-            std::cout << "Computed " << name() << '\n';
+      std::cout << "Computed " << name() << '\n';
 #endif
-            setClean();
-        }
-
-        return m_value;
+      setClean();
     }
 
-    const ElemValueT& operator[]( IndexType i )
-    {
-        return get()[i];
+    return m_value;
+  }
+
+  const ElemValueT& operator[](IndexType i) { return get()[i]; }
+
+  void set(const ValueT& value) {
+    setDependentsDirty();
+    m_value = value;
+  }
+
+  virtual void set(IndexType i, const ElemValueT& elemVal) {
+    setDependentsDirty();
+    m_value.resize(m_size);
+    m_value[i] = elemVal;
+  }
+
+  IndexType size() const { return m_size; }
+
+  /**
+   * @brief Erase m_value and free the memory
+   */
+  void free() {
+    ValueT().swap(m_value);
+    // Do not propagate dirtiness, as the dependents are still valid
+    // ( Free as not been called to signal that some input changed, but just to
+    // save memory )
+    setDirtyWithoutPropagating();
+  }
+
+  /**
+   * @brief Erase m_value but capacity remains untouched
+   */
+  void clear() {
+    m_value.clear();
+    setDirty();
+  }
+
+  IndexType getFirstValidIndex() { return m_firstValidIndex; }
+
+  virtual void print(std::ostream& os) {
+    os << name() << ":...\n";
+    /*        for ( IndexType i = getFirstValidIndex(); i < size(); ++i )
+            {
+                os << ( *this )[i] << ' ';
+            }*/
+    os << '\n' << name() << ":^^^\n";
+  }
+
+  friend class boost::serialization::access;
+  template <class Archive>
+  void save(Archive& ar, const unsigned int version) const {
+    ar& m_value;
+  }
+  template <class Archive>
+  void load(Archive& ar, const unsigned int version) {
+    ValueT value;
+    ar& value;
+    set(value);
+  }
+  BOOST_SERIALIZATION_SPLIT_MEMBER()
+
+ protected:
+  // Either overload compute() or elemCompute(). The second one is the "lazy
+  // way", relying on this compute() loop, but note that in involves calling
+  // get() for each iteration, hence unnecessary test. If you overload compute()
+  // instead, get() once for each inputs and write you own loop. IMPORTANT: due
+  // to the possibility to clear the m_value, always resize it before computing.
+
+  virtual void compute() {
+    m_value.resize(m_size);
+
+    for (IndexType i = m_firstValidIndex; i < size(); ++i) {
+      m_value[i] = elemCompute(i);
     }
+    setDependentsDirty();
+  }
 
-    void set( const ValueT& value )
-    {
-        setDependentsDirty();
-        m_value = value;
-    }
+  virtual ElemValueT elemCompute(IndexType) {
+    ErrorStream(g_log, "") << "Either compute() or elemCompute() method must "
+                              "be implemented for class "
+                           << name();
 
-    virtual void set( IndexType i, const ElemValueT& elemVal )
-    {
-        setDependentsDirty();
-        m_value.resize( m_size );
-        m_value[i] = elemVal;
-    }
+    return ElemValueT();
+  }
 
-    IndexType size() const
-    {
-        return m_size;
-    }
-
-    /**
-     * @brief Erase m_value and free the memory
-     */
-    void free()
-    {
-        ValueT().swap( m_value );
-        // Do not propagate dirtiness, as the dependents are still valid
-        // ( Free as not been called to signal that some input changed, but just to save memory )
-        setDirtyWithoutPropagating();
-    }
-
-    /**
-     * @brief Erase m_value but capacity remains untouched
-     */
-    void clear()
-    {
-        m_value.clear();
-        setDirty();
-    }
-
-    IndexType getFirstValidIndex()
-    {
-        return m_firstValidIndex;
-    }
-
-    virtual void print( std::ostream& os )
-    {
-        os << name() << ":...\n";
-/*        for ( IndexType i = getFirstValidIndex(); i < size(); ++i )
-        {
-            os << ( *this )[i] << ' ';
-        }*/
-        os << '\n' << name() << ":^^^\n";
-    }
-
-    friend class boost::serialization::access;
-    template<class Archive>
-    void save( Archive & ar, const unsigned int version ) const
-    {
-        ar & m_value;
-    }
-    template<class Archive>
-    void load( Archive & ar, const unsigned int version )
-    {
-        ValueT value;
-        ar & value;
-        set( value );
-    }
-    BOOST_SERIALIZATION_SPLIT_MEMBER()
-
-protected    :
-    // Either overload compute() or elemCompute(). The second one is the "lazy way", relying on this compute() loop,
-    // but note that in involves calling get() for each iteration, hence unnecessary test. If you overload compute() instead,
-    // get() once for each inputs and write you own loop.
-    // IMPORTANT: due to the possibility to clear the m_value, always resize it before computing.
-
-    virtual void compute()
-    {
-        m_value.resize( m_size );
-
-        for ( IndexType i = m_firstValidIndex; i < size(); ++i )
-        {
-            m_value[i] = elemCompute( i );
-        }
-        setDependentsDirty();
-    }
-
-    virtual ElemValueT elemCompute( IndexType )
-    {
-        ErrorStream( g_log, "" )
-        << "Either compute() or elemCompute() method must be implemented for class "
-        << name();
-
-        return ElemValueT();
-    }
-
-    IndexType m_firstValidIndex;
-    ValueT m_value;
-    size_t m_size;
+  IndexType m_firstValidIndex;
+  ValueT m_value;
+  size_t m_size;
 };
 
-template<typename ValueT>
-inline std::ostream& operator<<( std::ostream& os, DependencyNode<ValueT>& node )
-{
-    node.print( os );
+template <typename ValueT>
+inline std::ostream& operator<<(std::ostream& os,
+                                DependencyNode<ValueT>& node) {
+  node.print(os);
 
-    return os;
+  return os;
 }
 
-}
+}  // namespace strandsim
 
 #endif /* DEPENDENCYNODE_HH_ */

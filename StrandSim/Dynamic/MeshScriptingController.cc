@@ -8,23 +8,13 @@
 
 #include "MeshScriptingController.hh"
 
-namespace strandsim
-{
+namespace strandsim {
 
-MeshScriptingController::MeshScriptingController( double time, double dt )
-    : ScriptingController( time, dt )
-{
-}
+MeshScriptingController::MeshScriptingController(double time, double dt)
+    : ScriptingController(time, dt) {}
 
-MeshScriptingController::~MeshScriptingController()
-{
-}
+MeshScriptingController::~MeshScriptingController() {}
 
+bool MeshScriptingController::execute() { return execute(false); }
 
-bool MeshScriptingController::execute()
-{
-    return execute( false ) ;
-}
-
-
-}
+}  // namespace strandsim

@@ -14,17 +14,17 @@
  * http://paulbourke.net/geometry/capsule/
  */
 
-#include "../Collision/TriangularMesh.hh"
-#include <vector>
 #include <unordered_map>
+#include <vector>
+
+#include "../Collision/TriangularMesh.hh"
 
 namespace strandsim {
-class Capsule
-{
-public:
-	Capsule(int N, const double& radius, const double& halfheight, strandsim::TriangularMesh* mesh, bool inverted);
+class Capsule {
+ public:
+  Capsule(int N, const double& radius, const double& halfheight,
+          strandsim::TriangularMesh* mesh, bool inverted);
 };
-};
-
+};  // namespace strandsim
 
 #endif

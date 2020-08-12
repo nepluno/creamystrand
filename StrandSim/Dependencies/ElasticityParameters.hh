@@ -18,251 +18,207 @@
 #endif
 #include "DependencyNode.hh"
 
-namespace strandsim
-{
+namespace strandsim {
 
 /**
  * Unit: cm
  */
-class EllipticalRadii: public DependencyNode<std::pair<Scalar, Scalar> >
-{
-public:
-    EllipticalRadii( Scalar radiusA, Scalar radiusB ) :
-            DependencyNode<std::pair<Scalar, Scalar> >( std::make_pair( radiusA, radiusB ) )
-    {
+class EllipticalRadii : public DependencyNode<std::pair<Scalar, Scalar> > {
+ public:
+  EllipticalRadii(Scalar radiusA, Scalar radiusB)
+      : DependencyNode<std::pair<Scalar, Scalar> >(
+            std::make_pair(radiusA, radiusB)) {
 #ifdef VERBOSE_DEPENDENCY_NODE
-        std::cout << "Creating " << name() << ' ' << this << '\n';
+    std::cout << "Creating " << name() << ' ' << this << '\n';
 #endif
 
-        setClean();
-    }
+    setClean();
+  }
 
-    virtual const char* name() const
-    {
-        return "EllipticalRadii";
-    }
+  virtual const char* name() const { return "EllipticalRadii"; }
 
-    friend class boost::serialization::access;
-    template<class Archive>
-    void save( Archive & ar, const int version ) const
-    {
-        // Can't use get() or compute() here as boost require save() to be const.
-        // So we'll just issue a warning if someone tries to save a dirty value.
-        if ( isDirty() )
-        {
-            WarningStream( g_log, "" ) << "Saving dirty value for " << name();
-        }
-        ar & m_value.first;
-        ar & m_value.second;
+  friend class boost::serialization::access;
+  template <class Archive>
+  void save(Archive& ar, const int version) const {
+    // Can't use get() or compute() here as boost require save() to be const.
+    // So we'll just issue a warning if someone tries to save a dirty value.
+    if (isDirty()) {
+      WarningStream(g_log, "") << "Saving dirty value for " << name();
     }
-    template<class Archive>
-    void load( Archive & ar, const int version )
-    {
-        std::pair<Scalar, Scalar> value;
-        ar & value.first;
-        ar & value.second;
-        set( value );
-    }
-    BOOST_SERIALIZATION_SPLIT_MEMBER()
+    ar& m_value.first;
+    ar& m_value.second;
+  }
+  template <class Archive>
+  void load(Archive& ar, const int version) {
+    std::pair<Scalar, Scalar> value;
+    ar& value.first;
+    ar& value.second;
+    set(value);
+  }
+  BOOST_SERIALIZATION_SPLIT_MEMBER()
 
-protected    :
-    virtual void compute()
-    {
-    }
+ protected:
+  virtual void compute() {}
 };
 
 /**
  * Unit: no dimension
  */
-class BaseRotation: public DependencyNode<Scalar>
-{
-public:
-    BaseRotation( Scalar baseRotation ) :
-            DependencyNode<Scalar>( baseRotation )
-    {
+class BaseRotation : public DependencyNode<Scalar> {
+ public:
+  BaseRotation(Scalar baseRotation) : DependencyNode<Scalar>(baseRotation) {
 #ifdef VERBOSE_DEPENDENCY_NODE
-        std::cout << "Creating " << name() << ' ' << this << '\n';
+    std::cout << "Creating " << name() << ' ' << this << '\n';
 #endif
 
-        setClean();
-    }
+    setClean();
+  }
 
-    virtual const char* name() const
-    {
-        return "BaseRotation";
-    }
+  virtual const char* name() const { return "BaseRotation"; }
 
-protected:
-    virtual void compute()
-    {
-    }
+ protected:
+  virtual void compute() {}
 };
 
 /**
- * \brief This contains the bending matrix base, must be multiplied by the appropriate viscous or non-viscous
- * coefficient (with optional interpolation factor).
+ * \brief This contains the bending matrix base, must be multiplied by the
+ * appropriate viscous or non-viscous coefficient (with optional interpolation
+ * factor).
  *
  * Unit: cm^4
  */
-class BendingMatrixBase: public DependencyNode<Mat2x>
-{
-public:
-    BendingMatrixBase( EllipticalRadii& ellipticalRadii, BaseRotation& baseRotation ) :
-            DependencyNode<Mat2x>( Mat2x() ), //
-            m_ellipticalRadii( ellipticalRadii ), //
-            m_baseRotation( baseRotation )
-    {
+class BendingMatrixBase : public DependencyNode<Mat2x> {
+ public:
+  BendingMatrixBase(EllipticalRadii& ellipticalRadii,
+                    BaseRotation& baseRotation)
+      : DependencyNode<Mat2x>(Mat2x()),      //
+        m_ellipticalRadii(ellipticalRadii),  //
+        m_baseRotation(baseRotation) {
 #ifdef VERBOSE_DEPENDENCY_NODE
-        std::cout << "Creating " << name() << ' ' << this << '\n';
+    std::cout << "Creating " << name() << ' ' << this << '\n';
 #endif
 
-        m_ellipticalRadii.addDependent( this );
-        m_baseRotation.addDependent( this );
-    }
+    m_ellipticalRadii.addDependent(this);
+    m_baseRotation.addDependent(this);
+  }
 
-    virtual const char* name() const
-    {
-        return "BendingMatrixBase";
-    }
+  virtual const char* name() const { return "BendingMatrixBase"; }
 
-protected:
-    virtual void compute()
-    {
-        const std::pair<Scalar, Scalar>& radii = m_ellipticalRadii.get();
-        const Scalar baseRotation = m_baseRotation.get();
+ protected:
+  virtual void compute() {
+    const std::pair<Scalar, Scalar>& radii = m_ellipticalRadii.get();
+    const Scalar baseRotation = m_baseRotation.get();
 
-        Mat2x& B = m_value;
-        B( 0, 0 ) = M_PI_4 * radii.second * cube( radii.first );
-        B( 1, 1 ) = M_PI_4 * radii.first * cube( radii.second );
-        // rotate cross section by a constant angle
-        const Mat2x& rot = Eigen::Rotation2D<Scalar>( baseRotation ).toRotationMatrix();
-        B = rot * B * rot.transpose();
-        B( 0, 1 ) = B( 1, 0 ) = 0.5 * ( B( 0, 1 ) + B( 1, 0 ) ); // For perfect numerical symmetry
+    Mat2x& B = m_value;
+    B(0, 0) = M_PI_4 * radii.second * cube(radii.first);
+    B(1, 1) = M_PI_4 * radii.first * cube(radii.second);
+    // rotate cross section by a constant angle
+    const Mat2x& rot =
+        Eigen::Rotation2D<Scalar>(baseRotation).toRotationMatrix();
+    B = rot * B * rot.transpose();
+    B(0, 1) = B(1, 0) =
+        0.5 * (B(0, 1) + B(1, 0));  // For perfect numerical symmetry
 
-        setDependentsDirty();
-    }
+    setDependentsDirty();
+  }
 
-    EllipticalRadii& m_ellipticalRadii;
-    BaseRotation& m_baseRotation;
+  EllipticalRadii& m_ellipticalRadii;
+  BaseRotation& m_baseRotation;
 };
 
 /**
  * Unit: dPa = g cm^-1 s^-2
  */
-class YoungsModulus: public DependencyNode<Scalar>
-{
-public:
-    YoungsModulus( Scalar youngsModulus ) :
-            DependencyNode<Scalar>( youngsModulus )
-    {
-        setClean();
-    }
+class YoungsModulus : public DependencyNode<Scalar> {
+ public:
+  YoungsModulus(Scalar youngsModulus) : DependencyNode<Scalar>(youngsModulus) {
+    setClean();
+  }
 
-    virtual const char* name() const
-    {
-        return "YoungsModulus";
-    }
+  virtual const char* name() const { return "YoungsModulus"; }
 
-protected:
-    virtual void compute()
-    {
-    }
+ protected:
+  virtual void compute() {}
 };
 
 /**
  * Unit: dPa = g cm^-1 s^-2
  */
-class ShearModulus: public DependencyNode<Scalar>
-{
-public:
-    ShearModulus( Scalar shearModulus ) :
-            DependencyNode<Scalar>( shearModulus )
-    {
-        setClean();
-    }
+class ShearModulus : public DependencyNode<Scalar> {
+ public:
+  ShearModulus(Scalar shearModulus) : DependencyNode<Scalar>(shearModulus) {
+    setClean();
+  }
 
-    virtual const char* name() const
-    {
-        return "ShearModulus";
-    }
+  virtual const char* name() const { return "ShearModulus"; }
 
-protected:
-    virtual void compute()
-    {
-    }
+ protected:
+  virtual void compute() {}
 };
 
 /**
  * Unit: 10^-5 N = g cm s^-2
  */
-class ElasticKs: public DependencyNode<Scalar>
-{
-public:
-    ElasticKs( EllipticalRadii& ellrad, YoungsModulus& ym ) :
-            DependencyNode<Scalar>( std::numeric_limits<Scalar>::signaling_NaN() ), //
-            m_ellipticalRadii( ellrad ), //
-            m_youngsModulus( ym ) //
-    {
-        m_ellipticalRadii.addDependent( this );
-        m_youngsModulus.addDependent( this );
-    }
+class ElasticKs : public DependencyNode<Scalar> {
+ public:
+  ElasticKs(EllipticalRadii& ellrad, YoungsModulus& ym)
+      : DependencyNode<Scalar>(
+            std::numeric_limits<Scalar>::signaling_NaN()),  //
+        m_ellipticalRadii(ellrad),                          //
+        m_youngsModulus(ym)                                 //
+  {
+    m_ellipticalRadii.addDependent(this);
+    m_youngsModulus.addDependent(this);
+  }
 
-    virtual const char* name() const
-    {
-        return "ElasticKs";
-    }
+  virtual const char* name() const { return "ElasticKs"; }
 
-protected:
-    virtual void compute()
-    {
-        const std::pair<Scalar, Scalar>& radii = m_ellipticalRadii.get();
-        const Scalar youngsModulus = m_youngsModulus.get();
+ protected:
+  virtual void compute() {
+    const std::pair<Scalar, Scalar>& radii = m_ellipticalRadii.get();
+    const Scalar youngsModulus = m_youngsModulus.get();
 
-        m_value = M_PI * radii.first * radii.second * youngsModulus;
+    m_value = M_PI * radii.first * radii.second * youngsModulus;
 
-        setDependentsDirty();
-    }
+    setDependentsDirty();
+  }
 
-    EllipticalRadii& m_ellipticalRadii;
-    YoungsModulus& m_youngsModulus;
+  EllipticalRadii& m_ellipticalRadii;
+  YoungsModulus& m_youngsModulus;
 };
 
 /**
  * Unit: 10^-5 cm^2 N = g cm^3 s^-2
  */
-class ElasticKt: public DependencyNode<Scalar>
-{
-public:
-    ElasticKt( EllipticalRadii& ellrad, ShearModulus& sm ) :
-            DependencyNode<Scalar>( std::numeric_limits<Scalar>::signaling_NaN() ), //
-            m_ellipticalRadii( ellrad ), //
-            m_shearModulus( sm )
-    {
-        m_ellipticalRadii.addDependent( this );
-        m_shearModulus.addDependent( this );
-    }
+class ElasticKt : public DependencyNode<Scalar> {
+ public:
+  ElasticKt(EllipticalRadii& ellrad, ShearModulus& sm)
+      : DependencyNode<Scalar>(
+            std::numeric_limits<Scalar>::signaling_NaN()),  //
+        m_ellipticalRadii(ellrad),                          //
+        m_shearModulus(sm) {
+    m_ellipticalRadii.addDependent(this);
+    m_shearModulus.addDependent(this);
+  }
 
-    virtual const char* name() const
-    {
-        return "ElasticKt";
-    }
+  virtual const char* name() const { return "ElasticKt"; }
 
-protected:
-    virtual void compute()
-    {
-        const std::pair<Scalar, Scalar>& radii = m_ellipticalRadii.get();
-        const Scalar shearModulus = m_shearModulus.get();
+ protected:
+  virtual void compute() {
+    const std::pair<Scalar, Scalar>& radii = m_ellipticalRadii.get();
+    const Scalar shearModulus = m_shearModulus.get();
 
-        m_value = M_PI_4 * radii.first * radii.second
-                * ( radii.first * radii.first + radii.second * radii.second ) * shearModulus;
+    m_value = M_PI_4 * radii.first * radii.second *
+              (radii.first * radii.first + radii.second * radii.second) *
+              shearModulus;
 
-        setDependentsDirty();
-    }
+    setDependentsDirty();
+  }
 
-    EllipticalRadii& m_ellipticalRadii;
-    ShearModulus& m_shearModulus;
+  EllipticalRadii& m_ellipticalRadii;
+  ShearModulus& m_shearModulus;
 };
 
-}
+}  // namespace strandsim
 
 #endif /* ELASTICPARAMETERS_HH_ */

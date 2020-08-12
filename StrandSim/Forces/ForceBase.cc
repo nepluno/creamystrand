@@ -8,59 +8,49 @@
 
 #include "ForceBase.hh"
 
-#include "../Utils/TextLog.hh"
 #include "../Core/StrandState.hh"
+#include "../Utils/TextLog.hh"
 
-namespace strandsim
-{
+namespace strandsim {
 
-RuntimeForceBase::RuntimeForceBase()
-    : ForceBase()
-{
-}
+RuntimeForceBase::RuntimeForceBase() : ForceBase() {}
 
-RuntimeForceBase::~RuntimeForceBase()
-{
-}
+RuntimeForceBase::~RuntimeForceBase() {}
 
 SelfManagingRuntimeForceBase::SelfManagingRuntimeForceBase()
-    : RuntimeForceBase()
-{
-}
+    : RuntimeForceBase() {}
 
-SelfManagingRuntimeForceBase::~SelfManagingRuntimeForceBase()
-{
-}
+SelfManagingRuntimeForceBase::~SelfManagingRuntimeForceBase() {}
 
-void RuntimeForceBase::accumulate( Quantities q, StrandState& geometry, const ElasticStrand& strand )
-{
-    switch( q )
-    {
+void RuntimeForceBase::accumulate(Quantities q, StrandState& geometry,
+                                  const ElasticStrand& strand) {
+  switch (q) {
     case EFJ:
-        accumulateEFJ( geometry, strand );
-        break ;
+      accumulateEFJ(geometry, strand);
+      break;
     case EF:
     case F:
-        accumulateEF( geometry, strand );
-        break ;
+      accumulateEF(geometry, strand);
+      break;
     case E:
-        accumulateE( geometry, strand );
-        break ;
+      accumulateE(geometry, strand);
+      break;
     case J:
-        accumulateJ( geometry, strand );
-        break ;
+      accumulateJ(geometry, strand);
+      break;
     case NONE:
-        break ;
-    }
+      break;
+  }
 }
 
-void RuntimeForceBase::accumulateE( StrandState& geometry, const ElasticStrand& strand )
-{
-    WarningStream( g_log, "" ) << " accumulateE not implemented for " << getName()
-                               << " -> falling back to accumulateEF ( inefficient ) " ;
-    const VecXx currentF = geometry.m_totalForce ;
-    accumulateEF( geometry, strand );
-    geometry.m_totalForce = currentF ;
+void RuntimeForceBase::accumulateE(StrandState& geometry,
+                                   const ElasticStrand& strand) {
+  WarningStream(g_log, "")
+      << " accumulateE not implemented for " << getName()
+      << " -> falling back to accumulateEF ( inefficient ) ";
+  const VecXx currentF = geometry.m_totalForce;
+  accumulateEF(geometry, strand);
+  geometry.m_totalForce = currentF;
 }
 
-}
+}  // namespace strandsim

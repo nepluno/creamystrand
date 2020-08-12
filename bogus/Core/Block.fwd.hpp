@@ -6,8 +6,7 @@
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
-*/
-
+ */
 
 #ifndef BOGUS_BLOCK_FWD_HPP
 #define BOGUS_BLOCK_FWD_HPP
@@ -17,31 +16,31 @@
 
 namespace bogus {
 
-template < typename Derived >
-struct BlockObjectBase ;
+template <typename Derived>
+struct BlockObjectBase;
 
-template < typename Derived >
+template <typename Derived>
 class IterableBlockObject;
 
-template < typename Derived >
-struct Transpose ;
+template <typename Derived>
+struct Transpose;
 
-template < typename Derived >
-class BlockMatrixBase ;
+template <typename Derived>
+class BlockMatrixBase;
 
-template < typename Derived >
-class SparseBlockMatrixBase ;
+template <typename Derived>
+class SparseBlockMatrixBase;
 
-template < typename BlockT, int Flags = flags::NONE >
-class SparseBlockMatrix  ;
+template <typename BlockT, int Flags = flags::NONE>
+class SparseBlockMatrix;
 
-template < typename BlockT, int Flags = flags::NONE >
-class FlatSparseBlockMatrix  ;
+template <typename BlockT, int Flags = flags::NONE>
+class FlatSparseBlockMatrix;
 
-template < typename BlockT, int Flags = flags::NONE, typename Index = BOGUS_DEFAULT_INDEX_TYPE >
-class MappedSparseBlockMatrix  ;
+template <typename BlockT, int Flags = flags::NONE,
+          typename Index = BOGUS_DEFAULT_INDEX_TYPE>
+class MappedSparseBlockMatrix;
 
-
-}
+}  // namespace bogus
 
 #endif

@@ -9,16 +9,14 @@
 #ifndef STEPPERBASE_HH_
 #define STEPPERBASE_HH_
 
-namespace strandsim
-{
+namespace strandsim {
 
-class StepperBase
-{
-public:
-    StepperBase() {}
-    virtual ~StepperBase() {}
+class StepperBase {
+ public:
+  StepperBase() {}
+  virtual ~StepperBase() {}
 };
 
-}
+}  // namespace strandsim
 
 #endif /* STEPPERBASE_HH_ */

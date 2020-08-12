@@ -6,34 +6,28 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-
 #ifndef LOGGINGTIMER_HH
 #define LOGGINGTIMER_HH
 
-#include "TimeUtils.hh"
 #include "TextLog.hh"
+#include "TimeUtils.hh"
 
-namespace strandsim
-{
+namespace strandsim {
 
-template<typename StreamName>
-class LoggingTimer: public TimerBase<StreamCreator<StreamName> >
-{
-public:
-    typedef StreamCreator<StreamName> StreamType;
+template <typename StreamName>
+class LoggingTimer : public TimerBase<StreamCreator<StreamName> > {
+ public:
+  typedef StreamCreator<StreamName> StreamType;
 
-    LoggingTimer( const std::string &name, const char* id_str = NULL ) :
-            TimerBase<StreamCreator<StreamName> >( name, &stream(), id_str )
-    {
-    }
+  LoggingTimer(const std::string& name, const char* id_str = NULL)
+      : TimerBase<StreamCreator<StreamName> >(name, &stream(), id_str) {}
 
-    static StreamType& stream()
-    {
-        static StreamType s_stream( g_log, "Timing" );
-        return s_stream;
-    }
+  static StreamType& stream() {
+    static StreamType s_stream(g_log, "Timing");
+    return s_stream;
+  }
 };
 
-}
+}  // namespace strandsim
 
-#endif // LOGGINGTIMER_HH
+#endif  // LOGGINGTIMER_HH

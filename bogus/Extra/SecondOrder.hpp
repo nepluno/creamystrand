@@ -18,7 +18,6 @@
  * along with So-bogus.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-
 #ifndef BOGUS_SECOND_ORDER_HPP
 #define BOGUS_SECOND_ORDER_HPP
 
@@ -26,7 +25,7 @@
 #ifndef BOGUS_WITHOUT_EIGEN
 #include "../Core/Eigen/EigenProblemTraits.hpp"
 #endif
-#include "SOC/SOCLaw.hpp"
 #include "SOC/HBLaw.hpp"
+#include "SOC/SOCLaw.hpp"
 
 #endif

@@ -11,135 +11,107 @@
 
 #include <boost/serialization/split_member.hpp>
 
-#include "../Core/Definitions.hh"
 #include "../Core/BandMatrix.hh"
+#include "../Core/Definitions.hh"
 #include "../Core/LinearSolver.hh"
 
-namespace strandsim
-{
+namespace strandsim {
 
-template<typename ScalarT, int kl >
-class SymmetricBandMatrixSolver
-{
-public:
-    typedef BandMatrixCompressedStorage< ScalarT, true, true, kl, kl > SPDStorageT ;
-    typedef BandMatrixCompressedStorage< ScalarT, true, false, kl, kl > NonSPDStorageT ;
-    typedef BandMatrix<ScalarT, kl, kl> BandMatrixT;
-    typedef Eigen::Matrix<ScalarT, Eigen::Dynamic, 1> VectorT;
-    typedef Eigen::Matrix<ScalarT, Eigen::Dynamic, Eigen::Dynamic> MatrixT;
+template <typename ScalarT, int kl>
+class SymmetricBandMatrixSolver {
+ public:
+  typedef BandMatrixCompressedStorage<ScalarT, true, true, kl, kl> SPDStorageT;
+  typedef BandMatrixCompressedStorage<ScalarT, true, false, kl, kl>
+      NonSPDStorageT;
+  typedef BandMatrix<ScalarT, kl, kl> BandMatrixT;
+  typedef Eigen::Matrix<ScalarT, Eigen::Dynamic, 1> VectorT;
+  typedef Eigen::Matrix<ScalarT, Eigen::Dynamic, Eigen::Dynamic> MatrixT;
 
-    SymmetricBandMatrixSolver( )
-        : m_notSPD( false ), m_invScaling( 1. ), m_allocatedBandMatrix( NULL )
-    {
+  SymmetricBandMatrixSolver()
+      : m_notSPD(false), m_invScaling(1.), m_allocatedBandMatrix(NULL) {}
+
+  SymmetricBandMatrixSolver(const BandMatrixT& A)
+      : m_notSPD(false), m_invScaling(1.), m_allocatedBandMatrix(NULL) {
+    store(A);
+  }
+
+  ~SymmetricBandMatrixSolver() { delete m_allocatedBandMatrix; }
+
+  void store(const BandMatrixT& A) {
+    setScaling(1.);
+
+    if (m_notSPD) {
+      m_nonSPDStorage.desallocate();
     }
 
-    SymmetricBandMatrixSolver( const BandMatrixT& A )
-        : m_notSPD( false ), m_invScaling( 1. ), m_allocatedBandMatrix( NULL )
-    {
-        store( A ) ;
+    m_SPDStorage.store(A);
+    m_notSPD = m_SPDStorage.factorize();
+    if (m_notSPD) {
+      m_SPDStorage.desallocate();
+      m_nonSPDStorage.store(A);
+      m_nonSPDStorage.factorize();
     }
+  }
 
-    ~SymmetricBandMatrixSolver( )
-    {
-        delete m_allocatedBandMatrix ;
-    }
+  void setScaling(Scalar scaling) { m_invScaling = 1. / scaling; }
 
-    void store( const BandMatrixT& A )
-    {
-        setScaling( 1. );
+  bool notSPD() const { return m_notSPD; }
 
-        if( m_notSPD )
-        {
-            m_nonSPDStorage.desallocate() ;
-        }
+  // x = A \ b . store( A ) should have been called.
+  template <typename Derived, typename OtherDerived>
+  int solve(Eigen::MatrixBase<Derived>& x,
+            const Eigen::MatrixBase<OtherDerived>& b) const {
+    x = m_invScaling * b;
 
-        m_SPDStorage.store( A ) ;
-        m_notSPD = m_SPDStorage.factorize() ;
-        if( m_notSPD )
-        {
-            m_SPDStorage.desallocate() ;
-            m_nonSPDStorage.store( A ) ;
-            m_nonSPDStorage.factorize() ;
-        }
-    }
+    if (m_notSPD) return m_nonSPDStorage.solveInPlaceFactorized(x.derived());
+    return m_SPDStorage.solveInPlaceFactorized(x.derived());
+  }
 
-    void setScaling( Scalar scaling )
-    {
-        m_invScaling = 1. / scaling ;
-    }
+  SPDStorageT& SPDStorage() { return m_SPDStorage; }
+  NonSPDStorageT& nonSPDStorage() { return m_nonSPDStorage; }
 
-    bool notSPD() const
-    {
-        return m_notSPD ;
-    }
+  const BandMatrixT& matrix() const { return m_SPDStorage.A(); }
 
-    // x = A \ b . store( A ) should have been called.
-    template < typename Derived, typename OtherDerived >
-    int solve( Eigen::MatrixBase< Derived > &x, const Eigen::MatrixBase< OtherDerived >& b ) const
-    {
-        x = m_invScaling * b ;
+  template <class Archive>
+  void load(Archive& ar, const unsigned int version) {
+    delete m_allocatedBandMatrix;
+    m_allocatedBandMatrix = new BandMatrixT();
 
-        if( m_notSPD )
-            return m_nonSPDStorage.solveInPlaceFactorized( x.derived() ) ;
-        return m_SPDStorage.solveInPlaceFactorized( x.derived() ) ;
-    }
+    // invScaling will be overwritten in store(), so we retrieve it in a
+    // temporary
+    Scalar invScaling;
+    ar >> invScaling;
+    ar >> *m_allocatedBandMatrix;
 
-    SPDStorageT& SPDStorage()
-    {
-        return m_SPDStorage ;
-    }
-    NonSPDStorageT& nonSPDStorage()
-    {
-        return m_nonSPDStorage ;
-    }
+    store(*m_allocatedBandMatrix);
+    m_invScaling = invScaling;
+  }
+  template <class Archive>
+  void save(Archive& ar, const unsigned int version) const {
+    ar << m_invScaling;
+    ar << matrix();
+  }
+  template <class Archive>
+  void serialize(Archive& ar, const unsigned int version) {
+    boost::serialization::split_member(ar, *this, version);
+  }
 
-    const BandMatrixT& matrix() const
-    {
-        return m_SPDStorage.A() ;
-    }
+ private:
+  SymmetricBandMatrixSolver(const SymmetricBandMatrixSolver&);
+  SymmetricBandMatrixSolver& operator=(const SymmetricBandMatrixSolver&);
 
-    template<class Archive>
-    void load( Archive & ar, const unsigned int version )
-    {
-        delete m_allocatedBandMatrix ;
-        m_allocatedBandMatrix = new BandMatrixT() ;
+  SPDStorageT m_SPDStorage;
+  NonSPDStorageT m_nonSPDStorage;
 
-        // invScaling will be overwritten in store(), so we retrieve it in a temporary
-        Scalar invScaling ;
-        ar >> invScaling ;
-        ar >> *m_allocatedBandMatrix ;
+  bool m_notSPD;
+  Scalar m_invScaling;
 
-        store( *m_allocatedBandMatrix ) ;
-        m_invScaling = invScaling ;
-    }
-    template<class Archive>
-    void save( Archive & ar, const unsigned int version ) const
-    {
-        ar << m_invScaling ;
-        ar << matrix() ;
-    }
-    template<class Archive>
-    void serialize( Archive & ar, const unsigned int version )
-    {
-        boost::serialization::split_member( ar, *this, version );
-    }
+  BandMatrixT* m_allocatedBandMatrix;  // If loaded from archive
+};
 
-private:
-    SymmetricBandMatrixSolver( const SymmetricBandMatrixSolver& ) ;
-    SymmetricBandMatrixSolver& operator=( const SymmetricBandMatrixSolver& ) ;
+typedef SymmetricBandMatrixSolver<Scalar, JacobianMatrixType::LowerBands>
+    JacobianSolver;
 
+}  // namespace strandsim
 
-    SPDStorageT m_SPDStorage ;
-    NonSPDStorageT m_nonSPDStorage ;
-
-    bool m_notSPD ;
-    Scalar m_invScaling ;
-
-    BandMatrixT* m_allocatedBandMatrix ; // If loaded from archive
-} ;
-
-typedef SymmetricBandMatrixSolver<Scalar, JacobianMatrixType::LowerBands> JacobianSolver;
-
-}
-
-#endif // SYMMETRICBANDMATRIXSOLVER_HH
+#endif  // SYMMETRICBANDMATRIXSOLVER_HH

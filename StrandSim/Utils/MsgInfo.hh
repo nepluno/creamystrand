@@ -17,92 +17,98 @@
 namespace strandsim {
 
 class MsgInfo {
-public:
-    /// Message ids are represented as strings.
-    typedef std::string Id;
+ public:
+  /// Message ids are represented as strings.
+  typedef std::string Id;
 
-    /// Message severity.
-    enum Severity {
-        kSilent,
-        kTrace,
-        kDebug,
-        kCopious,
-        kContact,
-        kInfo,
-        kNotice,
-        kWarning,
-        kError,
-        kSevere,
-        kInternal,
-        kForced,
-    };
+  /// Message severity.
+  enum Severity {
+    kSilent,
+    kTrace,
+    kDebug,
+    kCopious,
+    kContact,
+    kInfo,
+    kNotice,
+    kWarning,
+    kError,
+    kSevere,
+    kInternal,
+    kForced,
+  };
 
-    /// Message frequency.
-    enum Frequency {
-        kOncePerId,
-        kOncePerMsg,
-        kAlways,
-    };
+  /// Message frequency.
+  enum Frequency {
+    kOncePerId,
+    kOncePerMsg,
+    kAlways,
+  };
 
-    /// The default severity level.
-    static const Severity kDefaultSeverity = kNotice;
+  /// The default severity level.
+  static const Severity kDefaultSeverity = kNotice;
 
-    /// Convert severity level to string.
-    inline static const char* SeverityToString(Severity severity)
-    {
-        switch (severity) {
-          case kSilent: return "";
-          case kTrace: return "Trace";
-          case kDebug: return "Debug";
-          case kCopious: return "Copious";
-          case kContact: return "Contact";
-          case kInfo: return "Info";
-          case kNotice: return "Notice";
-          case kWarning: return "Warning";
-          case kError: return "Error";
-          case kSevere: return "Severe";
-          case kInternal: return "Internal error";
-          case kForced: default: return "";
-        }
+  /// Convert severity level to string.
+  inline static const char* SeverityToString(Severity severity) {
+    switch (severity) {
+      case kSilent:
+        return "";
+      case kTrace:
+        return "Trace";
+      case kDebug:
+        return "Debug";
+      case kCopious:
+        return "Copious";
+      case kContact:
+        return "Contact";
+      case kInfo:
+        return "Info";
+      case kNotice:
+        return "Notice";
+      case kWarning:
+        return "Warning";
+      case kError:
+        return "Error";
+      case kSevere:
+        return "Severe";
+      case kInternal:
+        return "Internal error";
+      case kForced:
+      default:
+        return "";
     }
+  }
 
-    /// Construct a message identifier.
-    MsgInfo(Severity severity,
-            const Id& id, 
-            Frequency frequency = kAlways) :
-        m_id(id),
-        m_severity(severity),
-        m_frequency(frequency)
-    { }
+  /// Construct a message identifier.
+  MsgInfo(Severity severity, const Id& id, Frequency frequency = kAlways)
+      : m_id(id), m_severity(severity), m_frequency(frequency) {}
 
-    /// Get the message id.
-    const Id& GetId() const { return m_id; }
+  /// Get the message id.
+  const Id& GetId() const { return m_id; }
 
-    /// Get message severity.
-    Severity GetSeverity() const { return m_severity; }
+  /// Get message severity.
+  Severity GetSeverity() const { return m_severity; }
 
-    /// Set message severity.
-    void SetSeverity(Severity severity) { m_severity = severity; }
+  /// Set message severity.
+  void SetSeverity(Severity severity) { m_severity = severity; }
 
-    /// Get the message frequency.
-    Frequency GetFrequency() const { return m_frequency; }
+  /// Get the message frequency.
+  Frequency GetFrequency() const { return m_frequency; }
 
-private:
-    Id m_id;                    ///< The message identifier.
-    Severity m_severity;        ///< Message severity.
-    Frequency m_frequency;      ///< Message frequency 
+ private:
+  Id m_id;                ///< The message identifier.
+  Severity m_severity;    ///< Message severity.
+  Frequency m_frequency;  ///< Message frequency
 };
 
-/// Output severity and message id to a stream (with a trailing colon and space).  If the severity
-/// and message id are empty, nothing is printed.
+/// Output severity and message id to a stream (with a trailing colon and
+/// space).  If the severity and message id are empty, nothing is printed.
 std::ostream& operator<<(std::ostream& out, const MsgInfo& info);
 
-template<MsgInfo::Severity severity>
+template <MsgInfo::Severity severity>
 class SeverityInfo : public MsgInfo {
-public:
-    explicit SeverityInfo(const Id& id, Frequency frequency = kAlways) :
-        MsgInfo(severity, id, frequency)
-    { }
+ public:
+  explicit SeverityInfo(const Id& id, Frequency frequency = kAlways)
+      : MsgInfo(severity, id, frequency) {}
 };
 
 typedef SeverityInfo<MsgInfo::kSilent> SilentMsg;
@@ -117,6 +123,6 @@ typedef SeverityInfo<MsgInfo::kSevere> SevereMsg;
 typedef SeverityInfo<MsgInfo::kInternal> InternalMsg;
 typedef SeverityInfo<MsgInfo::kForced> ForcedMsg;
 
-}
+}  // namespace strandsim
 
-#endif // ndef MSG_INFO_HH
+#endif  // ndef MSG_INFO_HH

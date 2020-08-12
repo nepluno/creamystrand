@@ -14,25 +14,26 @@
  * http://blog.andreaskahler.com/2009/06/creating-icosphere-mesh-in-code.html
  */
 
-#include "../Collision/TriangularMesh.hh"
-#include <vector>
 #include <unordered_map>
+#include <vector>
+
+#include "../Collision/TriangularMesh.hh"
 
 using namespace strandsim;
 
 namespace strandsim {
-class Icosphere
-{
-	int index;
-  	std::unordered_map<uint64, int> middlePointIndexCache;
-  	strandsim::TriangularMesh* m_mesh;
-  
-  	int addVertexWithIndices(const Vec3x& p);
-  	int getMiddlePoint(int p1, int p2);
+class Icosphere {
+  int index;
+  std::unordered_map<uint64, int> middlePointIndexCache;
+  strandsim::TriangularMesh* m_mesh;
 
-public:
-  	Icosphere(int recursionLevel, const double& radius, strandsim::TriangularMesh* mesh, bool inverted);
+  int addVertexWithIndices(const Vec3x& p);
+  int getMiddlePoint(int p1, int p2);
+
+ public:
+  Icosphere(int recursionLevel, const double& radius,
+            strandsim::TriangularMesh* mesh, bool inverted);
 };
-};
+};  // namespace strandsim
 
 #endif

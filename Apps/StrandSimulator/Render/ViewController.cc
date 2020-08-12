@@ -11,21 +11,19 @@
 const Scalar ViewController::eps = std::numeric_limits<Scalar>::epsilon();
 
 ViewController::ViewController()
-  : m_centerMode(CENTER_OBJECT)
-  , m_trackball(&m_camera)
-  , m_translator(&m_camera)
-  , m_zoomer(&m_camera)
-{
+    : m_centerMode(CENTER_OBJECT),
+      m_trackball(&m_camera),
+      m_translator(&m_camera),
+      m_zoomer(&m_camera) {
   m_camera.setPerspective(60, 1);
   m_camera.setViewport(100, 100);
 }
 
-void ViewController::ApplyCamera()
-{
+void ViewController::ApplyCamera() {
   m_camera.applyViewport();
   m_camera.applyProjection();
 
-  glMatrixMode( GL_MODELVIEW );
+  glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
 
   m_camera.applyCamera();
@@ -81,28 +79,22 @@ void ViewController::ApplyCamera()
 
   }
 */
-void ViewController::setCamera(const Camera& c) {
-  m_camera = c;
-}
+void ViewController::setCamera(const Camera& c) { m_camera = c; }
 
-const Camera& ViewController::getCamera() const {
-  return m_camera;
-}
+const Camera& ViewController::getCamera() const { return m_camera; }
 
-Camera& ViewController::getCamera() {
-  return m_camera;
-}
+Camera& ViewController::getCamera() { return m_camera; }
 
 void ViewController::setCenterMode(const CenterMode m) {
   m_centerMode = m;
   switch (m_centerMode) {
-  case CENTER_WORLD_ORIGIN:
-    m_camera.setViewCenter(Vec3d(0,0,0));
-    break;
+    case CENTER_WORLD_ORIGIN:
+      m_camera.setViewCenter(Vec3d(0, 0, 0));
+      break;
 
-  case CENTER_OBJECT:
-    m_camera.setViewCenter(m_objCenter);
-    break;
+    case CENTER_OBJECT:
+      m_camera.setViewCenter(m_objCenter);
+      break;
   }
 }
 
@@ -112,13 +104,10 @@ void ViewController::setViewCenter(const Vec3d& p) {
 }
 
 void ViewController::getCenterOfInterest(ViewController::CenterMode* m,
-                                         Vec3d* p) const
-{
-  if (m)
-    *m = m_centerMode;
+                                         Vec3d* p) const {
+  if (m) *m = m_centerMode;
 
-  if (p)
-    *p = m_camera.getViewCenter();
+  if (p) *p = m_camera.getViewCenter();
 }
 
 void ViewController::setViewDirection(const Vec3d& d) {
@@ -133,39 +122,37 @@ void ViewController::setBoundingRadius(Scalar r) {
   m_zoomer.setScale(2 * m_boundingRadius);
 }
 
-Scalar ViewController::getBoundingRadius() {
-  return m_boundingRadius;
-}
+Scalar ViewController::getBoundingRadius() { return m_boundingRadius; }
 
 void ViewController::beginRotationDrag(const Scalar x, const Scalar y) {
-  m_trackball.start(Vec2d(x,y));
+  m_trackball.start(Vec2d(x, y));
 }
 
 void ViewController::endRotationDrag(const Scalar x, const Scalar y) {
-  m_trackball.update(Vec2d(x,y));
+  m_trackball.update(Vec2d(x, y));
   m_trackball.stop();
 }
 
 void ViewController::beginTranslationDrag(const Scalar x, const Scalar y) {
-  m_translator.start(Vec2d(x,y));
+  m_translator.start(Vec2d(x, y));
 }
 
 void ViewController::endTranslationDrag(const Scalar x, const Scalar y) {
-  m_translator.update(Vec2d(x,y));
+  m_translator.update(Vec2d(x, y));
   m_translator.stop();
 }
 
 void ViewController::beginZoomDrag(const Scalar x, const Scalar y) {
-  m_zoomer.start(Vec2d(x,y));
+  m_zoomer.start(Vec2d(x, y));
 }
 
 void ViewController::endZoomDrag(const Scalar x, const Scalar y) {
-  m_zoomer.update(Vec2d(x,y));
+  m_zoomer.update(Vec2d(x, y));
   m_zoomer.stop();
 }
 
 void ViewController::updateDrag(const Scalar x, const Scalar y) {
-  const Vec2d v(x,y);
+  const Vec2d v(x, y);
   m_trackball.update(v);
   m_translator.update(v);
   m_zoomer.update(v);
@@ -174,8 +161,7 @@ void ViewController::updateDrag(const Scalar x, const Scalar y) {
 void ViewController::calcTranslation(const Vec2d& start, const Vec2d& stop,
                                      const Vec3d& viewCenter, const Vec3d& eye,
                                      const Vec3d& up, const Scalar scale,
-                                     Vec3d& translation)
-{
+                                     Vec3d& translation) {
   // Points to the object
   const Vec3d n = (viewCenter - eye).normalized();
   // Spans the view plane in world coords
@@ -186,6 +172,5 @@ void ViewController::calcTranslation(const Vec2d& start, const Vec2d& stop,
 
   translation = v[0] * w1 + v[1] * w2;
 
-  assert(translation.dot(n) < 10*eps);
+  assert(translation.dot(n) < 10 * eps);
 }
-

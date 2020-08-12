@@ -9,29 +9,18 @@
 #include "Zoomer.hh"
 
 Zoomer::Zoomer(Camera* c, const Scalar s)
-  : m_camera(c)
-  , m_translating(false)
-  , m_scale(s)
-{}
+    : m_camera(c), m_translating(false), m_scale(s) {}
 
-void Zoomer::setCamera(Camera* c)
-{
-  m_camera = c;
-}
+void Zoomer::setCamera(Camera* c) { m_camera = c; }
 
-void Zoomer::setScale(const Scalar s)
-{
-  m_scale = s;
-}
+void Zoomer::setScale(const Scalar s) { m_scale = s; }
 
-void Zoomer::start(const Vec2d& p)
-{
+void Zoomer::start(const Vec2d& p) {
   m_translating = true;
   m_startPos = p;
 }
 
-void Zoomer::update(const Vec2d& p)
-{
+void Zoomer::update(const Vec2d& p) {
   if (!m_translating) return;
 
   assert(m_camera);
@@ -45,8 +34,4 @@ void Zoomer::update(const Vec2d& p)
   m_startPos = p;
 }
 
-void Zoomer::stop()
-{
-  m_translating = false;
-}
-
+void Zoomer::stop() { m_translating = false; }

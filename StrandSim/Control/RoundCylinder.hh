@@ -12,17 +12,18 @@
 /* Rounded Cylinder generation algorithm.
  */
 
-#include "../Collision/TriangularMesh.hh"
-#include <vector>
 #include <unordered_map>
+#include <vector>
+
+#include "../Collision/TriangularMesh.hh"
 
 namespace strandsim {
-class RoundCylinder
-{
-public:
-	RoundCylinder(int N, int M, const double& ra, const double& rb, const double& h, strandsim::TriangularMesh* mesh, bool inverted);
+class RoundCylinder {
+ public:
+  RoundCylinder(int N, int M, const double& ra, const double& rb,
+                const double& h, strandsim::TriangularMesh* mesh,
+                bool inverted);
 };
-};
-
+};  // namespace strandsim
 
 #endif

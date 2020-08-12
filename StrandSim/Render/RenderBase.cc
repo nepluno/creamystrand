@@ -6,23 +6,22 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+#include "RenderBase.hh"
+
 #include "../Core/Definitions.hh"
 #include "OpenGLHeaders.hh"
-#include "RenderBase.hh"
 
 namespace strandsim {
 
-void RenderBase::render()
-{
-  if (enableNormals())  setNormalArray();
-  if (enableColors())   setColorArray();
+void RenderBase::render() {
+  if (enableNormals()) setNormalArray();
+  if (enableColors()) setColorArray();
   if (enableVertices()) drawVertices();
-  if (enableNormals())  unsetNormalArray();
-  if (enableColors())   unsetColorArray();
+  if (enableNormals()) unsetNormalArray();
+  if (enableColors()) unsetColorArray();
 }
 
-void RenderBase::drawVertices()
-{
+void RenderBase::drawVertices() {
   glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
   glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
   glEnable(GL_COLOR_MATERIAL);
@@ -33,7 +32,8 @@ void RenderBase::drawVertices()
   glVertexPointer(3, GL_FLOAT, 0, &(vertices[0]));
 
   // draw the triangles
-  glDrawElements(GL_TRIANGLES, (int)vertices.size() / 3, GL_UNSIGNED_INT, &(indices[0]));
+  glDrawElements(GL_TRIANGLES, (int)vertices.size() / 3, GL_UNSIGNED_INT,
+                 &(indices[0]));
 
   // deactivate vertex array
   glDisableClientState(GL_VERTEX_ARRAY);
@@ -41,26 +41,18 @@ void RenderBase::drawVertices()
   glDisable(GL_COLOR_MATERIAL);
 }
 
-void RenderBase::setNormalArray()
-{
+void RenderBase::setNormalArray() {
   glEnableClientState(GL_NORMAL_ARRAY);
   glNormalPointer(GL_FLOAT, 0, &(normals[0]));
 }
 
-void RenderBase::unsetNormalArray()
-{
-  glDisableClientState(GL_NORMAL_ARRAY);
-}
+void RenderBase::unsetNormalArray() { glDisableClientState(GL_NORMAL_ARRAY); }
 
-void RenderBase::setColorArray()
-{
+void RenderBase::setColorArray() {
   glEnableClientState(GL_COLOR_ARRAY);
   glColorPointer(3, GL_UNSIGNED_BYTE, 0, &(colors[0]));
 }
 
-void RenderBase::unsetColorArray()
-{
-  glDisableClientState(GL_COLOR_ARRAY);
-}
+void RenderBase::unsetColorArray() { glDisableClientState(GL_COLOR_ARRAY); }
 
-} // namespace strandsim
+}  // namespace strandsim

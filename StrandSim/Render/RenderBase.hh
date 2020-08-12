@@ -10,21 +10,17 @@
 #define S_RENDERBASE_HH
 
 #include <vector>
-#include "OpenGLHeaders.hh"
+
 #include "../Core/Definitions.hh"
+#include "OpenGLHeaders.hh"
 
 namespace strandsim {
 
 /** Interface for all renderers. */
-class RenderBase
-{
-public:
-
+class RenderBase {
+ public:
   RenderBase()
-    : m_enableVertices(false)
-    , m_enableNormals(false)
-    , m_enableColors(false)
-  {
+      : m_enableVertices(false), m_enableNormals(false), m_enableColors(false) {
     m_enableVertices = true;
 
     vertices.push_back(0);
@@ -52,11 +48,10 @@ public:
   bool& enableNormals() { return m_enableNormals; }
   bool& enableColors() { return m_enableColors; }
 
-  //virtual Vec3d calculateObjectCenter() = 0;
- // virtual Scalar calculateObjectBoundingRadius(const Vec3d& center) = 0;
+  // virtual Vec3d calculateObjectCenter() = 0;
+  // virtual Scalar calculateObjectBoundingRadius(const Vec3d& center) = 0;
 
-protected:
-
+ protected:
   void setNormalArray();
   void unsetNormalArray();
   void setColorArray();
@@ -73,6 +68,6 @@ protected:
   bool m_enableColors;
 };
 
-} // namespace strandsim
+}  // namespace strandsim
 
-#endif // S_RENDERBASE_HH
+#endif  // S_RENDERBASE_HH
