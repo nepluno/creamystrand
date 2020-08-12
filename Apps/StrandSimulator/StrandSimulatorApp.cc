@@ -450,7 +450,7 @@ std::string generateOutputDirName() {
   datestream << std::setw(2) << (g_timeinfo->tm_mday) << "_" << std::setw(2)
              << (g_timeinfo->tm_hour) << "_" << std::setw(2)
              << (g_timeinfo->tm_min) << "_";
-  datestream << std::setw(2) << (g_timeinfo->tm_sec);
+  datestream << std::setw(2) << (g_timeinfo->tm_sec) << "/";
 
   return datestream.str();
 }

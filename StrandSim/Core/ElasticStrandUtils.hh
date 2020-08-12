@@ -53,7 +53,7 @@ template <int n>
 inline Eigen::Matrix<Scalar, n, 1> findNormal(
     const Eigen::Matrix<Scalar, n, 1>& u) {
   assert(u.norm() != 0);
-  Eigen::Matrix<Scalar, n, 1> v;
+  Eigen::Matrix<Scalar, n, 1> v = Eigen::Matrix<Scalar, n, 1>::Zero();
 
   int maxCoordinate = 0;
   for (int i = 0; i < n; ++i) {

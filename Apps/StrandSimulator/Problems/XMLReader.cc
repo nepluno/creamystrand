@@ -114,7 +114,7 @@ void XMLReader::loadCollisionFree(rapidxml::xml_node<>* node) {
 int XMLReader::LoadOptions(const char* filename) {
   std::string file_name = std::string(filename);
 
-  size_t start = file_name.find('/');
+  size_t start = file_name.find_last_of('/');
   if (start == std::string::npos)
     start = 0;
   else

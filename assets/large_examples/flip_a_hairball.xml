@@ -77,6 +77,7 @@
     <useNonlinearContacts value="0"/>
     <useSoftAttachConstraints value="0"/>
     <usePreFilterGeometry value="0"/>
+    <solveLiquids value="0"/>
   </SimulationParameters>
 
   <particle x="4.5504 -3 2.50876" v="0.0 0.0 0.0" fixed="1"/>
@@ -122,7 +123,7 @@
   <particle x="24.2279 -16.1731 13.2871" v="0.0 0.0 0.0" />
  
 
-
+<!-- 
   <particle x="0.581506 -4.88992 -3.4279" v="0.0 0.0 0.0" fixed="1"/>
   <particle x="0.655358 -5.51094 -3.86324" v="0.0 0.0 0.0" fixed="1"/>
   <particle x="0.636316 -6.42489 -4.30502" v="0.0 0.0 0.0" />
@@ -45131,10 +45132,10 @@
   <particle x="4.50904 -26.7142 13.121" v="0.0 0.0 0.0" />
   <particle x="4.35289 -27.3398 13.363" v="0.0 0.0 0.0" />
   <particle x="4.45844 -28.0191 13.4049" v="0.0 0.0 0.0" />
-  <particle x="4.80585 -28.5671 13.6358" v="0.0 0.0 0.0" />
+  <particle x="4.80585 -28.5671 13.6358" v="0.0 0.0 0.0" /> -->
 
   <hair params="0" start="0" count="41"/>
-<hair params="0" start="41" count="41"/>
+<!-- <hair params="0" start="41" count="41"/>
 <hair params="0" start="82" count="41"/>
 <hair params="0" start="123" count="41"/>
 <hair params="0" start="164" count="41"/>
@@ -46156,7 +46157,7 @@
 <hair params="0" start="41820" count="41"/>
 <hair params="0" start="41861" count="41"/>
 <hair params="0" start="41902" count="41"/>
-<hair params="0" start="41943" count="41"/>
+<hair params="0" start="41943" count="41"/> -->
 
  <script type="translate" x="0" y="-8.0" z="0" w="0.0" start="0.0" end="0.3" group="0"/>
  <script type="translate" x="0" y="16.0" z="0" w="0.0" start="0.3" end="0.55" group="0"/>
@@ -46176,8 +46177,8 @@
  -->
 <!--   <distancefield usage="solid" type="cylinder" cx="-20.26" cy="-10.0" cz="0.0" rx="0.0" ry="1.0" rz="0.0" rw="0.0" radius="0.375" corner="0.125" halflength="10.25" group="2" sampled="0"/> 
   <distancefield usage="solid" type="cylinder" cx="20.26" cy="-10.0" cz="0.0" rx="0.0" ry="1.0" rz="0.0" rw="0.0" radius="0.375" corner="0.125" halflength="10.25" group="2" sampled="0"/>   --> 
-  <distancefield usage="solid" type="sphere" cx="0.0" cy="0.0" cz="0.0" rx="0.0" ry="1.0" rz="0.0" rw="0.0" radius="6.0" group="0" sampled="0"/>   
-  <distancefield usage="solid" type="sphere" cx="0.0" cy="0.0" cz="0.0" rx="0.0" ry="1.0" rz="0.0" rw="0.0" radius="40.0" group="1" sampled="0" inverted="1"/>   
-  <distancefield usage="source" type="box" cx="0.0" cy="-25.84722" cz="0.0" rx="0.0" ry="1.0" rz="0.0" rw="0.0" ex="43" ey="17.23148" ez="37.0787"/>
+  <!-- <distancefield usage="solid" type="sphere" cx="0.0" cy="0.0" cz="0.0" rx="0.0" ry="1.0" rz="0.0" rw="0.0" radius="6.0" group="0" sampled="0"/>    -->
+  <!-- <distancefield usage="solid" type="sphere" cx="0.0" cy="0.0" cz="0.0" rx="0.0" ry="1.0" rz="0.0" rw="0.0" radius="40.0" group="1" sampled="0" inverted="1"/>    -->
+  <!-- <distancefield usage="source" type="box" cx="0.0" cy="-25.84722" cz="0.0" rx="0.0" ry="1.0" rz="0.0" rw="0.0" ex="43" ey="17.23148" ez="37.0787"/> -->
   <!-- <distancefield usage="source" type="box" cx="17.38" cy="-11.6916" cz="9.69154" rx="0.0" ry="1.0" rz="0.0" rw="0.0" ex="1.0" ey="1.0" ez="1.0"/> -->
 </scene>  
