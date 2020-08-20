@@ -43,8 +43,7 @@ template <typename ViscousT>
 Scalar BendingForce<ViscousT>::localEnergy(const ElasticStrand& strand,
                                            StrandState& geometry,
                                            const IndexType vtx) {
-  const Mat2x& B = ViscousT::bendingMatrix(strand, vtx) *
-                   strand.getStepper()->getStretchMultiplier();
+  const Mat2x& B = ViscousT::bendingMatrix(strand, vtx);
   const Vec4x& kappaBar = ViscousT::kappaBar(strand, vtx);
   const Scalar ilen = strand.m_invVoronoiLengths[vtx];
   const Vec4x& kappa = geometry.m_kappas[vtx];
@@ -77,8 +76,7 @@ template <typename ViscousT>
 void BendingForce<ViscousT>::computeLocal(
     typename BendingForce::LocalForceType& localF, const ElasticStrand& strand,
     StrandState& geometry, const IndexType vtx) {
-  const Mat2x& B = ViscousT::bendingMatrix(strand, vtx) *
-                   strand.getStepper()->getStretchMultiplier();
+  const Mat2x& B = ViscousT::bendingMatrix(strand, vtx);
   const Vec4x& kappaBar = ViscousT::kappaBar(strand, vtx);
   const Scalar ilen = strand.m_invVoronoiLengths[vtx];
   const Vec4x& kappa = geometry.m_kappas[vtx];
@@ -118,8 +116,7 @@ void BendingForce<ViscousT>::computeLocal(
     const ElasticStrand& strand, StrandState& geometry, const IndexType vtx) {
   localJ = geometry.m_bendingProducts[vtx] * 0.5;
 
-  const Mat2x& bendingMatrixBase = strand.m_parameters.bendingMatrixBase() *
-                                   strand.getStepper()->getStretchMultiplier();
+  const Mat2x& bendingMatrixBase = strand.m_parameters.bendingMatrixBase();
   const Vec4x& kappaBar = ViscousT::kappaBar(strand, vtx);
   const Vec4x& kappa = geometry.m_kappas[vtx];
   const LocalJacobianType& hessKappa0 = geometry.m_hessKappas[vtx * 4 + 0];
