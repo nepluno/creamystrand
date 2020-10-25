@@ -2,7 +2,7 @@
   <description text="A moving vertex collides with a stationary one of the same size and mass. The first vertex should stop moving, and the second one should begin moving in the same direction and at the same speed as the first one did."/>
 
   <duration time="4.0"/>
-  <integrator type="linearized-implicit-euler" dt="0.001" criterion="1e-9" maxiters="1000"/>
+  <integrator type="linearized-implicit-euler" dt="0.02" criterion="1e-9" maxiters="1000"/>
   <collision type="continuous-time"/>
 
   <simplegravity fx="0.0" fy="-981.0"/>
@@ -33,12 +33,12 @@
     <collisionMultiplier value="1.0"/>
     <attachMultiplier value="1.0" />
     <density value="1.32" /> 
-    <viscosity value="3.727e8" />
+    <viscosity value="0.0" />
     <baseRotation value="0.0"/>
-    <accumulateWithViscous value="1"/>
+    <accumulateWithViscous value="0"/>
     <accumulateViscousOnlyForBendingModes value="0"/>
     <frictionAngle value="40.0"/>
-    <stretchMultiplier value="1e-4"/>
+    <stretchMultiplier value="1e-3"/>
   </StrandParameters>
 
   <CollisionParameters>
@@ -53,7 +53,7 @@
     <airDrag value="0.0003"/> 
     <gaussSeidelIterations value="75"/>
     <gaussSeidelTolerance value="1e-06"/> 
-    <maxNewtonIterations value="1000"/>
+    <maxNewtonIterations value="10000"/>
     <hairMeshFrictionCoefficient value="0.0"/>
     <numberOfThreads value="24"/>
     <percentCTRodRodCollisionsAccept value="100"/>
@@ -75,6 +75,7 @@
     <useNonlinearContacts value="0"/>
     <useSoftAttachConstraints value="0"/>
     <usePreFilterGeometry value="0"/>
+    <useExactJacobian value="0"/>
     <solveLiquids value="0"/>
   </SimulationParameters>
 

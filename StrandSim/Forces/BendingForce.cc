@@ -106,8 +106,6 @@ void BendingForce<ViscousT>::computeLocal(
       localF.segment<3>(8) += -f;
     }
   }
-
-  //    localF(3) = localF(7) = 0.0;
 }
 
 template <typename ViscousT>
@@ -116,21 +114,23 @@ void BendingForce<ViscousT>::computeLocal(
     const ElasticStrand& strand, StrandState& geometry, const IndexType vtx) {
   localJ = geometry.m_bendingProducts[vtx] * 0.5;
 
-  const Mat2x& bendingMatrixBase = strand.m_parameters.bendingMatrixBase();
-  const Vec4x& kappaBar = ViscousT::kappaBar(strand, vtx);
-  const Vec4x& kappa = geometry.m_kappas[vtx];
-  const LocalJacobianType& hessKappa0 = geometry.m_hessKappas[vtx * 4 + 0];
-  const LocalJacobianType& hessKappa1 = geometry.m_hessKappas[vtx * 4 + 1];
-  const LocalJacobianType& hessKappa2 = geometry.m_hessKappas[vtx * 4 + 2];
-  const LocalJacobianType& hessKappa3 = geometry.m_hessKappas[vtx * 4 + 3];
-  const Vec2x& temp_e =
-      bendingMatrixBase * (kappa.segment<2>(0) - kappaBar.segment<2>(0));
-  const Vec2x& temp_f =
-      bendingMatrixBase * (kappa.segment<2>(2) - kappaBar.segment<2>(2));
+  if (strand.m_requiresExactJacobian) {
+    const Mat2x& bendingMatrixBase = strand.m_parameters.bendingMatrixBase();
+    const Vec4x& kappaBar = ViscousT::kappaBar(strand, vtx);
+    const Vec4x& kappa = geometry.m_kappas[vtx];
+    const LocalJacobianType& hessKappa0 = geometry.m_hessKappas[vtx * 4 + 0];
+    const LocalJacobianType& hessKappa1 = geometry.m_hessKappas[vtx * 4 + 1];
+    const LocalJacobianType& hessKappa2 = geometry.m_hessKappas[vtx * 4 + 2];
+    const LocalJacobianType& hessKappa3 = geometry.m_hessKappas[vtx * 4 + 3];
+    const Vec2x& temp_e =
+        bendingMatrixBase * (kappa.segment<2>(0) - kappaBar.segment<2>(0));
+    const Vec2x& temp_f =
+        bendingMatrixBase * (kappa.segment<2>(2) - kappaBar.segment<2>(2));
 
-  localJ += (temp_e(0) * hessKappa0 + temp_e(1) * hessKappa1 +
-             temp_f(0) * hessKappa2 + temp_f(1) * hessKappa3) *
-            0.5;
+    localJ += (temp_e(0) * hessKappa0 + temp_e(1) * hessKappa1 +
+               temp_f(0) * hessKappa2 + temp_f(1) * hessKappa3) *
+              0.5;  
+  }
 
   const Scalar ilen = strand.m_invVoronoiLengths[vtx];
   localJ *= -ilen * ViscousT::bendingCoefficient(strand, vtx);
@@ -149,8 +149,14 @@ void BendingForce<ViscousT>::computeLocal(
 
       Mat3x M;
 
-      M = ks * ((1.0 / restState - 1.0 / length) * Mat3x::Identity() +
-                1.0 / length * (edge * edge.transpose()));
+      if (strand.m_requiresExactJacobian) {
+        M = ks * ((1.0 / restState - 1.0 / length) * Mat3x::Identity() +
+                  1.0 / length * (edge * edge.transpose()));
+      } else {
+        M = ks *
+            (std::max(0.0, 1.0 / restState - 1.0 / length) * Mat3x::Identity() +
+             1.0 / length * (edge * edge.transpose()));
+      }
 
       localJ.block<3, 3>(0, 0) += -M;
       localJ.block<3, 3>(8, 8) += -M;
@@ -158,11 +164,6 @@ void BendingForce<ViscousT>::computeLocal(
       localJ.block<3, 3>(8, 0) += M;
     }
   }
-
-  //    localJ.row(3).setZero();
-  //    localJ.row(7).setZero();
-  //    localJ.col(3).setZero();
-  //    localJ.col(7).setZero();
 }
 
 template <typename ViscousT>

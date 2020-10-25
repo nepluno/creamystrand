@@ -21,15 +21,15 @@ struct SimulationParameters {
   int m_numberOfThreads;
   int m_rodSubSteps;
 
-  // Number of substeps
-  //    int m_solver_steps_per_frame;
-
   int m_statGathering;
 
   bool m_simulationManager_limitedMemory;
 
+  /**
+   * Newton Related
+   */
   unsigned m_maxNewtonIterations;
-  //    int m_maxLineSearchIterations;
+  bool m_useExactJacobian;
   /**
    * Rod-rod collisions
    */

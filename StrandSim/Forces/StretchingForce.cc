@@ -66,15 +66,11 @@ void StretchingForce<ViscousT>::computeLocal(
 
   const Scalar length = geometry.m_lengths[vtx];
 
-  //    if(length < restLength && ViscousT::isViscous()) {
-  //        localF.setZero();
-  //    } else {
   const Vec3x& edge = geometry.m_tangents[vtx];
 
   Vec3x f = ks * (length / restLength - 1.0) * edge;
   localF.segment<3>(0) = f;
   localF.segment<3>(3) = -f;
-  //    }
 }
 
 template <typename ViscousT>
@@ -90,8 +86,14 @@ void StretchingForce<ViscousT>::computeLocal(
 
   Mat3x M;
 
-  M = ks * (std::max(0.0, 1.0 / restLength - 1.0 / length) * Mat3x::Identity() +
-            1.0 / restLength * (edge * edge.transpose()));
+  if (strand.m_requiresExactJacobian) {
+    M = ks * ((1.0 / restLength - 1.0 / length) * Mat3x::Identity() +
+              1.0 / restLength * (edge * edge.transpose()));
+  } else {
+    M = ks *
+        (std::max(0.0, 1.0 / restLength - 1.0 / length) * Mat3x::Identity() +
+         1.0 / restLength * (edge * edge.transpose()));
+  }
 
   localJ.block<3, 3>(0, 0) = localJ.block<3, 3>(3, 3) = -M;
   localJ.block<3, 3>(0, 3) = localJ.block<3, 3>(3, 0) = M;

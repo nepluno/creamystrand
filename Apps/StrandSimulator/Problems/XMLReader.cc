@@ -1761,6 +1761,7 @@ void XMLReader::setSimulationParameters() {
 #endif
   m_simulation_params.m_rodSubSteps = 1;
   m_simulation_params.m_logLevel = MsgInfo::kInfo;
+  m_simulation_params.m_useExactJacobian = false;
   m_simulation_params.m_useLengthProjection = true;
   m_simulation_params.m_usePreFilterGeometry = false;
   m_simulation_params.m_useApproxRodElasticFriction = true;
@@ -1804,6 +1805,7 @@ void XMLReader::setSimulationParameters() {
             m_simulation_params.m_useLengthProjection);
   loadParam(nd, "usePreFilterGeometry",
             m_simulation_params.m_usePreFilterGeometry);
+  loadParam(nd, "useExactJacobian", m_simulation_params.m_useExactJacobian);
   loadParam(nd, "useApproxRodElasticFriction",
             m_simulation_params.m_useApproxRodElasticFriction);
   loadParam(nd, "skipRodMeshCollisions",

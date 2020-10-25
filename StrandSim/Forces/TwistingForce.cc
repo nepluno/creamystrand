@@ -56,10 +56,6 @@ void TwistingForce<ViscousT>::computeLocal(
   const Scalar twist = geometry.m_twists[vtx];
 
   localF = -kt * ilen * (twist - undefTwist) * geometry.m_gradTwists[vtx];
-
-  //    localF.segment<3>(0).setZero();
-  //    localF.segment<3>(4).setZero();
-  //    localF.segment<3>(8).setZero();
 }
 
 template <typename ViscousT>
@@ -87,10 +83,13 @@ void TwistingForce<ViscousT>::computeLocal(
   const Mat11x& gradTwistSquared = geometry.m_gradTwistsSquared[vtx];
 
   localJ = -kt * ilen * gradTwistSquared;
-  const Scalar undeformedTwist = ViscousT::thetaBar(strand, vtx);
-  const Scalar twist = geometry.m_twists[vtx];
-  const Mat11x& hessTwist = geometry.m_hessTwists[vtx];
-  localJ += -kt * ilen * (twist - undeformedTwist) * hessTwist;
+
+  if (strand.m_requiresExactJacobian) {
+    const Scalar undeformedTwist = ViscousT::thetaBar(strand, vtx);
+    const Scalar twist = geometry.m_twists[vtx];
+    const Mat11x& hessTwist = geometry.m_hessTwists[vtx];
+    localJ += -kt * ilen * (twist - undeformedTwist) * hessTwist;
+  }
 }
 
 template <typename ViscousT>
