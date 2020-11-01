@@ -30,6 +30,8 @@ struct SimulationParameters {
    */
   unsigned m_maxNewtonIterations;
   bool m_useExactJacobian;
+  bool m_useProjectedJacobian;
+
   /**
    * Rod-rod collisions
    */

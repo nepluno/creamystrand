@@ -76,6 +76,7 @@
     <useSoftAttachConstraints value="0"/>
     <usePreFilterGeometry value="0"/>
     <useExactJacobian value="0"/>
+    <useProjectedJacobian value="0"/>
     <solveLiquids value="0"/>
   </SimulationParameters>
 

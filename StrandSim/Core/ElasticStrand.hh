@@ -506,8 +506,11 @@ class ElasticStrand : public StrandBase {
   StrandDynamicTraits& dynamics() { return *m_dynamics; }
 
   bool requiresExactJacobian() const { return m_requiresExactJacobian; }
-
   void requireExactJacobian(bool b) { m_requiresExactJacobian = b; }
+
+  bool projectsJacobian() const { return m_projectJacobian; }
+  void projectJacobian(bool b) { m_projectJacobian = b; }
+
   bool activelySimulated() const { return m_activelySimulated; }
 
   void setActivelySimulated(bool simulated) { m_activelySimulated = simulated; }
@@ -696,6 +699,7 @@ class ElasticStrand : public StrandBase {
 
   // Flags
   bool m_requiresExactJacobian;
+  bool m_projectJacobian;
   bool m_activelySimulated;
 
   // Forces that are not built-in

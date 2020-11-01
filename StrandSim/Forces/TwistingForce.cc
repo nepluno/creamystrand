@@ -90,6 +90,13 @@ void TwistingForce<ViscousT>::computeLocal(
     const Mat11x& hessTwist = geometry.m_hessTwists[vtx];
     localJ += -kt * ilen * (twist - undeformedTwist) * hessTwist;
   }
+
+  if (strand.m_projectJacobian) {
+    Eigen::EigenSolver<typename TwistingForce::LocalJacobianType> es;
+    es.compute(localJ, false);
+    localJ -= std::max(0.0, es.eigenvalues().real().maxCoeff()) *
+              LocalJacobianType::Identity();
+  }
 }
 
 template <typename ViscousT>

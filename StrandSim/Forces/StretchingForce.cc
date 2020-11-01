@@ -8,6 +8,8 @@
 
 #include "StretchingForce.hh"
 
+#include <Eigen/Eigenvalues>
+
 #include "../Core/BandMatrix.hh"
 #include "../Core/BandMatrixFwd.hh"
 #include "../Core/ElasticStrand.hh"
@@ -86,9 +88,10 @@ void StretchingForce<ViscousT>::computeLocal(
 
   Mat3x M;
 
-  if (strand.m_requiresExactJacobian) {
+  if (strand.m_requiresExactJacobian && !strand.m_projectJacobian) {
     M = ks * ((1.0 / restLength - 1.0 / length) * Mat3x::Identity() +
               1.0 / restLength * (edge * edge.transpose()));
+
   } else {
     M = ks *
         (std::max(0.0, 1.0 / restLength - 1.0 / length) * Mat3x::Identity() +

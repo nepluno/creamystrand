@@ -1060,6 +1060,7 @@ void ImplicitStepper::prepareSolveNonlinear() {
   m_alpha = 1.0;
 
   m_strand.requireExactJacobian(m_params.m_useExactJacobian);
+  m_strand.projectJacobian(m_params.m_useProjectedJacobian);
 }
 
 bool ImplicitStepper::postSolveNonlinear() {

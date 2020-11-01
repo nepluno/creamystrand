@@ -164,6 +164,13 @@ void BendingForce<ViscousT>::computeLocal(
       localJ.block<3, 3>(8, 0) += M;
     }
   }
+
+  if (strand.m_projectJacobian) {
+    Eigen::EigenSolver<typename BendingForce::LocalJacobianType> es; 
+    es.compute(localJ, false);
+    localJ -= std::max(0.0, es.eigenvalues().real().maxCoeff()) *
+              LocalJacobianType::Identity();
+  }
 }
 
 template <typename ViscousT>

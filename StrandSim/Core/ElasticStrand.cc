@@ -53,7 +53,8 @@ ElasticStrand::ElasticStrand(const VecXx& dofs, ParametersType& parameters,
       m_dynamics(NULL),
       m_parent(NULL),
       m_stepper(NULL),
-      m_requiresExactJacobian(true),  //
+      m_requiresExactJacobian(false),  //
+      m_projectJacobian(false),
       m_activelySimulated(true),      //
       m_isClumpCenterLine(false)      //
 {
@@ -98,7 +99,8 @@ ElasticStrand::ElasticStrand(const VecXx& dofs, const VecXx& area_dofs,
       m_dynamics(NULL),
       m_parent(NULL),
       m_stepper(NULL),
-      m_requiresExactJacobian(true),  //
+      m_requiresExactJacobian(false),  //
+      m_projectJacobian(false),
       m_activelySimulated(true),      //
       m_isClumpCenterLine(false)      //
 {
