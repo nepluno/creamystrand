@@ -115,15 +115,19 @@ int XMLReader::LoadOptions(const char* filename) {
   std::string file_name = std::string(filename);
 
   size_t start = file_name.find_last_of('/');
-  if (start == std::string::npos) start = 0;
+  if (start == std::string::npos)
+    start = 0;
+  else
+    start++;
 
 #ifdef WIN32
   size_t wstart = file_name.find_last_of('\\');
-  if (wstart == std::string::npos) wstart = 0;
+  if (wstart == std::string::npos)
+    wstart = 0;
+  else
+    wstart++;
   start = std::max(start, wstart);
 #endif
-
-  start++;  
 
   size_t end = file_name.find_last_of('.');
   if (end == std::string::npos) end = file_name.size();
