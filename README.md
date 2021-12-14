@@ -2,7 +2,7 @@
 
 CreamyStrand
 ================
-CreamyStrand is an open source project for the physical simulation of the coupling between hairs and shear-dependent liquid. It is cross-platform (Mac OS X, Linux, Windows, and more), and licensed under the Mozilla Public License v. 2.0.
+CreamyStrand is an open source project for the physical simulation of the coupling between hairs and shear-dependent liquid. It supports Linux and Windows, and licensed under the Mozilla Public License v. 2.0.
 
 We would like to hear from you if you appreciate this work.
 
@@ -27,15 +27,15 @@ CreamyStrand depends on following libraries (some of them have been included in 
 - GLUT (https://www.opengl.org/resources/libraries/glut/)
 - Boost 1.58+ (https://www.boost.org/)
 
-On Mac OS X or Linux-based systems, most of the dependencies are either included, or can be easily installed with Homebrew (https://brew.sh) or the APT package handling utility. For Intel MKL, you may download and install from the link provided above. For GLUT on Windows, you may acquire the binaries from the NVIDIA Cg Toolkit (https://developer.nvidia.com/cg-toolkit)
+On Linux-based systems, most of the dependencies are either included, or can be easily installed with the APT package handling utility. For Intel MKL, you may download and install from the link provided above. For GLUT on Windows, you may acquire the binaries from the NVIDIA Cg Toolkit (https://developer.nvidia.com/cg-toolkit)
 
-For parallelization, CreamyStrand uses the OpenMP library. On Mac OS X you may need the open source LLVM compiler installed (use `brew install llvm` for Homebrew installation).
+For parallelization, CreamyStrand uses the OpenMP library. 
 
 On Windows you may need manually download and compile some of the dependencies. More details refer to the compilation section below.
 
 Compilation
 -----------------
-CreamyStrand has been tested with Clang/LLVM (under Mac OS X), GCC 4.8+ (under Linux), and MSVC (under Windows 10 and Visual Studio 2019).
+CreamyStrand has been tested with GCC 4.8+ (under Linux), and MSVC (under Windows 10 and Visual Studio 2019).
 
 To compile CreamyStrand, you'll need CMake or CMake-GUI (https://cmake.org).
 
