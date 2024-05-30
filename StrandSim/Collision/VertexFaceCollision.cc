@@ -38,7 +38,7 @@ void VertexFaceCollision::print(std::ostream& os) const {
 }
 
 bool VertexFaceCollision::analyse() {
-  static double times[4];
+  double times[4];
 
   const int num_verts = m_firstStrand->getNumVertices();
   const Vec3x p_off = m_firstStrand->getVertex(m_firstVertex);

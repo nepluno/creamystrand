@@ -85,7 +85,7 @@ bool EdgeFaceIntersection::barycentricCoordinatesIfCloser(
 }
 
 bool EdgeFaceIntersection::analyseProximity() {
-  static double times[4];
+  double times[4];
 
   // Tolerance for the interior edge/edge collisions that point in a direction
   // perpendicular to the face normal

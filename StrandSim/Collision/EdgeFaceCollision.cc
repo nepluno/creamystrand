@@ -81,7 +81,7 @@ void EdgeFaceCollision::print(std::ostream& os) const {
 }
 
 bool EdgeFaceCollision::analyse() {
-  static double times[4];
+  double times[4];
   //    const short side_p = m_side < 2 ? m_side + 1 : 0;
 
   // Tolerance for the interior edge/edge collisions that point in a direction
